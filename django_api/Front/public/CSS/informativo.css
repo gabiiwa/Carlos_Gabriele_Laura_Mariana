@@ -1,0 +1,33 @@
+/* Elementos */
+html, body {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    font-family: "Arial Rounded MT Bold", Arial, Helvetica, sans-serif !important;
+    background-color: #FFFAFA;
+}
+
+/* Classes */
+.apresentacao {
+    padding: 60px 130px 20px 60px;
+}
+
+.txt-informativo h2 {
+    color: #BA55D3;
+}
+
+.txt-informativo p {
+    text-align: justify;
+    font-size: 18px;
+    color: #DDA0DD;
+}
+
+.img-comp {
+    float: left;
+    border-radius: 25px;
+    width: 350px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
