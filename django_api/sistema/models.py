@@ -22,8 +22,7 @@ class Estudante(Usuario):
 class Postagem(models.Model):
     texto = models.CharField(max_length=10000)
     fkusuario = models.ForeignKey(Estudante,on_delete=models.CASCADE)
-    # def __str__(self):
-    #     return self.fkusuario.name
+    
 class PostagemProgramada(Postagem):
     post_date = models.DateField()
     
