@@ -18,19 +18,48 @@ class Professor(Usuario):
 
 class Estudante(Usuario):
     matricula = models.CharField(max_length=11)
-    pontuacao = models.IntegerField()
-    titulo = models.CharField(max_length=100)
+    pontuacao = models.IntegerField(default = 0)
+
+class Titulo(models.Model):
+    nome = models.CharField(max_length=100)
+    qtdPontos = models.IntegerField() # quantos pontos são necessários para se ter esse título
+    estudante = models.ManyToManyField(Estudante, through='listaTitulo')
+
+class listaTitulo(models.Model): # títulos que as estudantes já tiveram, assim como o título atual
+    fktitulo = models.ForeignKey(Titulo,on_delete=models.CASCADE)
+    fkestudante = models.ForeignKey(Estudante,on_delete=models.CASCADE)
+    dataHora = models.DateTimeField(auto_now_add = True)
+    tituloAtual = models.BooleanField()
+
+class Tarefa(models.Model):
+    descricao = models.CharField(max_length=100)
+    qtdPontos = models.IntegerField()
+    dataHora = models.DateTimeField()
+    cumprida = models.BooleanField()
+
+class Notificacao(models.Model):
+    descricao = models.CharField(max_length=100)
+    dataHora = models.DateTimeField(auto_now_add = True)
 
 class Postagem(models.Model):
     texto = models.CharField(max_length=10000)
     fkusuario = models.ForeignKey(Estudante,on_delete=models.CASCADE)
+    dataHora = models.DateTimeField(auto_now_add = True, null=True)
     
-class PostagemProgramada(models.Model):
+class PostagemArmazenada(models.Model):
     texto = models.CharField(max_length=10000)
-    post_date = models.DateField()
+    post_date = models.DateTimeField(null=True, blank=True)
     fkusuario = models.ForeignKey(Professor,on_delete=models.CASCADE)
     tag_choice = (
         ("TG1", "Normal"),
         ("TG2", "Extra"),
     )
     tag = models.CharField(choices=tag_choice, max_length=10, default="TG1") #marcador que pode ser de dois tipos: tarefa diária ou tarefa extra
+    programada = models.BooleanField()
+
+class Comentario(models.Model):
+    texto = models.CharField(max_length=10000)
+    fkpostagem = models.ForeignKey(Postagem,on_delete=models.CASCADE, blank=True, null=True)
+    fkprogramada = models.ForeignKey(PostagemArmazenada,on_delete=models.CASCADE, blank=True, null=True)  
+    fkEstudante = models.ForeignKey(Estudante,on_delete=models.CASCADE)     
+    dataHora = models.DateTimeField(auto_now_add = True)

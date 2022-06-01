@@ -7,5 +7,6 @@ draw.io,"Doc. de Requisitos, Diag. de Classe e Diagrama de Caso de Uso",Software
 "Web Browser(Chrome, FireFox, Opera...)",Em todas etapas,Auxiliar na visualização das funcionalidades do sistema web.
 SQLite,Etapas de entrega de protótipo e Teste de Software,Banco de dados
 Django REST framework,Etapas de entrega de protótipo e Teste de Software,Biblioteca que permite a construção de APIs REST utilizando a estrutura do Django.
+Balsamiq,Etapas de entrega de protótipo, Ferramenta de wireframing de interface do usuário
 IDE (Visual Studio Code),Etapas de entrega de protótipo e Teste de Software,Ferramenta para a programação do sistema back-end e front-end. Compilação do back-end.
 Selenium,Teste de Software,Ferramenta para automatizar testes em python.
