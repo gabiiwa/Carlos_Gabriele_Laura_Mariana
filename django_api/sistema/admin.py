@@ -10,6 +10,10 @@ from .models import Tarefa
 from .models import Notificacao
 from .models import Comentario
 
+#a professora é a unica que pode ter acesso a postagem programda
+# class Professor(admin.ModelAdmin):
+#     list_display
+
 # Register your models here.
 admin.site.register(Estudante)
 admin.site.register(Professor)

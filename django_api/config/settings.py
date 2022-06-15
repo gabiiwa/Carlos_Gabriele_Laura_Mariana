@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sistema',
+    'sistema', #adicionando o projeto
+    'rest_framework',  # Habilitando o rest_framework
 ]
 
 MIDDLEWARE = [
