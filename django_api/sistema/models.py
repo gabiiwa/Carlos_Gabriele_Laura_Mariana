@@ -1,6 +1,4 @@
 from django.db import models
-import random as random
-import time
 # Create your models here.
 class Usuario(models.Model):
     cpf = models.IntegerField()
@@ -41,13 +39,23 @@ class Notificacao(models.Model):
     descricao = models.CharField(max_length=100)
     dataHora = models.DateTimeField(auto_now_add = True)
 
+"""
+Postagem:
+- Tabela referente as postagens feitas por alunas;
+- Valor de pontos ganhos: 15;
+"""
 class Postagem(models.Model):
     titulo = models.CharField(max_length=10000)
     texto = models.CharField(max_length=10000)
     fkusuario = models.ForeignKey(Estudante,on_delete=models.CASCADE)
     dataHora = models.DateTimeField(auto_now_add = True, null=True)
-    qtdPontos = models.IntegerField()
-    
+    qtdPontos = models.IntegerField(default=15)
+
+"""
+Postagem Armazenada:
+- Tem esse nome pois quando não são programadas para um dia específico, o sistema armazena e posta depois;
+- Tabela referente as postagens feitas por professoras;
+"""
 class PostagemArmazenada(models.Model):
     titulo = models.CharField(max_length=10000)
     texto = models.CharField(max_length=10000)
