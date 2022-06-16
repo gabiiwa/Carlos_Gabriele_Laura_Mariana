@@ -1,5 +1,6 @@
 from django.db import models
-
+import random as random
+import time
 # Create your models here.
 class Usuario(models.Model):
     cpf = models.IntegerField()
@@ -33,7 +34,6 @@ class listaTitulo(models.Model): # títulos que as estudantes já tiveram, assim
 
 class Tarefa(models.Model):
     descricao = models.CharField(max_length=100)
-    qtdPontos = models.IntegerField()
     dataHora = models.DateTimeField()
     cumprida = models.BooleanField()
 
@@ -42,9 +42,10 @@ class Notificacao(models.Model):
     dataHora = models.DateTimeField(auto_now_add = True)
 
 class Postagem(models.Model):
-    texto = models.CharField(max_length=10000)
+    pythotexto = models.CharField(max_length=10000)
     fkusuario = models.ForeignKey(Estudante,on_delete=models.CASCADE)
     dataHora = models.DateTimeField(auto_now_add = True, null=True)
+    qtdPontos = models.IntegerField()
     
 class PostagemArmazenada(models.Model):
     texto = models.CharField(max_length=10000)
@@ -63,3 +64,13 @@ class Comentario(models.Model):
     fkprogramada = models.ForeignKey(PostagemArmazenada,on_delete=models.CASCADE, blank=True, null=True)  
     fkEstudante = models.ForeignKey(Estudante,on_delete=models.CASCADE)     
     dataHora = models.DateTimeField(auto_now_add = True)
+    qtdPontos = models.IntegerField()
+    
+
+class Visualizacao(models.Model):
+    foiVisualizado = models.BooleanField(default=False)
+    ehPontoExtra = models.BooleanField(default=False)
+    qtdPontos = models.IntegerField()
+    fkpostagem = models.ForeignKey(Postagem,on_delete=models.CASCADE, blank=True, null=True)
+    fkprogramada = models.ForeignKey(PostagemArmazenada,on_delete=models.CASCADE, blank=True, null=True)  
+    
