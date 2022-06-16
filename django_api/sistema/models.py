@@ -42,12 +42,14 @@ class Notificacao(models.Model):
     dataHora = models.DateTimeField(auto_now_add = True)
 
 class Postagem(models.Model):
-    pythotexto = models.CharField(max_length=10000)
+    titulo = models.CharField(max_length=10000)
+    texto = models.CharField(max_length=10000)
     fkusuario = models.ForeignKey(Estudante,on_delete=models.CASCADE)
     dataHora = models.DateTimeField(auto_now_add = True, null=True)
     qtdPontos = models.IntegerField()
     
 class PostagemArmazenada(models.Model):
+    titulo = models.CharField(max_length=10000)
     texto = models.CharField(max_length=10000)
     post_date = models.DateTimeField(null=True, blank=True)
     fkusuario = models.ForeignKey(Professor,on_delete=models.CASCADE)
