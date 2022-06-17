@@ -10,12 +10,13 @@ from .models import Tarefa
 from .models import Notificacao
 from .models import Comentario
 
-#a professora é a unica que pode ter acesso a postagem programda
-# class Professor(admin.ModelAdmin):
-#     list_display
+class EstudanteAdmin(admin.ModelAdmin):
+    list_display = ('cpf','nome','matricula','pontuacao')
+    list_display_links = ('cpf','nome','matricula')
+
 
 # Register your models here.
-admin.site.register(Estudante)
+admin.site.register(Estudante,EstudanteAdmin)
 admin.site.register(Professor)
 admin.site.register(Postagem)
 admin.site.register(PostagemArmazenada)
