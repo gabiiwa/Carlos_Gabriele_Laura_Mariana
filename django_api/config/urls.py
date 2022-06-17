@@ -26,4 +26,5 @@ router.register(r'postagem_armazenada', views.PostagemArmazenadaViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
+    path('home/', views.home, name='home'),
 ]
