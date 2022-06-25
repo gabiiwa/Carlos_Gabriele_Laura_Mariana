@@ -1,4 +1,8 @@
 {% for post in data %}
+    <!-- nome de quem realizou a postagem-->
+    <h3>{{ post.nome }}</h3>
+    <!-- titulo do post -->
     <h1>{{ post.titulo }}</h1>
+    <!-- texto do post -->
     <p>{{ post.texto }}</p>
 {% endfor %}
