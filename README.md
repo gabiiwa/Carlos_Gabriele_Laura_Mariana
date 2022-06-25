@@ -5,3 +5,7 @@
 $ source venv/bin/activate #ativar venv, precisa estar na pasta django_api
 
 ```
+## Rodar django
+pip install django
+pip install djangorestframework
+
