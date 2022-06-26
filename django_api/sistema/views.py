@@ -9,6 +9,7 @@ import requests
 class PostagemViewSet(viewsets.ModelViewSet):
     queryset = models.Postagem.objects.all().order_by('dataHora')
     serializer_class = serializers.PostagemSerializer
+    #post
     def create(self, request):
         serializer = serializers.PostagemSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -22,6 +23,9 @@ class PostagemViewSet(viewsets.ModelViewSet):
              #atualizando a pontuação
              estudante_obj.pontuacao += 15
              estudante_obj.save()
+             #setar data de postagem
+             #loop pra procurar tarefas do tipo postagem
+            #  lista
              return Response(serializer.data)
 class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
     queryset = models.PostagemArmazenada.objects.all().order_by('post_date')
@@ -35,6 +39,11 @@ class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
     # def list(self, request):
     #     #só postar se não for programada
     #     #caso contrario, precisa comparar o dia e hora 
+class TarefaViewSet(viewsets.ModelViewSet):
+    queryset = models.PostagemArmazenada.objects.all().order_by('post_date')
+    serializer_class = serializers.PostagemArmazenadaSerializer
+
+
 
 #############Páginas que dependem de dados do banco###################
 def home(request):
@@ -44,5 +53,4 @@ def home(request):
     #inserindo qual foi a estudante que realizoua postagem
     for post,i in zip(data,range(len(estudantes))):
         post['nome']=estudantes[i]
-  
     return render(request, 'home.html', {'data': data})
