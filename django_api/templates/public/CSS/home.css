@@ -18,8 +18,32 @@ body {
     text-align: center;
 }
 
-#logo {
+#logo, #menu {
     padding: 10px;
+}
+
+#main {
+    width: 920px;
+    margin: 0 auto;
+}
+
+#conteudo {
+    width: 660px;
+    float: left;
+    background-color: #F5F5F5;
+}
+
+#area-lateral {
+    width: 240px;
+    float: right;
+    background-color: #F5F5F5;
+}
+
+#rodape {
+    clear: both;
+    background-color: #CCCCCC;
+    text-align: center;
+    padding: 15px;
 }
 
 /* Tags */
@@ -42,5 +66,3 @@ a:hover {
     color: #8B008B;
     background-color: #F5F5F5;
 }
-
-/* Classes */
