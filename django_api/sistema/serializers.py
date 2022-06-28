@@ -17,5 +17,4 @@ class PostagemSerializer(serializers.ModelSerializer):
 class PostagemArmazenadaSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.PostagemArmazenada
-        fields = ['titulo','texto','post_date','fkusuario',
-                    'tag']
+        fields = ['titulo','texto','post_date','fkusuario']

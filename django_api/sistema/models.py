@@ -61,11 +61,8 @@ class PostagemArmazenada(models.Model):
     texto = models.CharField(max_length=10000)
     post_date = models.DateTimeField(null=True, blank=True)
     fkusuario = models.ForeignKey(Professor,on_delete=models.CASCADE)
-    tag_choice = (
-        ("TG1", "Normal"),
-        ("TG2", "Extra"),
-    )
-    tag = models.CharField(choices=tag_choice, max_length=10, default="TG1") #marcador que pode ser de dois tipos: tarefa diária ou tarefa extra
+    
+    # tag = models.CharField(choices=tag_choice, max_length=10, default="TG1") #marcador que pode ser de dois tipos: tarefa diária ou tarefa extra
     programada = models.BooleanField()
 
 class Comentario(models.Model):
