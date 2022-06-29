@@ -22,6 +22,8 @@ from sistema import views
 router = routers.DefaultRouter()
 router.register(r'postagem', views.PostagemViewSet)
 router.register(r'postagem_armazenada', views.PostagemArmazenadaViewSet)
+router.register(r'tarefa', views.TarefaViewSet)
+router.register(r'comentario', views.ComentarioViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

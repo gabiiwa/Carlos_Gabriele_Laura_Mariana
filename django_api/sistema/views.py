@@ -28,6 +28,16 @@ class PostagemViewSet(viewsets.ModelViewSet):
              #atualizando a pontuação
              estudante_obj.pontuacao += 15
              estudante_obj.save()
+
+             data_atual = datetime.date.today()
+             tarefa_check = models.Tarefa.objects.filter(fkestudante = estudante_id, dataHora = data_atual, tipo = 'DC3')
+             if tarefa_check.exists():
+                tarefa_obj = models.Tarefa.objects.get(fkestudante = estudante_id, dataHora = data_atual, tipo = 'DC3')
+                if tarefa_obj.cumprida == 0:
+                    tarefa_obj.cumprida = 1
+                    tarefa_obj.save()
+                    estudante_obj.pontuacao += 5 # estudante ganha 5 pontos por cumprir a tarefa
+                    estudante_obj.save()
              #loop pra procurar tarefas do tipo postagem
             #  lista
              return Response(serializer.data)
@@ -58,10 +68,51 @@ class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
         print("\nEsta sendo mandado:{}\n".format(data_send))
         return Response(serializer.data)
 class TarefaViewSet(viewsets.ModelViewSet):
-    queryset = models.PostagemArmazenada.objects.all().order_by('post_date')
-    serializer_class = serializers.PostagemArmazenadaSerializer
+    queryset = models.Tarefa.objects.all().order_by('dataHora')
+    serializer_class = serializers.TarefaSerializer
+    #post
+    def create(self, request):
+        serializer = serializers.TarefaSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            #salva os dados no banco
+             serializer.save()
+             #pega os dados que foram enviados pela requisição post
+             data = request.data      
 
+            #  lista
+             return Response(serializer.data)
 
+class ComentarioViewSet(viewsets.ModelViewSet):
+    queryset = models.Comentario.objects.all().order_by('dataHora')
+    serializer_class = serializers.ComentarioSerializer
+    #post
+    def create(self, request):
+        serializer = serializers.ComentarioSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            #salva os dados no banco
+             serializer.save()
+             #pega os dados que foram enviados pela requisição post
+             data = request.data
+             #pega o id correspondente à estudante que fez o post para poder acessar a pontuação
+             estudante_id = data.get("fkestudante")
+             estudante_obj = models.Estudante.objects.get(id=estudante_id)
+             #atualizando a pontuação
+             estudante_obj.pontuacao += 10
+             estudante_obj.save()
+
+             data_atual = datetime.date.today()
+             tarefa_check = models.Tarefa.objects.filter(fkestudante = estudante_id, dataHora = data_atual, tipo = 'DC2')
+             
+             if tarefa_check.exists():
+                tarefa_obj = models.Tarefa.objects.get(fkestudante = estudante_id, dataHora = data_atual, tipo = 'DC2')
+                if tarefa_obj.cumprida == 0:
+                    tarefa_obj.cumprida = 1
+                    tarefa_obj.save()
+                    estudante_obj.pontuacao += 5 # estudante ganha 5 pontos por cumprir a tarefa
+                    estudante_obj.save()      
+
+            #  lista
+             return Response(serializer.data) 
 
 #############Páginas que dependem de dados do banco###################
 def home(request):
