@@ -51,13 +51,13 @@ class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
             data = request.data
             postArm = models.PostagemArmazenada.objects.get(id=data.get("id"))
             print('\n data de postagem:{}\n'.format(data.get("post_date")))
-            # if data.get("post_date") == "":
-            #    postArm.post_date = datetime.datetime.now()
-            #    postArm.programada = 1
-            #    postArm.save()
-            # else:
-            #     postArm.programada = 0
-            #     postArm.save() 
+            if data.get("post_date") == "":
+               postArm.post_date = datetime.datetime.now()
+               postArm.programada = 1
+               postArm.save()
+            else:
+                postArm.programada = 0
+                postArm.save() 
             return Response(serializer.data)
     def list(self, request):
         #só postar se não for programada
