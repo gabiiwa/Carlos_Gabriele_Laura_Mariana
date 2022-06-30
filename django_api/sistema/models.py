@@ -24,7 +24,14 @@ class Estudante(Usuario):
     pontuacao = models.IntegerField(default = 0)
 
 class Titulo(models.Model):
-    nome = models.CharField(max_length=100)
+    titulos = (
+        ("Pontuação: 0 - 840","Bonnie Prado Pinto"),
+        ("Pontuação: 841 - 1680","Angelica Ross"),
+        ("Pontuação: 1681 - 3360", "Shirley Ann Jackson"),
+        ("Pontuação: 3361 - 6720","Timnit Gebru"),
+        ("Pontuação: 7560 - oo","Marie Van Brittan Brown"),
+    )
+    nome = models.CharField(choices=titulos, max_length=100, default="Pontuação: 0 - 840")
     qtdPontos = models.IntegerField() # quantos pontos são necessários para se ter esse título
     estudante = models.ManyToManyField(Estudante, through='listaTitulo')
 
