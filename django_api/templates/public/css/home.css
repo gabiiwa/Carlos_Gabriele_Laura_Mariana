@@ -30,13 +30,12 @@ body {
 #conteudo {
     width: 660px;
     float: left;
-    background-color: #F5F5F5;
+    margin-bottom: 203px;
 }
 
 #area-lateral {
     width: 240px;
     float: right;
-    background-color: #F5F5F5;
 }
 
 #rodape {
@@ -53,6 +52,10 @@ h1 {
     font-size: 2.5em;
 }
 
+h2 {
+    color: #4B0082;
+}
+
 a {
     text-decoration: none;
 }
@@ -65,4 +68,17 @@ a:link, a:visited {
 a:hover {
     color: #8B008B;
     background-color: #F5F5F5;
+}
+
+/* Classes */
+.postagens {
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #FFFFFF;
+}
+
+.data-postagem {
+    font-size: 0.8em;
+    border-bottom: 1px solid #BA55D3;
+    display: block;
 }
