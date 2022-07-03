@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
-
+import datetime
+import django
 # Create your models here.
 class Usuario(models.Model):
     cpf = models.IntegerField()
@@ -22,6 +23,15 @@ class Professor(Usuario):
 class Estudante(Usuario):
     matricula = models.CharField(max_length=11)
     pontuacao = models.IntegerField(default = 0)
+
+"""
+Título:
+- Pontuação: 0 - 840: Bonnie Prado Pinto;
+- Pontuação: 841 - 1680: Angelica Ross;
+- Pontuação: 1681 - 3360: Shirley Ann Jackson;
+- Pontuação: 3361 - 6720: Timnit Gebru;
+- Pontuação: 7560 - oo: Marie Van Brittan Brown.
+"""
 
 class Titulo(models.Model):
     titulos = (
@@ -114,11 +124,9 @@ Postagem Armazenada:
 class PostagemArmazenada(models.Model):
     titulo = models.CharField(max_length=10000)
     texto = models.CharField(max_length=10000)
-    post_date = models.DateTimeField(null=True, blank=True)
+    dataHora = models.DateTimeField(default=django.utils.timezone.now, null=True)
     fkusuario = models.ForeignKey(Professor,on_delete=models.CASCADE)
-    
-    # tag = models.CharField(choices=tag_choice, max_length=10, default="TG1") #marcador que pode ser de dois tipos: tarefa diária ou tarefa extra
-    programada = models.BooleanField()
+   
     comentarios = GenericRelation(Comentario)    
 
 class Visualizacao(models.Model):

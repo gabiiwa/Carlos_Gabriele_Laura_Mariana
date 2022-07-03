@@ -7,6 +7,7 @@ from sistema import models
 from rest_framework.response import Response
 import requests
 import datetime
+from rest_framework import status
 
 
 
@@ -42,31 +43,41 @@ class PostagemViewSet(viewsets.ModelViewSet):
             #  lista
              return Response(serializer.data)
 class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
-    queryset = models.PostagemArmazenada.objects.all().order_by('post_date')
+    queryset = models.PostagemArmazenada.objects.all().order_by('dataHora')
     serializer_class = serializers.PostagemArmazenadaSerializer
     def create(self, request):
         serializer = serializers.PostagemArmazenadaSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
+            
+            # data_request = request.data
+            # print("\nId postagem:{}\n".format(data_request.get("id")))
+            # print("\nrequest data:{}\n".format(data_request))
+            # postArm = models.PostagemArmazenada.objects.get(id=)
+            # print('\n query:{}\n'.format(data_request))
+            # print('\n data de postagem:{}\n'.format(data_request["dataHora"]))
+            if type(serializer.validated_data["dataHora"]) == type(None):
+               serializer.validated_data["dataHora"] = datetime.datetime.now()
             serializer.save()
-            data = request.data
-            postArm = models.PostagemArmazenada.objects.get(id=data.get("id"))
-            print('\n data de postagem:{}\n'.format(data.get("post_date")))
-            if data.get("post_date") == "":
-               postArm.post_date = datetime.datetime.now()
-               postArm.programada = 1
-               postArm.save()
-            else:
-                postArm.programada = 0
-                postArm.save() 
-            return Response(serializer.data)
+        return Response(serializer.data)
     def list(self, request):
         #só postar se não for programada
         #caso contrario, precisa comparar o dia e hora 
-        queryset = models.PostagemArmazenada.objects.all().order_by('post_date')
+        queryset = models.PostagemArmazenada.objects.all().order_by('dataHora')
         serializer = serializers.PostagemArmazenadaSerializer(queryset, many=True)
         data_send = serializer.data
-        print("\nEsta sendo mandado:{}\n".format(data_send))
-        return Response(serializer.data)
+        # print("\nEsta sendo mandado:{}\n".format(data_send))
+        if data_send != []:
+            print("\nEsta sendo mandado:{}\n".format(data_send[0]['dataHora']))
+            date_post = datetime.datetime.strptime(data_send[0]['dataHora'],"%Y-%m-%dT%H:%M:%SZ")
+            now = datetime.datetime.now()
+            if date_post.date()<= now.date():
+                if date_post.time()<=now.time():
+                    return Response(serializer.data,status=status.HTTP_200_OK)
+                else:
+                    return Response([],status=status.HTTP_200_OK)
+                
+        else:
+            return Response(serializer.data)
 class TarefaViewSet(viewsets.ModelViewSet):
     queryset = models.Tarefa.objects.all().order_by('dataHora')
     serializer_class = serializers.TarefaSerializer
