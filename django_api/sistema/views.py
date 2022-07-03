@@ -1,15 +1,14 @@
 # from asyncio.windows_events import NULL
 from django.shortcuts import render
 
-from rest_framework import viewsets
+from rest_framework import viewsets,status
 from sistema import serializers
 from sistema import models
 from rest_framework.response import Response
 import requests
 import datetime
-from rest_framework import status
 
-
+import django
 
 class PostagemViewSet(viewsets.ModelViewSet):
     queryset = models.Postagem.objects.all().order_by('dataHora')
@@ -56,7 +55,7 @@ class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
             # print('\n query:{}\n'.format(data_request))
             # print('\n data de postagem:{}\n'.format(data_request["dataHora"]))
             if type(serializer.validated_data["dataHora"]) == type(None):
-               serializer.validated_data["dataHora"] = datetime.datetime.now()
+               serializer.validated_data["dataHora"] = django.utils.timezone.now()
             serializer.save()
         return Response(serializer.data)
     def list(self, request):
@@ -65,17 +64,27 @@ class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
         queryset = models.PostagemArmazenada.objects.all().order_by('dataHora')
         serializer = serializers.PostagemArmazenadaSerializer(queryset, many=True)
         data_send = serializer.data
-        # print("\nEsta sendo mandado:{}\n".format(data_send))
+        return_valid =[]
         if data_send != []:
-            print("\nEsta sendo mandado:{}\n".format(data_send[0]['dataHora']))
-            date_post = datetime.datetime.strptime(data_send[0]['dataHora'],"%Y-%m-%dT%H:%M:%SZ")
-            now = datetime.datetime.now()
-            if date_post.date()<= now.date():
-                if date_post.time()<=now.time():
-                    return Response(serializer.data,status=status.HTTP_200_OK)
-                else:
-                    return Response([],status=status.HTTP_200_OK)
-                
+            for obj_serializer in range(len(data_send)):
+                date = data_send[obj_serializer]['dataHora'][:-6]
+                print("\nrequest:{}\n".format(data_send))
+                print("\nEsta sendo mandado:{}\n".format(date))
+                # print("\nEsta sendo mandado:{}\n".format(data_send[0]['dataHora']))
+                date_post = datetime.datetime.strptime(date,"%Y-%m-%dT%H:%M:%S")
+                now = datetime.datetime.now()
+                print("\nnow:{}\n".format(now))
+                if date_post.date() <= now.date():
+                    print("\ndate_post:{} e now:{}\n".format(date_post.date(),now.date()))
+                    if date_post.time() <= now.time():
+                        print("\ndate_post time:{} e now time:{}\n".format(date_post.time(),now.time()))
+                        return_valid.append(data_send[obj_serializer])
+                #             return Response(serializer.data,status=status.HTTP_200_OK)
+                #         else:
+                #             return Response([],status=status.HTTP_200_OK)
+                #     else:
+                #         return Response([])  
+            return Response(return_valid,status=status.HTTP_200_OK)
         else:
             return Response(serializer.data)
 class TarefaViewSet(viewsets.ModelViewSet):

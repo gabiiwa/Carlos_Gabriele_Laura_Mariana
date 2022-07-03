@@ -81,9 +81,6 @@ class Tarefa(models.Model):
     class Meta:
         unique_together = ('tipo', 'dataHora')
 
-class Notificacao(models.Model):
-    descricao = models.CharField(max_length=100)
-    dataHora = models.DateTimeField(auto_now_add = True)
 
 """
 Comentario:

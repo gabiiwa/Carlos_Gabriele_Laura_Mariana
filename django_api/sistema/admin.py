@@ -7,7 +7,6 @@ from .models import PostagemArmazenada
 from .models import Titulo
 from .models import listaTitulo
 from .models import Tarefa
-from .models import Notificacao
 from .models import Comentario
 
 class EstudanteAdmin(admin.ModelAdmin):
@@ -23,5 +22,4 @@ admin.site.register(PostagemArmazenada)
 admin.site.register(Titulo)
 admin.site.register(listaTitulo)
 admin.site.register(Tarefa)
-admin.site.register(Notificacao)
 admin.site.register(Comentario)
