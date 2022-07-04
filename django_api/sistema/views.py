@@ -47,43 +47,31 @@ class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
     def create(self, request):
         serializer = serializers.PostagemArmazenadaSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            
-            # data_request = request.data
-            # print("\nId postagem:{}\n".format(data_request.get("id")))
-            # print("\nrequest data:{}\n".format(data_request))
-            # postArm = models.PostagemArmazenada.objects.get(id=)
-            # print('\n query:{}\n'.format(data_request))
-            # print('\n data de postagem:{}\n'.format(data_request["dataHora"]))
+            #caso não seje informado a data e o horário que se deseja fazer a postagem, insere a data e horário presente
             if type(serializer.validated_data["dataHora"]) == type(None):
                serializer.validated_data["dataHora"] = django.utils.timezone.now()
             serializer.save()
         return Response(serializer.data)
     def list(self, request):
-        #só postar se não for programada
-        #caso contrario, precisa comparar o dia e hora 
+        #precisa comparar o dia e hora 
         queryset = models.PostagemArmazenada.objects.all().order_by('dataHora')
         serializer = serializers.PostagemArmazenadaSerializer(queryset, many=True)
         data_send = serializer.data
+        #guarda as postagens que a data de postagem for menor que a data atual
         return_valid =[]
+        #caso não tenha postagem feita ainda, o serializer estará vazio
         if data_send != []:
+            #itera em todas postagens no banco
             for obj_serializer in range(len(data_send)):
                 date = data_send[obj_serializer]['dataHora'][:-6]
-                print("\nrequest:{}\n".format(data_send))
-                print("\nEsta sendo mandado:{}\n".format(date))
-                # print("\nEsta sendo mandado:{}\n".format(data_send[0]['dataHora']))
+                #transforma a data de str para o formato datetime
                 date_post = datetime.datetime.strptime(date,"%Y-%m-%dT%H:%M:%S")
+                #pega a data e o horário atual
                 now = datetime.datetime.now()
-                print("\nnow:{}\n".format(now))
+                #se a data e o horário programado de postagem já chegou, este é guardado pro return
                 if date_post.date() <= now.date():
-                    print("\ndate_post:{} e now:{}\n".format(date_post.date(),now.date()))
                     if date_post.time() <= now.time():
-                        print("\ndate_post time:{} e now time:{}\n".format(date_post.time(),now.time()))
                         return_valid.append(data_send[obj_serializer])
-                #             return Response(serializer.data,status=status.HTTP_200_OK)
-                #         else:
-                #             return Response([],status=status.HTTP_200_OK)
-                #     else:
-                #         return Response([])  
             return Response(return_valid,status=status.HTTP_200_OK)
         else:
             return Response(serializer.data)
