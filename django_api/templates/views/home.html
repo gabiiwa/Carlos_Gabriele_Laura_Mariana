@@ -1,4 +1,61 @@
-{% for post in data %}
-    <h1>{{ post.titulo }}</h1>
-    <p>{{ post.texto }}</p>
-{% endfor %}
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+    <head>
+        <title>Mulheres na Computação</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../public/css/home.css">
+
+	<!-- bootstrap core css -->
+ 	<link rel="stylesheet" type="text/css" href="../public/css/bootstrap.css" />
+
+  	<!-- responsive style -->
+  	<link href="../public/css/responsive.css" rel="stylesheet" />
+	
+	<!-- Custom styles for this template -->
+	<link href="../public/css/style.css" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div id="cabecalho">
+            <div id="logo">
+                <h1>Mulheres na Computação</h1>
+            </div>
+
+            <div id="menu">
+                <a href="home.html">Home</a>
+                <a href="titulos.html">Títulos</a>
+                <a href="tutorial.html">Tutorial</a>
+                <a href="contato.html">Contato</a>
+		        <a href="sobre.html">Sobre</a>
+                <a href="politicas.html">Políticas</a>
+                <a href="login.html">Sair</a>
+            </div>
+
+        </div>
+
+        <div id="main">
+            <div id="conteudo">
+                <!-- Abertura postagens -->
+                <div class="postagens">
+                    <h2>Título da Postagem</h2>
+                    <span class="data-postagem">Postado em 28 de Junho de 2022</span>
+                    <p>
+                        Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. 
+                    </p>
+                    <a href="">Leia mais</a>
+                </div>
+                <!-- Fechamento da postagens -->
+            </div>
+
+            <div id="area-lateral">
+                area lateral
+            </div>
+
+            <div id="rodape">
+                Todos os direitos reservados
+            </div>
+        </div>
+    </body>
+</html>

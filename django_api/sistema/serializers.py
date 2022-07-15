@@ -17,5 +17,16 @@ class PostagemSerializer(serializers.ModelSerializer):
 class PostagemArmazenadaSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.PostagemArmazenada
-        fields = ['titulo','texto','post_date','fkusuario',
-                    'tag']
+        fields = ['titulo','texto','dataHora','fkusuario']
+    
+#tabela de serialização de tarefa
+class TarefaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Tarefa
+        fields = ['tipo', 'fkestudante']
+
+#tabela de serialização de comentário
+class ComentarioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Comentario
+        fields = ['texto','fkestudante', 'content_type', 'object_id']          
