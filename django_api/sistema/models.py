@@ -109,7 +109,8 @@ class Postagem(models.Model):
     titulo = models.CharField(max_length=10000)
     texto = models.CharField(max_length=10000)
     fkusuario = models.ForeignKey(Estudante,on_delete=models.CASCADE)
-    dataHora = models.DateTimeField(auto_now_add = True, null=True)
+    # dataHora = models.DateTimeField(auto_now_add = True, null=True, default=django.utils.timezone.now)
+    dataHora = models.DateTimeField(null=True, default=django.utils.timezone.now)
     qtdPontos = models.IntegerField(default=15)
     comentarios = GenericRelation(Comentario)
 
