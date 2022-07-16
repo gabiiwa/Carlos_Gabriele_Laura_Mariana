@@ -156,11 +156,11 @@ def home(request):
     return render(request, 'home.html', {'data': data})
 
 def login(request):
-    response = requests.get('http://127.0.0.1:8000/router/postagem/')
-    data = response.json()
-    estudantes = [models.Estudante.objects.get(id=dict_est['fkusuario']).nome for dict_est in data ]
-    #inserindo qual foi a estudante que realizoua postagem
-    for post,i in zip(data,range(len(estudantes))):
-        post['nome']=estudantes[i]
-    return render(request, 'home.html', {'data': data})
+    # response = requests.get('')
+    # data = response.json()
+    # estudantes = [models.Estudante.objects.get(id=dict_est['fkusuario']).nome for dict_est in data ]
+    # #inserindo qual foi a estudante que realizoua postagem
+    # for post,i in zip(data,range(len(estudantes))):
+    #     post['nome']=estudantes[i]
+    return render(request,'login.html')
 
