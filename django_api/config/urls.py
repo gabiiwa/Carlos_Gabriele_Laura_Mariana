@@ -26,7 +26,10 @@ router.register(r'tarefa', views.TarefaViewSet)
 router.register(r'comentario', views.ComentarioViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', views.login),
+    path('router/', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('home/', views.home, name='home'),
+    path('home/', views.home),
+    # path('home/', views.home, name='home'),
+    
 ]
