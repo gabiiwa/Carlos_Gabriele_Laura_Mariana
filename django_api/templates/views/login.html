@@ -31,7 +31,7 @@
                 <div class="container layout_padding2-top">
                     <div class="row">
                         <div class="col-md-6 mx-auto">
-                            <form action="router/login/" method="post">
+                            <form action="/router/login/" method="post">
                                 {% csrf_token %}
                                 <div>
                                     <input id="cpf" name="cpf" type="number" placeholder="CPF">
@@ -40,14 +40,24 @@
                                 <div>
                                     <input id="senha" name="senha" type="password" placeholder="Senha">
                                 </div>
-
                                 <div class="d-flex justify-content-center ">
                                     <button type="submit">
                                         <a href="home">Entrar</a>
-                                        <!-- Entrar -->
                                     </button>
                                 </div>
-
+                                <!-- {% if verifica %}
+                                <div class="d-flex justify-content-center ">
+                                    <button type="submit">
+                                        <a href="home">Entrar</a>
+                                    </button>
+                                </div>
+                                {% else %}
+                                <div>
+                                    <button type="submit">
+                                        Entrar
+                                    </button>
+                                </div>
+                                {% endif %} -->
                             </form>
                         </div>
                     </div>

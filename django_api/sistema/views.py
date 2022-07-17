@@ -11,9 +11,10 @@ import requests
 import datetime
 from django.http import JsonResponse
 import django
+import json
 
-global usuario_id
 
+# """"""Views"""""""
 class PostagemViewSet(viewsets.ModelViewSet):
     queryset = models.Postagem.objects.all().order_by('dataHora')
     serializer_class = serializers.PostagemSerializer
@@ -131,18 +132,33 @@ class ComentarioViewSet(viewsets.ModelViewSet):
 class LoginViewSet(viewsets.ModelViewSet):
     queryset = models.Login.objects.all()
     serializer_class = serializers.LoginSerializer
+    
     def create(self,request):
+        print("\nEstudante e professora\n")
         serializer = serializers.LoginSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            # if models.Usuario.(serializer.validated_data["cpf"])
-            if serializer.validated_data["cpf"] in models.Estudante.objects.values_list('cpf', flat=True).distinct():
-                serializer.save()
-                global usuario_id
-                usuario_id = models.Estudante.objects.get(cpf = serializer.validated_data["cpf"])
-                home(request)
-                return Response(serializer.data)
-            else:
-                return JsonResponse({'erro':'cpf inválido'})
+            if type(serializer.validated_data) != type(None):
+                estudante = models.Estudante.objects.filter(cpf = serializer.validated_data["cpf"])
+                professora = models.Professor.objects.filter(cpf = serializer.validated_data["cpf"])
+                print("\nEstudante e professora\n")
+                if estudante.exists() or professora.exists():
+                    serializer.validated_data["eh_usuario"] = True
+                    serializer.validated_data["dataHora"] = django.utils.timezone.now()
+                    serializer.save()
+                    home(request)
+                    return Response(serializer.data)
+                else:
+                    serializer.validated_data["eh_usuario"] = False
+                    serializer.validated_data["dataHora"] = django.utils.timezone.now()
+                    serializer.save()
+                    return JsonResponse({'erro':'cpf invalido'})
+            # else:
+            #     return Response(serializer.data)
+
+    # def usuarioId(self):
+    #     return usuario_id
+    # def verificaId(self):
+    #     return eh_usuario
 
 #############Páginas que dependem de dados do banco###################
 def home(request):
@@ -172,7 +188,20 @@ def home(request):
 
 @csrf_protect 
 def login(request):
-    c = {}
+    c={'verifica':False,'id_user':0}
+    response = requests.get('http://127.0.0.1:8000/router/login/')
+    # ultimo_user = models.Login.objects.get_latest_by("dataHora")
+    # print("\nUltimo user:{}\n".format(ultimo_user))
+    # eh_usuario = ultimo_user.eh_usuario
+    # usuario_id = ultimo_user.usuario_id
+    data = response.json()
+    print("\ndata:{}\n".format(data))
+    if data!=[]:
+        ultimo_user = data[-1]
+        eh_usuario = ultimo_user["eh_usuario"]
+        usuario_id = ultimo_user["cpf"]
+        c = {'verifica':eh_usuario,'id_user':usuario_id}
+    # print("\nValor passa:{} e usuario id:{}\n".format(eh_usuario,usuario_id))
     return render(request,'login.html',c)
 
 def teste(evento):
