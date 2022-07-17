@@ -1,15 +1,20 @@
 # from asyncio.windows_events import NULL
+from urllib import response
 from django.shortcuts import render
-
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_protect
 from rest_framework import viewsets,status
 from sistema import serializers
 from sistema import models
 from rest_framework.response import Response
 import requests
 import datetime
-
+from django.http import JsonResponse
 import django
+import json
 
+
+# """"""Views"""""""
 class PostagemViewSet(viewsets.ModelViewSet):
     queryset = models.Postagem.objects.all().order_by('dataHora')
     serializer_class = serializers.PostagemSerializer
@@ -122,45 +127,83 @@ class ComentarioViewSet(viewsets.ModelViewSet):
                     estudante_obj.save()      
 
             #  lista
-             return Response(serializer.data) 
+             return Response(serializer.data)
+
+class LoginViewSet(viewsets.ModelViewSet):
+    queryset = models.Login.objects.all()
+    serializer_class = serializers.LoginSerializer
+    
+    def create(self,request):
+        print("\nEstudante e professora\n")
+        serializer = serializers.LoginSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            if type(serializer.validated_data) != type(None):
+                estudante = models.Estudante.objects.filter(cpf = serializer.validated_data["cpf"])
+                professora = models.Professor.objects.filter(cpf = serializer.validated_data["cpf"])
+                print("\nEstudante e professora\n")
+                if estudante.exists() or professora.exists():
+                    serializer.validated_data["eh_usuario"] = True
+                    serializer.validated_data["dataHora"] = django.utils.timezone.now()
+                    serializer.save()
+                    home(request)
+                    return Response(serializer.data)
+                else:
+                    serializer.validated_data["eh_usuario"] = False
+                    serializer.validated_data["dataHora"] = django.utils.timezone.now()
+                    serializer.save()
+                    return JsonResponse({'erro':'cpf invalido'})
+            # else:
+            #     return Response(serializer.data)
+
+    # def usuarioId(self):
+    #     return usuario_id
+    # def verificaId(self):
+    #     return eh_usuario
 
 #############Páginas que dependem de dados do banco###################
 def home(request):
     response_aluna = requests.get('http://127.0.0.1:8000/router/postagem/')
     response_prof = requests.get('http://127.0.0.1:8000/router/postagem_armazenada/')
+
     data_aluna = response_aluna.json()
-    print('\n data_prof:{}\n'.format(response_aluna))
     data_prof = response_prof.json()
     
     estudantes = [models.Estudante.objects.get(id=dict_est['fkusuario']).nome for dict_est in data_aluna ]
     professora = [models.Professor.objects.get(id=dict_est['fkusuario']).nome for dict_est in data_prof ]
     
-    print('\n professora:{}\n'.format(professora))
    #inserindo qual foi a estudante que realizoua postagem
     for post,i in zip(data_aluna,range(len(estudantes))):
         post['nome']=estudantes[i]
-        print("\n post:{}\n ".format(post))
         date = models.Postagem.objects.get(id=post['fkusuario']).dataHora
         #transforma a data de str para o formato datetime
-        # date_post = datetime.datetime.strptime(date,"%Y-%m-%dT%H:%M:%S")
         post['dataHora']=date
     data = data_aluna
     for post,i in zip(data_prof,range(len(professora))):
         post['nome']=professora[i]
         date = models.PostagemArmazenada.objects.get(id=post['fkusuario']).dataHora
         #transforma a data de str para o formato datetime
-        # date_post = datetime.datetime.strptime(date,"%Y-%m-%dT%H:%M:%S")
         post['dataHora']=date
     data = data + data_prof
-    print('\n data com professoras:{}\n'.format(data))
     return render(request, 'home.html', {'data': data})
 
+@csrf_protect 
 def login(request):
-    response = requests.get('http://127.0.0.1:8000/router/postagem/')
+    c={'verifica':False,'id_user':0}
+    response = requests.get('http://127.0.0.1:8000/router/login/')
+    # ultimo_user = models.Login.objects.get_latest_by("dataHora")
+    # print("\nUltimo user:{}\n".format(ultimo_user))
+    # eh_usuario = ultimo_user.eh_usuario
+    # usuario_id = ultimo_user.usuario_id
     data = response.json()
-    estudantes = [models.Estudante.objects.get(id=dict_est['fkusuario']).nome for dict_est in data ]
-    #inserindo qual foi a estudante que realizoua postagem
-    for post,i in zip(data,range(len(estudantes))):
-        post['nome']=estudantes[i]
-    return render(request, 'home.html', {'data': data})
+    print("\ndata:{}\n".format(data))
+    if data!=[]:
+        ultimo_user = data[-1]
+        eh_usuario = ultimo_user["eh_usuario"]
+        usuario_id = ultimo_user["cpf"]
+        c = {'verifica':eh_usuario,'id_user':usuario_id}
+    # print("\nValor passa:{} e usuario id:{}\n".format(eh_usuario,usuario_id))
+    return render(request,'login.html',c)
+
+def teste(evento):
+    print("\n evento:{} \n".format(evento))
 

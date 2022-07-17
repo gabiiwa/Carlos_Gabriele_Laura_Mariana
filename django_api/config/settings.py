@@ -30,8 +30,9 @@ ALLOWED_HOSTS = []
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'templates/static'),
 ]
-# Application definition
+APPEND_SLASH=False
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -70,6 +71,8 @@ TEMPLATES = [
         },
     },
 ]
+
+
 
 WSGI_APPLICATION = 'config.wsgi.application'
 

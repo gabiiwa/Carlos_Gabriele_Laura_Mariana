@@ -24,12 +24,13 @@ router.register(r'postagem', views.PostagemViewSet)
 router.register(r'postagem_armazenada', views.PostagemArmazenadaViewSet)
 router.register(r'tarefa', views.TarefaViewSet)
 router.register(r'comentario', views.ComentarioViewSet)
+router.register(r'login', views.LoginViewSet)
 
 urlpatterns = [
-    path('', views.login),
+    path('', views.login, name='login'),
     path('router/', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('home/', views.home),
+    path('home/', views.home, name='home'),
     # path('home/', views.home, name='home'),
     
 ]
