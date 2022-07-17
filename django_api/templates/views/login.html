@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 
 <html lang="pt-br">
@@ -30,18 +31,20 @@
                 <div class="container layout_padding2-top">
                     <div class="row">
                         <div class="col-md-6 mx-auto">
-                            <form action="">
+                            <form action="router/login/" method="post">
+                                {% csrf_token %}
                                 <div>
-                                    <input type="number" placeholder="CPF">
+                                    <input id="cpf" name="cpf" type="number" placeholder="CPF">
                                 </div>
 
                                 <div>
-                                    <input type="text" placeholder="Senha">
+                                    <input id="senha" name="senha" type="password" placeholder="Senha">
                                 </div>
 
                                 <div class="d-flex justify-content-center ">
-                                    <button>
-                                        <a href="home.html">Entrar</a>
+                                    <button type="submit">
+                                        <a href="home">Entrar</a>
+                                        <!-- Entrar -->
                                     </button>
                                 </div>
 

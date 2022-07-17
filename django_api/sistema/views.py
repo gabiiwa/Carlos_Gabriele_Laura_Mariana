@@ -1,14 +1,18 @@
 # from asyncio.windows_events import NULL
+from urllib import response
 from django.shortcuts import render
-
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_protect
 from rest_framework import viewsets,status
 from sistema import serializers
 from sistema import models
 from rest_framework.response import Response
 import requests
 import datetime
-
+from django.http import JsonResponse
 import django
+
+global usuario_id
 
 class PostagemViewSet(viewsets.ModelViewSet):
     queryset = models.Postagem.objects.all().order_by('dataHora')
@@ -122,45 +126,55 @@ class ComentarioViewSet(viewsets.ModelViewSet):
                     estudante_obj.save()      
 
             #  lista
-             return Response(serializer.data) 
+             return Response(serializer.data)
+
+class LoginViewSet(viewsets.ModelViewSet):
+    queryset = models.Login.objects.all()
+    serializer_class = serializers.LoginSerializer
+    def create(self,request):
+        serializer = serializers.LoginSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            # if models.Usuario.(serializer.validated_data["cpf"])
+            if serializer.validated_data["cpf"] in models.Estudante.objects.values_list('cpf', flat=True).distinct():
+                serializer.save()
+                global usuario_id
+                usuario_id = models.Estudante.objects.get(cpf = serializer.validated_data["cpf"])
+                home(request)
+                return Response(serializer.data)
+            else:
+                return JsonResponse({'erro':'cpf inválido'})
 
 #############Páginas que dependem de dados do banco###################
 def home(request):
     response_aluna = requests.get('http://127.0.0.1:8000/router/postagem/')
     response_prof = requests.get('http://127.0.0.1:8000/router/postagem_armazenada/')
+
     data_aluna = response_aluna.json()
-    print('\n data_prof:{}\n'.format(response_aluna))
     data_prof = response_prof.json()
     
     estudantes = [models.Estudante.objects.get(id=dict_est['fkusuario']).nome for dict_est in data_aluna ]
     professora = [models.Professor.objects.get(id=dict_est['fkusuario']).nome for dict_est in data_prof ]
     
-    print('\n professora:{}\n'.format(professora))
    #inserindo qual foi a estudante que realizoua postagem
     for post,i in zip(data_aluna,range(len(estudantes))):
         post['nome']=estudantes[i]
-        print("\n post:{}\n ".format(post))
         date = models.Postagem.objects.get(id=post['fkusuario']).dataHora
         #transforma a data de str para o formato datetime
-        # date_post = datetime.datetime.strptime(date,"%Y-%m-%dT%H:%M:%S")
         post['dataHora']=date
     data = data_aluna
     for post,i in zip(data_prof,range(len(professora))):
         post['nome']=professora[i]
         date = models.PostagemArmazenada.objects.get(id=post['fkusuario']).dataHora
         #transforma a data de str para o formato datetime
-        # date_post = datetime.datetime.strptime(date,"%Y-%m-%dT%H:%M:%S")
         post['dataHora']=date
     data = data + data_prof
-    print('\n data com professoras:{}\n'.format(data))
     return render(request, 'home.html', {'data': data})
 
+@csrf_protect 
 def login(request):
-    # response = requests.get('')
-    # data = response.json()
-    # estudantes = [models.Estudante.objects.get(id=dict_est['fkusuario']).nome for dict_est in data ]
-    # #inserindo qual foi a estudante que realizoua postagem
-    # for post,i in zip(data,range(len(estudantes))):
-    #     post['nome']=estudantes[i]
-    return render(request,'login.html')
+    c = {}
+    return render(request,'login.html',c)
+
+def teste(evento):
+    print("\n evento:{} \n".format(evento))
 

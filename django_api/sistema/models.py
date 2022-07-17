@@ -133,4 +133,8 @@ class Visualizacao(models.Model):
     qtdPontos = models.IntegerField()
     fkpostagem = models.ForeignKey(Postagem,on_delete=models.CASCADE, blank=True, null=True)
     fkprogramada = models.ForeignKey(PostagemArmazenada,on_delete=models.CASCADE, blank=True, null=True)  
+
+class Login(models.Model):
+    senha = models.IntegerField()
+    cpf =  models.IntegerField()
     

@@ -30,3 +30,8 @@ class ComentarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Comentario
         fields = ['texto','fkestudante', 'content_type', 'object_id']          
+
+class LoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Login
+        fields = "__all__"
