@@ -29,9 +29,15 @@ class TarefaSerializer(serializers.ModelSerializer):
 class ComentarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Comentario
-        fields = ['texto','fkestudante', 'content_type', 'object_id']          
+        fields = ['texto','fkestudante', 'content_type', 'object_id']        
 
+# valida dados do login, me permitindo ver qual é o usuário atual
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Login
+        fields = "__all__"
+# A tabela de visulização me permitirá pontuar por visulização
+class VisualizacaoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Visualizacao
         fields = "__all__"

@@ -126,6 +126,11 @@ class PostagemArmazenada(models.Model):
    
     comentarios = GenericRelation(Comentario)    
 
+"""
+Visualização:
+- Permite que as alunas vejam a postagem inteira e ganhem pontos por elas;
+- Valor de pontos ganhos: 5;
+"""
 class Visualizacao(models.Model):
     foiVisualizado = models.BooleanField(default=False)
     ehPontoExtra = models.BooleanField(default=False)

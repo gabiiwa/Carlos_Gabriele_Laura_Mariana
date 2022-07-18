@@ -134,13 +134,11 @@ class LoginViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.LoginSerializer
     
     def create(self,request):
-        print("\nEstudante e professora\n")
         serializer = serializers.LoginSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             if type(serializer.validated_data) != type(None):
                 estudante = models.Estudante.objects.filter(cpf = serializer.validated_data["cpf"])
                 professora = models.Professor.objects.filter(cpf = serializer.validated_data["cpf"])
-                print("\nEstudante e professora\n")
                 if estudante.exists() or professora.exists():
                     serializer.validated_data["eh_usuario"] = True
                     serializer.validated_data["dataHora"] = django.utils.timezone.now()
@@ -152,13 +150,24 @@ class LoginViewSet(viewsets.ModelViewSet):
                     serializer.validated_data["dataHora"] = django.utils.timezone.now()
                     serializer.save()
                     return JsonResponse({'erro':'cpf invalido'})
-            # else:
-            #     return Response(serializer.data)
 
-    # def usuarioId(self):
-    #     return usuario_id
-    # def verificaId(self):
-    #     return eh_usuario
+class EstudanteViewSet(viewsets.ModelViewSet):
+    queryset = models.Login.objects.all()
+    serializer_class = serializers.LoginSerializer
+    def ranking(self,request):
+        #ordenar os alunos por ponto
+        #retorna uma lista de alunos
+        return
+    
+  
+class VisualizacaoViewSet(viewsets.ModelViewSet):
+    # foiVisualizado = models.BooleanField(default=False)
+    # ehPontoExtra = models.BooleanField(default=False)
+    # qtdPontos = models.IntegerField()
+    # fkpostagem = models.ForeignKey(Postagem,on_delete=models.CASCADE, blank=True, null=True)
+    # fkprogramada = models.ForeignKey(PostagemArmazenada,on_delete=models.CASCADE, blank=True, null=True) 
+    queryset = models.Visualizacao.objects.all()
+    serializer_class = serializers.VisualizacaoSerializer
 
 #############Páginas que dependem de dados do banco###################
 def home(request):
@@ -190,20 +199,15 @@ def home(request):
 def login(request):
     c={'verifica':False,'id_user':0}
     response = requests.get('http://127.0.0.1:8000/router/login/')
-    # ultimo_user = models.Login.objects.get_latest_by("dataHora")
-    # print("\nUltimo user:{}\n".format(ultimo_user))
-    # eh_usuario = ultimo_user.eh_usuario
-    # usuario_id = ultimo_user.usuario_id
+    
     data = response.json()
-    print("\ndata:{}\n".format(data))
+   
     if data!=[]:
         ultimo_user = data[-1]
         eh_usuario = ultimo_user["eh_usuario"]
         usuario_id = ultimo_user["cpf"]
         c = {'verifica':eh_usuario,'id_user':usuario_id}
-    # print("\nValor passa:{} e usuario id:{}\n".format(eh_usuario,usuario_id))
+    
     return render(request,'login.html',c)
 
-def teste(evento):
-    print("\n evento:{} \n".format(evento))
 
