@@ -42,7 +42,7 @@
                                 </div>
                                 
                                 <div class="d-flex justify-content-center ">
-                                    <button type="submit">
+                                    <button type="submit" onclick="erro()">
                                         <!-- <a href="">Entrar</a> -->
                                         Entrar
                                     </button>
@@ -62,9 +62,16 @@
                                 {% endif %} -->
                             </form>
                             {% if is_erro %}
-                                <div>
-                                    <p>OI {{erro_message}}</p>
-                                </div>
+                                <script>
+                                    function erro(message="{{erro_message}}"){
+                                        if("{{is_erro}}" == true){
+                                            alert(message);
+                                        }
+                                    }
+                                </script>
+                                <!-- <div>
+                                    {{erro_message}}
+                                </div> -->
                             {% endif %}
                         </div>
                     </div>
