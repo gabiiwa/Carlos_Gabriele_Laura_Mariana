@@ -41,12 +41,23 @@
                                     <input id="senha" name="senha" type="password" placeholder="Senha">
                                 </div>
                                 
+                                {% if is_erro %}
+                                <script>
+                                    function erro_login(){
+                                        if("{{is_erro}}" == true){
+                                            alert("{{erro_message}}");
+                                        }
+                                    }
+                                </script>
+                                {% endif %}
+
                                 <div class="d-flex justify-content-center ">
-                                    <button type="submit" onclick="erro()">
+                                    <button type="submit" onclick="erro_login()">
                                         <!-- <a href="">Entrar</a> -->
                                         Entrar
                                     </button>
                                 </div>
+                                
                                 <!-- {% if verifica %}
                                 <div class="d-flex justify-content-center ">
                                     <button type="submit">
@@ -61,18 +72,7 @@
                                 </div>
                                 {% endif %} -->
                             </form>
-                            {% if is_erro %}
-                                <script>
-                                    function erro(message="{{erro_message}}"){
-                                        if("{{is_erro}}" == true){
-                                            alert(message);
-                                        }
-                                    }
-                                </script>
-                                <!-- <div>
-                                    {{erro_message}}
-                                </div> -->
-                            {% endif %}
+                            
                         </div>
                     </div>
                 </div>
