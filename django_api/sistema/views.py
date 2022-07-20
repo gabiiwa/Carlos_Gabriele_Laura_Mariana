@@ -145,13 +145,21 @@ class LoginViewSet(viewsets.ModelViewSet):
                     serializer.validated_data["eh_usuario"] = True
                     serializer.validated_data["dataHora"] = django.utils.timezone.now()
                     serializer.save()
+<<<<<<< HEAD
                     # home(request)
+=======
+                    # redirect("home/")
+>>>>>>> Gabi
                     # return Response(serializer.data)
                     return redirect("http://127.0.0.1:8000/home/")
                 else:
                     serializer.validated_data["eh_usuario"] = False
                     serializer.validated_data["dataHora"] = django.utils.timezone.now()
                     serializer.save()
+<<<<<<< HEAD
+=======
+                    # redirect("http://127.0.0.1:8000/",{'erro':'cpf invalido'})
+>>>>>>> Gabi
                     # return JsonResponse({'erro':'cpf invalido'})
                     return redirect("http://127.0.0.1:8000/?erro=cpf_invalido")
 
@@ -203,6 +211,7 @@ def home(request):
 def login(request):
     # c={'verifica':False,'id_user':0}
     # response = requests.get('http://127.0.0.1:8000/router/login/')
+<<<<<<< HEAD
     
     # data = response.json()
    
@@ -211,6 +220,18 @@ def login(request):
     #     eh_usuario = ultimo_user["eh_usuario"]
     #     usuario_id = ultimo_user["cpf"]
     #     c = {'verifica':eh_usuario,'id_user':usuario_id}
+=======
+    # response_login = requests.get('http://127.0.0.1:8000')
+    # data = response.json()
+    # print(response_login.json())
+    # print(request.GET.get('erro',''))
+    # print(response.json())
+    
+    # eh_usuario = ultimo_user["eh_usuario"]
+    # usuario_id = ultimo_user["cpf"]
+    # c = {'verifica':eh_usuario,'id_user':usuario_id}
+    # if eh_usuario==False:
+>>>>>>> Gabi
     c = {'erro_message':request.GET.get('erro','')}
     if c['erro_message']!="":
         c['is_erro']=True
