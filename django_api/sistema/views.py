@@ -139,6 +139,8 @@ class LoginViewSet(viewsets.ModelViewSet):
             if type(serializer.validated_data) != type(None):
                 estudante = models.Estudante.objects.filter(cpf = serializer.validated_data["cpf"])
                 professora = models.Professor.objects.filter(cpf = serializer.validated_data["cpf"])
+                print("\n estudante: {} e professora: {}\n".format(estudante.exists(),professora.exists()))
+                print("\n eh_estudante: {}\n".format(estudante.exists() or professora.exists()))
                 if estudante.exists() or professora.exists():
                     serializer.validated_data["eh_usuario"] = True
                     serializer.validated_data["dataHora"] = django.utils.timezone.now()
@@ -200,18 +202,6 @@ def home(request):
 
 @csrf_protect 
 def login(request):
-    # c={'verifica':False,'id_user':0}
-    # response = requests.get('http://127.0.0.1:8000/router/login/')
-    # response_login = requests.get('http://127.0.0.1:8000')
-    # data = response.json()
-    # print(response_login.json())
-    # print(request.GET.get('erro',''))
-    # print(response.json())
-    
-    # eh_usuario = ultimo_user["eh_usuario"]
-    # usuario_id = ultimo_user["cpf"]
-    # c = {'verifica':eh_usuario,'id_user':usuario_id}
-    # if eh_usuario==False:
     c = {'erro_message':request.GET.get('erro','')}
     if c['erro_message']!="":
         c['is_erro']=True
