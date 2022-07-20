@@ -48,19 +48,9 @@
                                     }
                                 </script>
                                 {% endif %}
-                                
-                                {% if is_erro %}
-                                <script>
-                                    function erro_login(){
-                                        if("{{is_erro}}" == true){
-                                            alert("{{erro_message}}");
-                                        }
-                                    }
-                                </script>
-                                {% endif %}
 
                                 <div class="d-flex justify-content-center ">
-                                    <button type="submit" onclick="erro_login()">
+                                    <button type="submit" onclick="erro()">
                                         <!-- <a href="">Entrar</a> -->
                                         Entrar
                                     </button>
