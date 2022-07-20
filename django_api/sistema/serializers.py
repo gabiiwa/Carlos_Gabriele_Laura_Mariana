@@ -41,3 +41,23 @@ class VisualizacaoSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Visualizacao
         fields = "__all__"
+
+class RankingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Estudante
+        fields = ['nome', 'pontuacao']
+
+class ProfessorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Professor
+        fields = ['nome']
+
+class EstudanteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Estudante
+        fields = ['nome']
+
+class TituloSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Titulo
+        fields = ['nome', 'qtdPontos']        
