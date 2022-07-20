@@ -25,6 +25,9 @@ router.register(r'postagem_armazenada', views.PostagemArmazenadaViewSet)
 router.register(r'tarefa', views.TarefaViewSet)
 router.register(r'comentario', views.ComentarioViewSet)
 router.register(r'login', views.LoginViewSet)
+router.register(r'ranking', views.RankingViewSet)
+router.register(r'lista_professoras', views.ProfessorViewSet)
+router.register(r'lista_titulos', views.TituloViewSet)
 
 urlpatterns = [
     path('', views.login, name='login'),

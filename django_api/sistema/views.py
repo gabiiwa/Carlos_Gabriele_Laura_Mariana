@@ -156,13 +156,36 @@ class LoginViewSet(viewsets.ModelViewSet):
                     # return JsonResponse({'erro':'cpf invalido'})
                     return redirect("http://127.0.0.1:8000/?erro=cpf_invalido")
 
-class EstudanteViewSet(viewsets.ModelViewSet):
-    queryset = models.Login.objects.all()
-    serializer_class = serializers.LoginSerializer
+class RankingViewSet(viewsets.ModelViewSet):
+    #queryset = models.Login.objects.all()
+    #serializer_class = serializers.LoginSerializer
+    queryset = models.Estudante.objects.all().order_by('-pontuacao')
+    serializer_class = serializers.RankingSerializer
+    http_method_names = ['get', 'head', 'options']
+
     def ranking(self,request):
         #ordenar os alunos por ponto
         #retorna uma lista de alunos
-        return
+        #serializer = serializers.LoginSerializer(data=request.data)
+        return models.Estudante.objects.all().order_by('-pontuacao')
+
+class ProfessorViewSet(viewsets.ModelViewSet):    
+    queryset = models.Professor.objects.all().order_by('nome')
+    serializer_class = serializers.ProfessorSerializer
+    
+    http_method_names = ['get', 'head', 'options']
+
+    def lista(self,request):
+        return models.Professor.objects.all().order_by('nome')
+
+class TituloViewSet(viewsets.ModelViewSet):    
+    queryset = models.Titulo.objects.all().order_by('qtdPontos')
+    serializer_class = serializers.TituloSerializer
+    
+    http_method_names = ['get', 'head', 'options']
+
+    def lista(self,request):
+        return models.Titulo.objects.all().order_by('qtdPontos')
     
   
 class VisualizacaoViewSet(viewsets.ModelViewSet):
