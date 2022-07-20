@@ -1,6 +1,6 @@
 # from asyncio.windows_events import NULL
 from urllib import response
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_protect
 from rest_framework import viewsets,status
@@ -139,17 +139,21 @@ class LoginViewSet(viewsets.ModelViewSet):
             if type(serializer.validated_data) != type(None):
                 estudante = models.Estudante.objects.filter(cpf = serializer.validated_data["cpf"])
                 professora = models.Professor.objects.filter(cpf = serializer.validated_data["cpf"])
+                print("\n estudante: {} e professora: {}\n".format(estudante.exists(),professora.exists()))
+                print("\n eh_estudante: {}\n".format(estudante.exists() or professora.exists()))
                 if estudante.exists() or professora.exists():
                     serializer.validated_data["eh_usuario"] = True
                     serializer.validated_data["dataHora"] = django.utils.timezone.now()
                     serializer.save()
-                    home(request)
-                    return Response(serializer.data)
+                    # home(request)
+                    # return Response(serializer.data)
+                    return redirect("http://127.0.0.1:8000/home/")
                 else:
                     serializer.validated_data["eh_usuario"] = False
                     serializer.validated_data["dataHora"] = django.utils.timezone.now()
                     serializer.save()
-                    return JsonResponse({'erro':'cpf invalido'})
+                    # return JsonResponse({'erro':'cpf invalido'})
+                    return redirect("http://127.0.0.1:8000/?erro=cpf_invalido")
 
 class EstudanteViewSet(viewsets.ModelViewSet):
     queryset = models.Login.objects.all()
@@ -197,17 +201,22 @@ def home(request):
 
 @csrf_protect 
 def login(request):
-    c={'verifica':False,'id_user':0}
-    response = requests.get('http://127.0.0.1:8000/router/login/')
+    # c={'verifica':False,'id_user':0}
+    # response = requests.get('http://127.0.0.1:8000/router/login/')
     
-    data = response.json()
+    # data = response.json()
    
-    if data!=[]:
-        ultimo_user = data[-1]
-        eh_usuario = ultimo_user["eh_usuario"]
-        usuario_id = ultimo_user["cpf"]
-        c = {'verifica':eh_usuario,'id_user':usuario_id}
-    
+    # if data!=[]:
+    #     ultimo_user = data[-1]
+    #     eh_usuario = ultimo_user["eh_usuario"]
+    #     usuario_id = ultimo_user["cpf"]
+    #     c = {'verifica':eh_usuario,'id_user':usuario_id}
+    c = {'erro_message':request.GET.get('erro','')}
+    if c['erro_message']!="":
+        c['is_erro']=True
+    else:
+        c['is_erro']=False
+    print("\nc:{}\n".format(c))
     return render(request,'login.html',c)
 
 
