@@ -40,10 +40,14 @@
                                 <div>
                                     <input id="senha" name="senha" type="password" placeholder="Senha">
                                 </div>
-<<<<<<< HEAD
-                                <div class="d-flex justify-content-center">
-                                    <button type="submit" onclick="erro()">
-=======
+
+                                {% if is_erro %}
+                                <script>
+                                    function erro(){
+                                        alert("{{erro_message}}")
+                                    }
+                                </script>
+                                {% endif %}
                                 
                                 <div class="d-flex justify-content-center ">
                                     <button type="submit" onclick="erro()">
@@ -51,45 +55,7 @@
                                         Entrar
                                     </button>
                                 </div>
-                                <!-- {% if verifica %}
-                                <div class="d-flex justify-content-center ">
-                                    <button type="submit">
-                                        <a href="home">Entrar</a>
-                                    </button>
-                                </div>
-                                {% else %}
-                                <div>
-                                    <button type="submit">
->>>>>>> Gabi
-                                        Entrar
-                                    </button>
-                                </div>
                             </form>
-                            {% if is_erro %}
-                                <script>
-<<<<<<< HEAD
-                                    function erro(){
-                                        alert("{{erro_message}}");
-                                    }
-                                </script>
-                            {% endif %}
-                            <!-- <script>
-                                function teste(){
-                                    alert("{{erro_message}}");
-                                }
-                            </script> -->
-=======
-                                    function erro(message="{{erro_message}}"){
-                                        if("{{is_erro}}" == true){
-                                            alert(message);
-                                        }
-                                    }
-                                </script>
-                                <!-- <div>
-                                    {{erro_message}}
-                                </div> -->
-                            {% endif %}
->>>>>>> Gabi
                         </div>
                     </div>
                 </div>
