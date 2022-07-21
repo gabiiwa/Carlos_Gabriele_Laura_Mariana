@@ -34,6 +34,7 @@ urlpatterns = [
     path('router/', include(router.urls)),
     path('admin/', admin.site.urls),
     path('home/', views.home, name='home'),
+    path('titulos/', views.titulos, name="titulos"),
     # path('visualizar/', views.visualizar, name='vizualizar'),
     # path('home/', views.home, name='home'),
     

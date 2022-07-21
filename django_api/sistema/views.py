@@ -230,7 +230,9 @@ def login(request):
         c['is_erro']=True
     else:
         c['is_erro']=False
-    print("\nc:{}\n".format(c))
     return render(request,'login.html',c)
+
+def titulos(request):
+    return render(request,'titulos.html')
 
 
