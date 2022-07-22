@@ -27,7 +27,7 @@ router.register(r'comentario', views.ComentarioViewSet)
 router.register(r'login', views.LoginViewSet)
 router.register(r'ranking', views.RankingViewSet)
 router.register(r'lista_professoras', views.ProfessorViewSet)
-router.register(r'lista_titulos', views.TituloViewSet)
+router.register(r'titulo', views.criaTituloViewSet)
 
 urlpatterns = [
     path('', views.login, name='login'),

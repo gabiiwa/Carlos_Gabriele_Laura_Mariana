@@ -57,7 +57,7 @@ class EstudanteSerializer(serializers.ModelSerializer):
         model = models.Estudante
         fields = ['nome']
 
-class TituloSerializer(serializers.ModelSerializer):
+class criaTituloSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Titulo
-        fields = ['nome', 'qtdPontos']        
+        fields = ['nome']       

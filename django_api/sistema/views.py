@@ -167,7 +167,8 @@ class RankingViewSet(viewsets.ModelViewSet):
         #ordenar os alunos por ponto
         #retorna uma lista de alunos
         #serializer = serializers.LoginSerializer(data=request.data)
-        return models.Estudante.objects.all().order_by('-pontuacao')
+        ranking = models.Estudante.objects.all().order_by('-pontuacao').values_list('nome', 'pontuacao')
+        return list(ranking)
 
 class ProfessorViewSet(viewsets.ModelViewSet):    
     queryset = models.Professor.objects.all().order_by('nome')
@@ -176,16 +177,23 @@ class ProfessorViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'head', 'options']
 
     def lista(self,request):
-        return models.Professor.objects.all().order_by('nome')
+        professoras = models.Professor.objects.all().order_by('nome').values_list('nome')
+        return list(professoras)
 
-class TituloViewSet(viewsets.ModelViewSet):    
-    queryset = models.Titulo.objects.all().order_by('qtdPontos')
-    serializer_class = serializers.TituloSerializer
-    
-    http_method_names = ['get', 'head', 'options']
+class criaTituloViewSet(viewsets.ModelViewSet):    
+    queryset = models.Titulo.objects.all()
+    serializer_class = serializers.criaTituloSerializer
 
-    def lista(self,request):
-        return models.Titulo.objects.all().order_by('qtdPontos')
+    def create(self, request):
+        serializer = serializers.criaTituloSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            #salva os dados no banco
+             serializer.save()
+             #pega os dados que foram enviados pela requisição post
+             data = request.data      
+
+            #  lista
+             return Response(serializer.data)
     
   
 class VisualizacaoViewSet(viewsets.ModelViewSet):
