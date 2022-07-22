@@ -39,11 +39,33 @@ class Titulo(models.Model):
         ("Pontuação: 841 - 1680","Angelica Ross"),
         ("Pontuação: 1681 - 3360", "Shirley Ann Jackson"),
         ("Pontuação: 3361 - 6720","Timnit Gebru"),
-        ("Pontuação: 7560 - oo","Marie Van Brittan Brown"),
+        ("Pontuação: 6721 - oo","Marie Van Brittan Brown"),
     )
     nome = models.CharField(choices=titulos, max_length=100, default="Pontuação: 0 - 840")
+    desc = models.CharField(max_length = 30, default = "Bonnie Prado Pinto")
     qtdPontos = models.IntegerField() # quantos pontos são necessários para se ter esse título
     estudante = models.ManyToManyField(Estudante, through='listaTitulo')
+
+    def save(self, *args, **kwargs):
+        if self.nome == 'Pontuação: 0 - 840':
+            self.qtdPontos = 0
+            self.desc = 'Bonnie Prado Pinto'
+        else:
+            if self.nome == 'Pontuação: 841 - 1680':
+                self.qtdPontos = 841
+                self.desc = 'Angelica Ross'
+            else:
+                if self.nome == 'Pontuação: 1681 - 3360':
+                    self.qtdPontos = 1681
+                    self.desc = 'Shirley Ann Jackson'
+                else:
+                    if self.nome == 'Pontuação: 3361 - 6720':
+                        self.qtdPontos = 3361
+                        self.desc = 'Timnit Gebru'
+                    else:
+                        self.qtdPontos = 6721
+                        self.desc = 'Marie Van Brittan Brown'
+        super().save(*args, **kwargs)
 
 class listaTitulo(models.Model): # títulos que as estudantes já tiveram, assim como o título atual
     fktitulo = models.ForeignKey(Titulo,on_delete=models.CASCADE)
@@ -62,6 +84,7 @@ class Tarefa(models.Model):
         ("DC3", "Publicar uma postagem."),
     )
     tipo = models.CharField(choices=desc_choice, max_length=30, default="DC1")
+    desc = models.CharField(max_length = 30, default = "Ler uma postagem.")
     #dataHora = models.DateTimeField(auto_now_add = True)
     dataHora = models.DateField(auto_now_add = True, db_column='data')
     cumprida = models.BooleanField(default=0)
@@ -71,11 +94,14 @@ class Tarefa(models.Model):
     def save(self, *args, **kwargs):
         if self.tipo == 'DC1':
             self.qtdPontos = 5
+            self.desc = 'Ler uma postagem.'
         else:
             if self.tipo == 'DC2':
                 self.qtdPontos = 10
+                self.desc = 'Publicar um comentário.'
             else:
-                self.qtdPontos = 15    
+                self.qtdPontos = 15
+                self.desc = 'Publicar uma postagem.'    
         super().save(*args, **kwargs)
 
     class Meta:
