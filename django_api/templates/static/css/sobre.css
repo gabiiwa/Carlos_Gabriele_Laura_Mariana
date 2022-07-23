@@ -1,0 +1,71 @@
+/* Elementos */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 16px;
+    font-family: "Arial Rounded MT Bold", Arial, Arial, Helvetica, sans-serif !important;
+    background-color: #FFFAFA;
+}
+
+/* Ids */
+#cabecalho {
+    background-color: #DDA0DD;
+    padding: 15px;
+    text-align: center;
+}
+
+#logo, #menu {
+    padding: 10px;
+}
+
+#main {
+    width: 920px;
+    margin: 0 auto;
+}
+
+#sobre p {
+    text-align: justify;
+    font-size: 17px;
+    margin-top: 20px;
+}
+
+#sobre h2 {
+    margin-top: 15px;
+}
+
+/* Classes */
+.img-logo {
+    float: left;
+    border-radius: 25px;
+    width: 350px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+/* Tags */
+a {
+    text-decoration: none;
+    color: #8B008B;
+}
+
+a:link, a:visited {
+    color: #4B0082;
+    padding: 8px 12px;
+}
+
+a:hover {
+    color: #8B008B;
+    background-color: #F5F5F5;
+}
+
+h1, h2 {
+    color: #BA55D3;
+    font-size: 2.5em;
+}
+
+h2 {
+    text-align: center;
+}
