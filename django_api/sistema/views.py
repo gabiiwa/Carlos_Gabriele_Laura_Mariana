@@ -43,6 +43,41 @@ class PostagemViewSet(viewsets.ModelViewSet):
                     tarefa_obj.save()
                     estudante_obj.pontuacao += 5 # estudante ganha 5 pontos por cumprir a tarefa
                     estudante_obj.save()
+
+
+             # atualizando o título
+             titulo_atual = models.listaTitulo.objects.get(fkestudante = estudante_id, tituloAtual = 1)
+             titulo_atual_obj = titulo_atual.fktitulo
+             titulo_atual_nome = titulo_atual_obj.nome
+
+             if estudante_obj.pontuacao > 840:
+                if (estudante_obj.pontuacao <= 1680) and (titulo_atual_nome != 'Pontuação: 841 - 1680'):
+                    titulo_atual.tituloAtual = 0
+                    titulo_atual.save()
+                    novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 841 - 1680')
+                    novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
+                    novo_titulo_obj.save()
+                else:
+                    if (estudante_obj.pontuacao > 1680) and (estudante_obj.pontuacao <= 3360) and (titulo_atual_nome != 'Pontuação: 1681 - 3360'):
+                        titulo_atual.tituloAtual = 0
+                        titulo_atual.save()
+                        novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 1681 - 3360')
+                        novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
+                        novo_titulo_obj.save()
+                    else:
+                        if (estudante_obj.pontuacao > 3360) and (estudante_obj.pontuacao <= 6720) and (titulo_atual_nome != 'Pontuação: 3361 - 6720'):
+                            titulo_atual.tituloAtual = 0
+                            titulo_atual.save()
+                            novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 3361 - 6720')
+                            novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
+                            novo_titulo_obj.save()
+                        else:
+                            if (estudante_obj.pontuacao > 6720) and (titulo_atual_nome != 'Pontuação: 6721 - oo'):
+                                titulo_atual.tituloAtual = 0
+                                titulo_atual.save()
+                                novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 6721 - oo')
+                                novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
+                                novo_titulo_obj.save()                
              #loop pra procurar tarefas do tipo postagem
             #  lista
              return Response(serializer.data)
@@ -124,7 +159,41 @@ class ComentarioViewSet(viewsets.ModelViewSet):
                     tarefa_obj.cumprida = 1
                     tarefa_obj.save()
                     estudante_obj.pontuacao += 5 # estudante ganha 5 pontos por cumprir a tarefa
-                    estudante_obj.save()      
+                    estudante_obj.save()
+
+             # atualizando o título
+             titulo_atual = models.listaTitulo.objects.get(fkestudante = estudante_id, tituloAtual = 1)
+             titulo_atual_obj = titulo_atual.fktitulo
+             titulo_atual_nome = titulo_atual_obj.nome
+
+             if estudante_obj.pontuacao > 840:
+                if (estudante_obj.pontuacao <= 1680) and (titulo_atual_nome != 'Pontuação: 841 - 1680'):
+                    titulo_atual.tituloAtual = 0
+                    titulo_atual.save()
+                    novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 841 - 1680')
+                    novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
+                    novo_titulo_obj.save()
+                else:
+                    if (estudante_obj.pontuacao > 1680) and (estudante_obj.pontuacao <= 3360) and (titulo_atual_nome != 'Pontuação: 1681 - 3360'):
+                        titulo_atual.tituloAtual = 0
+                        titulo_atual.save()
+                        novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 1681 - 3360')
+                        novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
+                        novo_titulo_obj.save()
+                    else:
+                        if (estudante_obj.pontuacao > 3360) and (estudante_obj.pontuacao <= 6720) and (titulo_atual_nome != 'Pontuação: 3361 - 6720'):
+                            titulo_atual.tituloAtual = 0
+                            titulo_atual.save()
+                            novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 3361 - 6720')
+                            novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
+                            novo_titulo_obj.save()
+                        else:
+                            if (estudante_obj.pontuacao > 6720) and (titulo_atual_nome != 'Pontuação: 6721 - oo'):
+                                titulo_atual.tituloAtual = 0
+                                titulo_atual.save()
+                                novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 6721 - oo')
+                                novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
+                                novo_titulo_obj.save()              
 
             #  lista
              return Response(serializer.data)
