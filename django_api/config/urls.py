@@ -35,7 +35,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', views.home, name='home'),
     path('titulos/', views.titulos, name="titulos"),
+    path('tutorial/', views.tutorial, name="tutorial"),
+    path('sobre/', views.sobre, name="sobre"),
+    path('politicas/', views.politicas, name="politicas"),
+    path('titulo-atual/', views.tituloAtual, name="tituloAtual"),
     # path('visualizar/', views.visualizar, name='vizualizar'),
-    # path('home/', views.home, name='home'),
+    
     
 ]

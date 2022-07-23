@@ -40,21 +40,21 @@
                                     <input id="senha" name="senha" type="password" placeholder="Senha">
                                 </div>
 
-                                {% if is_erro %}
-                                <script>
-                                    function erro(){
-                                        alert("{{erro_message}}")
-                                    }
-                                </script>
-                                {% endif %}
 
                                 <div class="d-flex justify-content-center ">
-                                    <button type="submit" onclick="erro()">
-                                        <!-- <a href="">Entrar</a> -->
+                                    <button type="submit" >
+                                        
                                         Entrar
                                     </button>
                                 </div>
                             </form>
+                            {% if is_erro %}
+                                <script>
+                                    
+                                    alert("{{erro_message}}")
+                                    
+                                </script>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
