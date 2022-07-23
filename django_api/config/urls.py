@@ -28,6 +28,7 @@ router.register(r'login', views.LoginViewSet)
 router.register(r'ranking', views.RankingViewSet)
 router.register(r'lista_professoras', views.ProfessorViewSet)
 router.register(r'titulo', views.criaTituloViewSet)
+router.register(r'lista_usuarios', views.UsuarioViewSet, basename ='lista_usuarios')
 
 urlpatterns = [
     path('', views.login, name='login'),

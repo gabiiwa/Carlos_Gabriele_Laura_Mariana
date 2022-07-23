@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 import datetime
 import django
 # Create your models here.
@@ -75,6 +77,12 @@ class listaTitulo(models.Model): # títulos que as estudantes já tiveram, assim
 
     class Meta:
         unique_together = ('fkestudante', 'fktitulo')
+
+    @receiver(post_save, sender = Estudante)
+    def associa_Titulo(sender, instance, created, **kwargs):
+        if created:
+            titulo = Titulo.objects.get(nome = 'Pontuação: 0 - 840')
+            listaTitulo.objects.create(fktitulo = titulo, fkestudante = instance)
 
 """
 Tarefa:
