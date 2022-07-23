@@ -73,6 +73,9 @@ class listaTitulo(models.Model): # títulos que as estudantes já tiveram, assim
     dataHora = models.DateTimeField(auto_now_add = True)
     tituloAtual = models.BooleanField(default=1)
 
+    class Meta:
+        unique_together = ('fkestudante', 'fktitulo')
+
 """
 Tarefa:
 - Tabela referente às tarefas associadas às alunas;
