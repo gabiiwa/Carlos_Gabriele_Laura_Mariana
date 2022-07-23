@@ -11,7 +11,7 @@ import requests
 import datetime
 from django.http import JsonResponse
 import django
-import json
+# import json
 
 
 # """"""Views"""""""
@@ -113,7 +113,6 @@ class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
                     if date_post.time() <= now.time():
                         return_valid.append(data_send[obj_serializer])
                         
-            # print("\n Socorrro, esse é a saida de postagem programada:{}\n".format(return_valid))
             return Response(return_valid,status=status.HTTP_200_OK)
         else:
             return Response(serializer.data)
@@ -208,21 +207,18 @@ class LoginViewSet(viewsets.ModelViewSet):
             if type(serializer.validated_data) != type(None):
                 estudante = models.Estudante.objects.filter(cpf = serializer.validated_data["cpf"])
                 professora = models.Professor.objects.filter(cpf = serializer.validated_data["cpf"])
-                print("\n estudante: {} e professora: {}\n".format(estudante.exists(),professora.exists()))
-                print("\n eh_estudante: {}\n".format(estudante.exists() or professora.exists()))
+                
+
                 if estudante.exists() or professora.exists():
                     serializer.validated_data["eh_usuario"] = True
                     serializer.validated_data["dataHora"] = django.utils.timezone.now()
                     serializer.save()
-                    # redirect("home/")
-                    # return Response(serializer.data)
                     return redirect("http://127.0.0.1:8000/home/")
                 else:
                     serializer.validated_data["eh_usuario"] = False
                     serializer.validated_data["dataHora"] = django.utils.timezone.now()
                     serializer.save()
-                    # redirect("http://127.0.0.1:8000/",{'erro':'cpf invalido'})
-                    # return JsonResponse({'erro':'cpf invalido'})
+                    
                     return redirect("http://127.0.0.1:8000/?erro=cpf_invalido")
 
 class RankingViewSet(viewsets.ModelViewSet):
@@ -309,7 +305,52 @@ def login(request):
         c['is_erro']=False
     return render(request,'login.html',c)
 
+#informações sobre título atual
+def tituloAtual(request):
+    c = {
+        'aluna': {
+            'nome': 'Nome da aluna',
+            'titulo': 'Nome do titulo',
+            'pontuacao': 15,
+            'pontos_para_prox_titulo': 6,
+        },
+        'historico': [
+            {'titulo': "Nome do titulo 1", 'data': '21/07/2022'},
+            {'titulo': "Nome do titulo 2", 'data': '22/07/2022'},
+            {'titulo': "Nome do titulo 3", 'data': '23/07/2022'},
+            {'titulo': "Nome do titulo 4", 'data': '24/07/2022'},
+            {'titulo': "Nome do titulo 5", 'data': '25/07/2022'}
+        ]
+    }
+    return render(request,'tituloAtual.html', c)
+
+def criarPost(request):
+    response_user= requests.get('http://127.0.0.1:8000/router/login/')
+    data_user = response_user.json()
+    user_ultimo = data_user[-1]
+    # estudantes = [models.Estudante.objects.get(id=dict_est['fkusuario']).nome for dict_est in data_aluna ]
+    eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
+    eh_professor =  models.Professor.objects.filter(cpf = user_ultimo["cpf"])
+    if eh_estudante.exists():
+        return render(request,'criarPost.html')
+    elif eh_professor.exists():
+        return render(request,'criarPost_professora.html')
+################Páginas estáticas################
+#página estática de títulos
 def titulos(request):
     return render(request,'titulos.html')
 
+def tutorial(request):
+    return render(request,'tutorial.html')
 
+def sobre(request):
+    return render(request,'sobre.html')
+
+def politicas(request):
+    return render(request,'politicas.html')
+
+def assistencia(request):
+    return render(request,'assistenciaEstudantil.html')
+
+def professoras(request):
+    return render(request,'professoras.html')
