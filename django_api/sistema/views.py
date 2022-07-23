@@ -263,6 +263,24 @@ class criaTituloViewSet(viewsets.ModelViewSet):
 
             #  lista
              return Response(serializer.data)
+
+class UsuarioViewSet(viewsets.ModelViewSet):    
+    queryset = models.Professor.objects.order_by('nome')
+    serializer_class = serializers.ProfessorSerializer
+
+    #queryset = models.Estudante.objects.order_by('nome')
+    #serializer_class = serializers.EstudanteSerializer
+
+    http_method_names = ['get', 'head', 'options']
+
+    def lista(self):
+        professoras = models.Professor.objects.order_by('nome').values_list('nome')
+        alunas = models.Estudante.objects.order_by('nome').values_list('nome')
+
+        usuarios = list(professoras) + list(alunas)
+        usuarios.sort()
+        
+        return usuarios
     
   
 class VisualizacaoViewSet(viewsets.ModelViewSet):
