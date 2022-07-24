@@ -21,6 +21,10 @@ body {
     padding: 10px;
 }
 
+#menu a {
+    text-decoration: none;
+}
+
 #main {
     width: 920px;
     margin: 0 auto;
@@ -47,7 +51,6 @@ body {
 
 /* Tags */
 a {
-    text-decoration: none;
     color: #8B008B;
 }
 

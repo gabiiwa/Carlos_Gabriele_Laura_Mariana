@@ -4,18 +4,21 @@
 <html lang="pt-br">
 
   <head>
-    <title>SigaComElas</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+        <title>SigaComElas</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+        <!-- <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"> -->
+        <!-- <link rel="stylesheet" href="{% static 'css/home.css'%}"> -->
 
-    <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+        <!-- bootstrap core css -->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
 
-    <!-- responsive style -->
-    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+        <!-- responsive style -->
+        <!-- <link href="../static/css/responsive.css" rel="stylesheet" /> -->
+        <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
 
-    <!-- Custom styles for this template -->
-    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+        <!-- Custom styles for this template -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet" />
   </head>
 
   <body>
@@ -26,6 +29,7 @@
 
       <div id="menu">
         <a href="/home/">Home</a>
+        <a href="/criarPost/">Criar Postagem</a>
         <a href="/titulos/">Títulos</a>
         <a href="/tutorial/">Tutorial</a>
         <a href="/sobre/">Sobre</a>
@@ -36,9 +40,13 @@
             <a href="/titulo-atual/">Seu título</a>
         {% endif %}
         
-        <a href="/assistencia/">Assistência Estudantil</a>
+        <a href="/usuarios/">Usuários</a>
+        <a href="/usuariosmesmotitulo/">Usuários com o mesmo título</a>
+        <a href="/ranking/">Ranking</a>
         <a href="/professoras/">Lista de Professoras</a>
-        <a href="/criarPost/">Criar Postagem</a>
+        <a href="/assistencia/">Assistência Estudantil</a>
+        <a href="/politicas/">Políticas</a>
+        <a href="/sobre/">Sobre</a>
         <a href="http://127.0.0.1:8000">Sair</a>
       </div>
     </div>
