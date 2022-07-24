@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 
 <html lang="pt-br">
-
   <head>
     <title>SigaComElas</title>
     <meta charset="utf-8">
@@ -13,10 +12,10 @@
 
     <!-- responsive style -->
     <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
-
+      
     <!-- Custom styles for this template -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet" />
-  </head>
+    </head>
 
   <body>
     <div id="cabecalho">
@@ -39,48 +38,43 @@
         <a href="/sobre/">Sobre</a>
         <a href="http://127.0.0.1:8000">Sair</a>
       </div>
-
     </div>
 
     <div id="main">
-      <section class="contact_section layout_padding">
-        <div class="custom_heading-container">
-          <h3 class=" ">
-            Criar post
-          </h3>
-        </div>
-        <div class="container layout_padding2-top">
-          <div class="row">
-            <div class="col-md-6 mx-auto">
-              <form action="/router/postagem/" method="post">
-                {% csrf_token %}
-                <input type="hidden" id="fkusuario" name="fkusuario" value="{{id_user}}">
-                <div>
-                  <label for="tituloPost">Título do post</label>
-                  <input type="text" name="titulo">
-                </div>
-                <div>
-                  <label for="exampleFormControlTextarea1">Texto do post</label>
-                  <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Texto do post"
-                    rows="3" name="texto"></textarea>
-                </div>
-                <div class="d-flex justify-content-center ">
-                  <button type="submit">
-                    Enviar
-                  </button>
-                </div>
-              </form>
-            </div>
+      <section class="about_section layout_padding">
+        <div class="container">
+          <div class="custom_heading-container">
+            <h3 class=" ">
+              Usuários do sistema com o mesmo título que o seu
+            </h3>
           </div>
 
+          <div class="layout_padding2-top">
+              <div class="table-responsive-xl">
+                  <table class="table table-striped">
+                      <thead>
+                          <tr>
+                              <th scope="col">Nome</th>
+                              <th scope="col">Título</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for item in historico %}
+                          <tr>
+                              <td>{{item.titulo}}</td>
+                              <td>{{item.data}}</td>
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+          </div>
         </div>
       </section>
+    </div>
 
-
-      <div id="rodape">
-        Todos os direitos reservados
-      </div>
+    <div id="rodape">
+      Todos os direitos reservados
     </div>
   </body>
-
 </html>
