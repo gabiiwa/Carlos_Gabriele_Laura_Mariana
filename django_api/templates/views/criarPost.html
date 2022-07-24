@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 
 <html lang="pt-br">
@@ -5,16 +6,16 @@
   <head>
     <title>SigaComElas</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../public/css/home.css">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="../public/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
 
     <!-- responsive style -->
-    <link href="../public/css/responsive.css" rel="stylesheet" />
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
 
     <!-- Custom styles for this template -->
-    <link href="../public/css/style.css" rel="stylesheet" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
   </head>
 
   <body>
@@ -24,12 +25,16 @@
       </div>
 
       <div id="menu">
-        <a href="home.html">Home</a>
-        <a href="titulos.html">Títulos</a>
-        <a href="tutorial.html">Tutorial</a>
-        <a href="sobre.html">Sobre</a>
-        <a href="politicas.html">Políticas</a>
-        <a href="login.html">Sair</a>
+        <a href="/home/">Home</a>
+          <a href="/titulos/">Títulos</a>
+          <a href="/tutorial/">Tutorial</a>
+          <a href="/sobre/">Sobre</a>
+          <a href="/politicas/">Políticas</a>
+          <a href="/titulo-atual/">Seu título</a>
+          <a href="/assistencia/">Assistência Estudantil</a>
+          <a href="/professoras/">Lista de Professoras</a>
+          <a href="/criarPost/">Criar Postagem</a>
+          <a href="http://127.0.0.1:8000">Sair</a>
       </div>
 
     </div>
@@ -44,18 +49,20 @@
         <div class="container layout_padding2-top">
           <div class="row">
             <div class="col-md-6 mx-auto">
-              <form action="">
+              <form action="/router/postagem/" method="post">
+                {% csrf_token %}
+                <input type="hidden" id="fkusuario" name="fkusuario" value="{{id_user}}">
                 <div>
                   <label for="tituloPost">Título do post</label>
-                  <input type="text">
+                  <input type="text" name="titulo">
                 </div>
                 <div>
                   <label for="exampleFormControlTextarea1">Texto do post</label>
-                  <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Título do post"
-                    rows="3"></textarea>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Texto do post"
+                    rows="3" name="texto"></textarea>
                 </div>
                 <div class="d-flex justify-content-center ">
-                  <button>
+                  <button type="submit">
                     Enviar
                   </button>
                 </div>

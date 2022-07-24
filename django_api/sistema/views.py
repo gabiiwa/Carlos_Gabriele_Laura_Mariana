@@ -22,13 +22,15 @@ class PostagemViewSet(viewsets.ModelViewSet):
     def create(self, request):
         serializer = serializers.PostagemSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            #salva os dados no banco
+             #pega o ultimo usuario
+             ultimo_usuario = list(models.Login.objects.all().order_by('id'))[-1].cpf
+             serializer.validated_data['fkusuario'] = models.Estudante.objects.get(cpf=ultimo_usuario)
              serializer.save()
              #####Estudante########
              #pega os dados que foram enviados pela requisição post
-             data = request.data
+             data = serializer.validated_data
              #pega o id correspondente aestudante que fez o post para poder acessar a pontuação
-             estudante_id = data.get("fkusuario")
+             estudante_id = data["fkusuario"].id
              estudante_obj = models.Estudante.objects.get(id=estudante_id)
              #atualizando a pontuação
              estudante_obj.pontuacao += 15
@@ -80,7 +82,8 @@ class PostagemViewSet(viewsets.ModelViewSet):
                                 novo_titulo_obj.save()                
              #loop pra procurar tarefas do tipo postagem
             #  lista
-             return Response(serializer.data)
+            #  return Response(serializer.data)
+             return redirect("http://127.0.0.1:8000/home/")
 class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
     queryset = models.PostagemArmazenada.objects.all().order_by('dataHora')
     serializer_class = serializers.PostagemArmazenadaSerializer
@@ -90,8 +93,12 @@ class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
             #caso não seje informado a data e o horário que se deseja fazer a postagem, insere a data e horário presente
             if type(serializer.validated_data["dataHora"]) == type(None):
                serializer.validated_data["dataHora"] = django.utils.timezone.now()
+            #pega o ultimo usuario
+            ultimo_usuario = list(models.Login.objects.all().order_by('id'))[-1].cpf
+            serializer.validated_data['fkusuario'] = models.Professor.objects.get(cpf=ultimo_usuario)
             serializer.save()
-        return Response(serializer.data)
+        # return Response(serializer.data)
+        return redirect("http://127.0.0.1:8000/home/")
     def list(self, request):
         #precisa comparar o dia e hora 
         queryset = models.PostagemArmazenada.objects.all().order_by('dataHora')
@@ -129,7 +136,8 @@ class TarefaViewSet(viewsets.ModelViewSet):
              data = request.data      
 
             #  lista
-             return Response(serializer.data)
+            #  return Response(serializer.data)
+             return redirect("http://127.0.0.1:8000/home/")
 
 class ComentarioViewSet(viewsets.ModelViewSet):
     queryset = models.Comentario.objects.all().order_by('dataHora')
@@ -138,6 +146,7 @@ class ComentarioViewSet(viewsets.ModelViewSet):
     def create(self, request):
         serializer = serializers.ComentarioSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
+            
             #salva os dados no banco
              serializer.save()
              #pega os dados que foram enviados pela requisição post
@@ -195,7 +204,8 @@ class ComentarioViewSet(viewsets.ModelViewSet):
                                 novo_titulo_obj.save()              
 
             #  lista
-             return Response(serializer.data)
+            #  return Response(serializer.data)
+             return redirect("http://127.0.0.1:8000/home/")
 
 class LoginViewSet(viewsets.ModelViewSet):
     queryset = models.Login.objects.all()
@@ -228,22 +238,26 @@ class RankingViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.RankingSerializer
     http_method_names = ['get', 'head', 'options']
 
-    def ranking(self,request):
+    def list(self,request):
         #ordenar os alunos por ponto
         #retorna uma lista de alunos
         #serializer = serializers.LoginSerializer(data=request.data)
+        queryset = models.Estudante.objects.all().order_by('-pontuacao')
+        serializer =  serializers.RankingSerializer(queryset,many=True)
+
         ranking = models.Estudante.objects.all().order_by('-pontuacao').values_list('nome', 'pontuacao')
-        return list(ranking)
+        return Response(list(ranking))
+   
 
 class ProfessorViewSet(viewsets.ModelViewSet):    
     queryset = models.Professor.objects.all().order_by('nome')
     serializer_class = serializers.ProfessorSerializer
-    
-    http_method_names = ['get', 'head', 'options']
 
-    def lista(self,request):
+    def list(self,request):
+        queryset = models.Professor.objects.all().order_by('nome')
+        serializer =  serializers.ProfessorSerializer(queryset,many=True)
         professoras = models.Professor.objects.all().order_by('nome').values_list('nome')
-        return list(professoras)
+        return Response(list(professoras))
 
 class criaTituloViewSet(viewsets.ModelViewSet):    
     queryset = models.Titulo.objects.all()
@@ -267,16 +281,16 @@ class UsuarioViewSet(viewsets.ModelViewSet):
     #queryset = models.Estudante.objects.order_by('nome')
     #serializer_class = serializers.EstudanteSerializer
 
-    http_method_names = ['get', 'head', 'options']
-
-    def lista(self):
+    def list(self,request):
+        queryset = models.Professor.objects.order_by('nome')
+        serializer_class = serializers.ProfessorSerializer(queryset,many=True)
         professoras = models.Professor.objects.order_by('nome').values_list('nome')
         alunas = models.Estudante.objects.order_by('nome').values_list('nome')
 
         usuarios = list(professoras) + list(alunas)
         usuarios.sort()
         
-        return usuarios
+        return Response(usuarios)
     
   
 class VisualizacaoViewSet(viewsets.ModelViewSet):
@@ -325,23 +339,36 @@ def login(request):
 
 #informações sobre título atual
 def tituloAtual(request):
-    c = {
-        'aluna': {
-            'nome': 'Nome da aluna',
-            'titulo': 'Nome do titulo',
-            'pontuacao': 15,
-            'pontos_para_prox_titulo': 6,
-        },
-        'historico': [
-            {'titulo': "Nome do titulo 1", 'data': '21/07/2022'},
-            {'titulo': "Nome do titulo 2", 'data': '22/07/2022'},
-            {'titulo': "Nome do titulo 3", 'data': '23/07/2022'},
-            {'titulo': "Nome do titulo 4", 'data': '24/07/2022'},
-            {'titulo': "Nome do titulo 5", 'data': '25/07/2022'}
-        ]
-    }
-    return render(request,'tituloAtual.html', c)
+    response_user= requests.get('http://127.0.0.1:8000/router/login/')
+    data_user = response_user.json()
+    user_ultimo = data_user[-1]
+    eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
+    if eh_estudante.exists():
+        c = {
+            'aluna': {
+                'nome': list(eh_estudante)[0].nome,
+                'titulo': 'Nome do titulo',
+                'pontuacao': 15,
+                'pontos_para_prox_titulo': 6,
+            },
+            'historico': [
+                {'titulo': "Nome do titulo 1", 'data': '21/07/2022'},
+                {'titulo': "Nome do titulo 2", 'data': '22/07/2022'},
+                {'titulo': "Nome do titulo 3", 'data': '23/07/2022'},
+                {'titulo': "Nome do titulo 4", 'data': '24/07/2022'},
+                {'titulo': "Nome do titulo 5", 'data': '25/07/2022'}
+            ]
+        }
+        return render(request,'tituloAtual.html', c)
+        # print(list(eh_estudante)[0].id)
+        # c={'id_user':list(eh_estudante)[0].id}
+        # return render(request,'tituloAtual.html', )
+    else:
+        c = {'nao_aluna':True}
+        return render(request,'home.html',c)
+    
 
+@csrf_protect 
 def criarPost(request):
     response_user= requests.get('http://127.0.0.1:8000/router/login/')
     data_user = response_user.json()
@@ -350,9 +377,21 @@ def criarPost(request):
     eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
     eh_professor =  models.Professor.objects.filter(cpf = user_ultimo["cpf"])
     if eh_estudante.exists():
-        return render(request,'criarPost.html')
+        print(list(eh_estudante)[0].id)
+        c={'id_user':list(eh_estudante)[0].id}
+        return render(request,'criarPost.html',c)
     elif eh_professor.exists():
-        return render(request,'criarPost_professora.html')
+        c={'id_user':list(eh_professor)[0].id}
+        return render(request,'criarPost_professora.html', c)
+
+# def visualizacao(request):
+    # print('display functio')
+    # d=upload.objects.last()
+    # test=sr.takeCommand(d.file.path)
+    # # will store the record in the database
+    # p = text.objects.create(texts=test)
+    # print(test)
+    # return render(request,'thanks.html',{'print':test})
 ################Páginas estáticas################
 #página estática de títulos
 def titulos(request):

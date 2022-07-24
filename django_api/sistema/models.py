@@ -16,8 +16,8 @@ class Usuario(models.Model):
        ordering = ['nome'] 
 
 
-    def __str__(self):
-        return self.nome
+    # def __str__(self):
+    #     return self.nome
 
 class Professor(Usuario):
     siape = models.IntegerField()
