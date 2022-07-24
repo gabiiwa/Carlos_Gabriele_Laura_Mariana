@@ -130,15 +130,23 @@ class TarefaViewSet(viewsets.ModelViewSet):
     #post
     def create(self, request):
         serializer = serializers.TarefaSerializer(data=request.data)
+        tarefas_todoMundo = []
         if serializer.is_valid(raise_exception=True):
-            #salva os dados no banco
-             serializer.save()
-             #pega os dados que foram enviados pela requisição post
-             data = request.data      
+            tarefas_todoMundo.append(serializer)
+            for i,estudante_obj in enumerate(models.Estudante.objects.all()):
+                print("\n Valor i:{}\n".format(i))
+                tarefas_todoMundo[i]["fkestudante"]=estudante_obj
+            for num_serilizer in tarefas_todoMundo:
+                num_serilizer.save()
+            return redirect("http://127.0.0.1:8000/home/")
+            # #salva os dados no banco
+            #  serializer.save()
+            #  #pega os dados que foram enviados pela requisição post
+            #  data = request.data      
 
-            #  lista
-            #  return Response(serializer.data)
-             return redirect("http://127.0.0.1:8000/home/")
+            # #  lista
+            # #  return Response(serializer.data)
+            #  return redirect("http://127.0.0.1:8000/home/")
 
 class ComentarioViewSet(viewsets.ModelViewSet):
     queryset = models.Comentario.objects.all().order_by('-dataHora')
@@ -354,10 +362,14 @@ def tituloAtual(request):
         obj_titulo_atual = lista.fktitulo
         pega_titulo = models.Titulo.objects.get(id=obj_titulo_atual.id).desc
         print("\n Aluna:{} \n Titulo atual:{}\n".format(list(eh_estudante)[0].nome,pega_titulo))
+        
+        #pegando as informações sobre pontos do próximo título
         prox_titulo_id = lista.fktitulo.id + 1 
         titulo_prox = models.Titulo.objects.get(id=prox_titulo_id)
         qtdPontos_prox = titulo_prox.qtdPontos
-        nomes_titulos = [models.Titulo.objects.get(id = listTitulo.id).desc for listTitulo in list_titulos]
+
+        #nomes dos títulos que a aluna já teve
+        nomes_titulos = [models.Titulo.objects.get(id = listTitulo.fktitulo_id).desc for listTitulo in list_titulos]
         c = {
             'aluna': {
                 'nome': list(eh_estudante)[0].nome,
@@ -393,10 +405,11 @@ def criarPost(request):
     if eh_estudante.exists():
         print(list(eh_estudante)[0].id)
         c={'id_user':list(eh_estudante)[0].id}
+        c['nao_aluna']=False
         return render(request,'criarPost.html',c)
     elif eh_professor.exists():
         c={'id_user':list(eh_professor)[0].id}
-        print("\n Id professora:{}\n".format(list(eh_professor)[0].id))
+        c['nao_aluna']=True
         return render(request,'criarPost_professora.html', c)
 
 # def visualizacao(request):
