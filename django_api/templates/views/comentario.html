@@ -49,6 +49,10 @@
         <div id="main">
             <div id="comentarios">
                 <!-- Autor, data, hora do comentário -->
+                {% for post in data %}
+                <!-- <span class="data-postagem">Postado em 28 de Junho de 2022</span> -->
+                <span class="data-postagem">Autora:{{post.nome}}. Postado em {{post.dataHora.date}} ás
+                    {{post.dataHora.time}}</span>
 
                 <!-- Caixinha para comentar -->
                 <div class="comentar">
