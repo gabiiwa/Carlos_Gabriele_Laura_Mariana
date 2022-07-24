@@ -44,7 +44,7 @@
         <div class="container">
           <div class="custom_heading-container">
             <h3 class=" ">
-              Ranking
+              Usuários do sistema
             </h3>
           </div>
 
@@ -54,13 +54,15 @@
                       <thead>
                           <tr>
                               <th scope="col">Nome</th>
+                              <th scope="col">Título</th>
                               <th scope="col">Pontos</th>
                           </tr>
                       </thead>
                       <tbody>
                           {% for item in historico %}
                           <tr>
-                              <td>{{item.nome}}</td>
+                              <td>{{item.titulo}}</td>
+                              <td>{{item.data}}</td>
                               <td>{{item.data}}</td>
                           </tr>
                           {% endfor %}
