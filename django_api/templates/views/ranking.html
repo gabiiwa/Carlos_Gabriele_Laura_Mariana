@@ -43,60 +43,26 @@
         <div class="container">
           <div class="custom_heading-container">
             <h3 class=" ">
-              Títulos
+              Ranking
             </h3>
           </div>
 
           <div class="layout_padding2-top">
-            <h3>Títulos do sistema</h3>
-            <div class="table-responsive-xl">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Faixa de Pontuação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Bonnie Prado Pinto</td>
-                            <td>De 0 a 840 pontos</td>
-                        </tr>
-                        <tr>
-                          <td>Angelica Ross</td>
-                          <td>De 841 a 1680 pontos</td>
-                        </tr>
-                        <tr>
-                          <td>Shirley Ann Jackson</td>
-                          <td>De 1681 a 3360 pontos</td>
-                        </tr>
-                        <tr>
-                          <td>Timnit Gebru</td>
-                          <td>De 3361 a 6720 pontos</td>
-                        </tr>
-                        <tr>
-                          <td>Marie Van Brittan Brown</td>
-                          <td>Acima de 6721 pontos</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-          <div class="layout_padding2-top">
-              <h3>Estudantes com o mesmo título que o seu</h3>
+              <h3>Ranking dos usuários</h3>
               <div class="table-responsive-xl">
                   <table class="table table-striped">
                       <thead>
                           <tr>
                               <th scope="col">Nome</th>
                               <th scope="col">Título</th>
+                              <th scope="col">Pontos</th>
                           </tr>
                       </thead>
                       <tbody>
                           {% for item in historico %}
                           <tr>
                               <td>{{item.titulo}}</td>
+                              <td>{{item.data}}</td>
                               <td>{{item.data}}</td>
                           </tr>
                           {% endfor %}
