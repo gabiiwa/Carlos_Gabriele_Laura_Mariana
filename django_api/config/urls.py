@@ -18,6 +18,7 @@ from django.urls import path, include
 from rest_framework import routers
 from sistema import views
 
+
 #declarando rotas para criar as urls das páginas que serão criadas
 router = routers.DefaultRouter()
 router.register(r'postagem', views.PostagemViewSet)
@@ -30,6 +31,8 @@ router.register(r'lista_professoras', views.ProfessorViewSet)
 router.register(r'titulo', views.criaTituloViewSet)
 router.register(r'lista_usuarios', views.UsuarioViewSet, basename ='lista_usuarios')
 
+router_tarefa = routers.DefaultRouter()
+router_tarefa.register(r'criaTarefa',views.TarefaViewSet)
 urlpatterns = [
     path('', views.login, name='login'),
     path('router/', include(router.urls)),
@@ -43,6 +46,8 @@ urlpatterns = [
     path('assistencia/', views.assistencia, name="assistencia"),
     path('professoras/', views.professoras, name="professoras"),
     path('criarPost/', views.criarPost, name="criarPostagem"),
+    
+    # path('teste',include(router_tarefa)),
     # path('visualizar/', views.visualizar, name='vizualizar'),
     
     
