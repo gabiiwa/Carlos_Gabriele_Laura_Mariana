@@ -16,7 +16,7 @@ import django
 
 # """"""Views"""""""
 class PostagemViewSet(viewsets.ModelViewSet):
-    queryset = models.Postagem.objects.all().order_by('dataHora')
+    queryset = models.Postagem.objects.all().order_by('-dataHora')
     serializer_class = serializers.PostagemSerializer
     #post
     def create(self, request):
@@ -25,6 +25,7 @@ class PostagemViewSet(viewsets.ModelViewSet):
              #pega o ultimo usuario
              ultimo_usuario = list(models.Login.objects.all().order_by('id'))[-1].cpf
              serializer.validated_data['fkusuario'] = models.Estudante.objects.get(cpf=ultimo_usuario)
+             serializer.validated_data['dataHora'] = django.utils.timezone.now()
              serializer.save()
              #####Estudante########
              #pega os dados que foram enviados pela requisição post
@@ -85,7 +86,7 @@ class PostagemViewSet(viewsets.ModelViewSet):
             #  return Response(serializer.data)
              return redirect("http://127.0.0.1:8000/home/")
 class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
-    queryset = models.PostagemArmazenada.objects.all().order_by('dataHora')
+    queryset = models.PostagemArmazenada.objects.all().order_by('-dataHora')
     serializer_class = serializers.PostagemArmazenadaSerializer
     def create(self, request):
         serializer = serializers.PostagemArmazenadaSerializer(data=request.data)
@@ -101,7 +102,7 @@ class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
         return redirect("http://127.0.0.1:8000/home/")
     def list(self, request):
         #precisa comparar o dia e hora 
-        queryset = models.PostagemArmazenada.objects.all().order_by('dataHora')
+        queryset = models.PostagemArmazenada.objects.all().order_by('-dataHora')
         serializer = serializers.PostagemArmazenadaSerializer(queryset, many=True)
         data_send = serializer.data
         #guarda as postagens que a data de postagem for menor que a data atual
@@ -124,7 +125,7 @@ class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.data)
 class TarefaViewSet(viewsets.ModelViewSet):
-    queryset = models.Tarefa.objects.all().order_by('dataHora')
+    queryset = models.Tarefa.objects.all().order_by('-dataHora')
     serializer_class = serializers.TarefaSerializer
     #post
     def create(self, request):
@@ -140,7 +141,7 @@ class TarefaViewSet(viewsets.ModelViewSet):
              return redirect("http://127.0.0.1:8000/home/")
 
 class ComentarioViewSet(viewsets.ModelViewSet):
-    queryset = models.Comentario.objects.all().order_by('dataHora')
+    queryset = models.Comentario.objects.all().order_by('-dataHora')
     serializer_class = serializers.ComentarioSerializer
     #post
     def create(self, request):
@@ -325,6 +326,7 @@ def home(request):
         date = models.PostagemArmazenada.objects.get(id=post['fkusuario']).dataHora
         #transforma a data de str para o formato datetime
         post['dataHora']=date
+    
     data = data + data_prof
     return render(request, 'home.html', {'data': data})
 
@@ -343,20 +345,32 @@ def tituloAtual(request):
     data_user = response_user.json()
     user_ultimo = data_user[-1]
     eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
+    print("\n Aluna objeto:{}\n".format(eh_estudante))
     if eh_estudante.exists():
+        list_titulos = models.listaTitulo.objects.filter(fkestudante=list(eh_estudante)[0]).order_by('-dataHora')
+        print("\n Lista de Títulos de uma aluna:{}\n".format(list_titulos))
+        #pega o titulo mais novo
+        lista = list_titulos[0]
+        obj_titulo_atual = lista.fktitulo
+        pega_titulo = models.Titulo.objects.get(id=obj_titulo_atual.id).desc
+        print("\n Aluna:{} \n Titulo atual:{}\n".format(list(eh_estudante)[0].nome,pega_titulo))
+        prox_titulo_id = lista.fktitulo.id + 1 
+        titulo_prox = models.Titulo.objects.get(id=prox_titulo_id)
+        qtdPontos_prox = titulo_prox.qtdPontos
+        nomes_titulos = [models.Titulo.objects.get(id = listTitulo.id).desc for listTitulo in list_titulos]
         c = {
             'aluna': {
                 'nome': list(eh_estudante)[0].nome,
-                'titulo': 'Nome do titulo',
-                'pontuacao': 15,
-                'pontos_para_prox_titulo': 6,
+                'titulo': pega_titulo,
+                'pontuacao': list(eh_estudante)[0].pontuacao,
+                'pontos_para_prox_titulo': qtdPontos_prox - list(eh_estudante)[0].pontuacao,
             },
-            'historico': [
-                {'titulo': "Nome do titulo 1", 'data': '21/07/2022'},
-                {'titulo': "Nome do titulo 2", 'data': '22/07/2022'},
-                {'titulo': "Nome do titulo 3", 'data': '23/07/2022'},
-                {'titulo': "Nome do titulo 4", 'data': '24/07/2022'},
-                {'titulo': "Nome do titulo 5", 'data': '25/07/2022'}
+            'historico': [ {'titulo':nomeTitulo, 'data': dateTime.dataHora} for nomeTitulo,dateTime in zip(nomes_titulos,list_titulos)
+                # {'titulo': "Nome do titulo 1", 'data': '21/07/2022'},
+                # {'titulo': "Nome do titulo 2", 'data': '22/07/2022'},
+                # {'titulo': "Nome do titulo 3", 'data': '23/07/2022'},
+                # {'titulo': "Nome do titulo 4", 'data': '24/07/2022'},
+                # {'titulo': "Nome do titulo 5", 'data': '25/07/2022'}
             ]
         }
         return render(request,'tituloAtual.html', c)
@@ -382,6 +396,7 @@ def criarPost(request):
         return render(request,'criarPost.html',c)
     elif eh_professor.exists():
         c={'id_user':list(eh_professor)[0].id}
+        print("\n Id professora:{}\n".format(list(eh_professor)[0].id))
         return render(request,'criarPost_professora.html', c)
 
 # def visualizacao(request):
