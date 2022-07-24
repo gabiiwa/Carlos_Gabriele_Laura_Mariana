@@ -61,3 +61,4 @@ class criaTituloSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Titulo
         fields = ['nome']       
+

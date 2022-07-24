@@ -132,12 +132,25 @@ class TarefaViewSet(viewsets.ModelViewSet):
         serializer = serializers.TarefaSerializer(data=request.data)
         tarefas_todoMundo = []
         if serializer.is_valid(raise_exception=True):
-            tarefas_todoMundo.append(serializer)
-            for i,estudante_obj in enumerate(models.Estudante.objects.all()):
-                print("\n Valor i:{}\n".format(i))
-                tarefas_todoMundo[i]["fkestudante"]=estudante_obj
-            for num_serilizer in tarefas_todoMundo:
-                num_serilizer.save()
+            
+            for estudante_obj in models.Estudante.objects.all():
+                
+                # serializer.validated_data["fkestudante"]=estudante_obj
+                # print("\n Valor seriliazer:{}\n".format(serializer.validated_data))
+                print("\n Valor seriliazer:{}\n".format(serializer.validated_data))
+                tarefa_objeto = models.Tarefa.objects.create(
+                                                            tipo=serializer.validated_data['tipo'],
+                                                            dataHora = django.utils.timezone.now().date(),
+                                                            fkestudante=estudante_obj
+                                                            )
+                
+                tarefa_objeto.save()
+                # serializer.save()
+                # models.Tarefa.objects.create(texts=test)
+            # for num_serilizer in tarefas_todoMundo:
+            #     # models.Tarefa.objects.create(texts=test)
+            #     print("\n Serializers:{}\n".format(num_serilizer))
+            #     num_serilizer.save()
             return redirect("http://127.0.0.1:8000/home/")
             # #salva os dados no banco
             #  serializer.save()
@@ -315,6 +328,9 @@ class VisualizacaoViewSet(viewsets.ModelViewSet):
 def home(request):
     response_aluna = requests.get('http://127.0.0.1:8000/router/postagem/')
     response_prof = requests.get('http://127.0.0.1:8000/router/postagem_armazenada/')
+    response_user= requests.get('http://127.0.0.1:8000/router/login/')
+    data_user = response_user.json()
+    user_ultimo = data_user[-1]
 
     data_aluna = response_aluna.json()
     data_prof = response_prof.json()
@@ -322,6 +338,14 @@ def home(request):
     estudantes = [models.Estudante.objects.get(id=dict_est['fkusuario']).nome for dict_est in data_aluna ]
     professora = [models.Professor.objects.get(id=dict_est['fkusuario']).nome for dict_est in data_prof ]
     
+    #identificar se é uma aluna que está logada
+    eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
+    c={}
+    if eh_estudante.exists():
+        c['nao_aluna'] = False
+    else:
+        c['nao_aluna'] = True
+
    #inserindo qual foi a estudante que realizoua postagem
     for post,i in zip(data_aluna,range(len(estudantes))):
         post['nome']=estudantes[i]
@@ -336,7 +360,7 @@ def home(request):
         post['dataHora']=date
     
     data = data + data_prof
-    return render(request, 'home.html', {'data': data})
+    return render(request, 'home.html', {'data': data,'c':c})
 
 @csrf_protect 
 def login(request):
@@ -385,6 +409,7 @@ def tituloAtual(request):
                 # {'titulo': "Nome do titulo 5", 'data': '25/07/2022'}
             ]
         }
+        c['nao_aluna'] = False
         return render(request,'tituloAtual.html', c)
         # print(list(eh_estudante)[0].id)
         # c={'id_user':list(eh_estudante)[0].id}
@@ -412,6 +437,7 @@ def criarPost(request):
         c['nao_aluna']=True
         return render(request,'criarPost_professora.html', c)
 
+
 # def visualizacao(request):
     # print('display functio')
     # d=upload.objects.last()
@@ -423,19 +449,73 @@ def criarPost(request):
 ################Páginas estáticas################
 #página estática de títulos
 def titulos(request):
-    return render(request,'titulos.html')
+    response_user= requests.get('http://127.0.0.1:8000/router/login/')
+    data_user = response_user.json()
+    user_ultimo = data_user[-1]
+    eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
+    c={}
+    if eh_estudante.exists():
+        c['nao_aluna'] = False
+    else:
+        c['nao_aluna'] = True
+    return render(request,'titulos.html',c)
 
 def tutorial(request):
-    return render(request,'tutorial.html')
+    response_user= requests.get('http://127.0.0.1:8000/router/login/')
+    data_user = response_user.json()
+    user_ultimo = data_user[-1]
+    eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
+    c={}
+    if eh_estudante.exists():
+        c['nao_aluna'] = False
+    else:
+        c['nao_aluna'] = True
+    return render(request,'tutorial.html',c)
 
 def sobre(request):
-    return render(request,'sobre.html')
+    response_user= requests.get('http://127.0.0.1:8000/router/login/')
+    data_user = response_user.json()
+    user_ultimo = data_user[-1]
+    eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
+    c={}
+    if eh_estudante.exists():
+        c['nao_aluna'] = False
+    else:
+        c['nao_aluna'] = True
+    return render(request,'sobre.html',c)
 
 def politicas(request):
-    return render(request,'politicas.html')
+    response_user= requests.get('http://127.0.0.1:8000/router/login/')
+    data_user = response_user.json()
+    user_ultimo = data_user[-1]
+    eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
+    c={}
+    if eh_estudante.exists():
+        c['nao_aluna'] = False
+    else:
+        c['nao_aluna'] = True
+    return render(request,'politicas.html',c)
 
 def assistencia(request):
-    return render(request,'assistenciaEstudantil.html')
+    response_user= requests.get('http://127.0.0.1:8000/router/login/')
+    data_user = response_user.json()
+    user_ultimo = data_user[-1]
+    eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
+    c={}
+    if eh_estudante.exists():
+        c['nao_aluna'] = False
+    else:
+        c['nao_aluna'] = True
+    return render(request,'assistenciaEstudantil.html',c)
 
 def professoras(request):
-    return render(request,'professoras.html')
+    response_user= requests.get('http://127.0.0.1:8000/router/login/')
+    data_user = response_user.json()
+    user_ultimo = data_user[-1]
+    eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
+    c={}
+    if eh_estudante.exists():
+        c['nao_aluna'] = False
+    else:
+        c['nao_aluna'] = True
+    return render(request,'professoras.html',c)
