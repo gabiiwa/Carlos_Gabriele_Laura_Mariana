@@ -32,7 +32,7 @@ Título:
 - Pontuação: 841 - 1680: Angelica Ross;
 - Pontuação: 1681 - 3360: Shirley Ann Jackson;
 - Pontuação: 3361 - 6720: Timnit Gebru;
-- Pontuação: 7560 - oo: Marie Van Brittan Brown.
+- Pontuação: 6721 - oo: Marie Van Brittan Brown.
 """
 
 class Titulo(models.Model):
