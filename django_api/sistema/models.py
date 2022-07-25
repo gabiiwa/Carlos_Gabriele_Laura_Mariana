@@ -116,7 +116,7 @@ class Tarefa(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
-        unique_together = ('tipo', 'dataHora')
+        unique_together = ('tipo', 'dataHora','fkestudante')
 
 
 """
