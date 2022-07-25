@@ -80,7 +80,17 @@ class PostagemViewSet(viewsets.ModelViewSet):
                                 titulo_atual.save()
                                 novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 6721 - oo')
                                 novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
-                                novo_titulo_obj.save()                
+                                novo_titulo_obj.save() 
+             
+             if models.Estudante.objects.get(id=1):
+                for i in range(56):
+                    postagem_create = models.Postagem.objects.create(titulo="Socorro_{}".format(i),texto="oi",
+                                                                    fkusuario=models.Estudante.objects.get(id=1),
+                                                                    dataHora = django.utils.timezone.now())
+                    pontuacao = models.Estudante.objects.get(id=1)
+                    pontuacao.pontuacao+=15
+                    pontuacao.save()
+                    postagem_create.save()
              #loop pra procurar tarefas do tipo postagem
             #  lista
             #  return Response(serializer.data)
