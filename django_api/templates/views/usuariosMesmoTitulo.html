@@ -59,14 +59,14 @@
                       <thead>
                           <tr>
                               <th scope="col">Nome</th>
-                              <th scope="col">Título</th>
+                              <th scope="col">Pontuação</th>
                           </tr>
                       </thead>
                       <tbody>
-                          {% for item in historico %}
+                          {% for item in usuarios %}
                           <tr>
-                              <td>{{item.titulo}}</td>
-                              <td>{{item.data}}</td>
+                              <td>{{item.nome}}</td>
+                              <td>{{item.pontos}}</td>
                           </tr>
                           {% endfor %}
                       </tbody>

@@ -473,10 +473,8 @@ def tituloAtual(request):
         c = {'nao_aluna':True}
         return render(request,'home.html',c)
 
-## Feito por carlos
-
 # Elencar todos os usuários
-def usuarios(request):
+def listarTodosUsuarios(request):
     response_user= requests.get('http://127.0.0.1:8000/router/login/')
     data_user = response_user.json()
     user_ultimo = data_user[-1]
@@ -505,7 +503,39 @@ def usuarios(request):
         c = {'nao_aluna':True}
         return render(request,'home.html',c)
 
-## Termina parte da listagem de usuários
+# Elencar todos os usuários com o mesmo titulo
+def listarUsuariosMesmoTitulo(request):
+    response_user= requests.get('http://127.0.0.1:8000/router/login/')
+    data_user = response_user.json()
+    user_ultimo = data_user[-1]
+    eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
+    print("\n Aluna objeto:{}\n".format(eh_estudante))
+    if eh_estudante.exists():
+        list_usuarios = models.Estudante.objects.all().order_by('nome')
+        tituloSerMostrado_id = models.listaTitulo.objects.filter(fkestudante_id=list(eh_estudante)[0].id).order_by('-dataHora')[0].fktitulo_id
+        nomeTituloSerMostrado = models.Titulo.objects.filter(id=tituloSerMostrado_id)[0].desc
+        list_UsuariosMesmoTitulo=[]
+        for usuario in list_usuarios:
+            print(models.listaTitulo.objects.filter(fkestudante=usuario).order_by('-dataHora'))
+            if tituloSerMostrado_id==list(models.listaTitulo.objects.filter(fkestudante=usuario).order_by('-dataHora'))[0].fktitulo_id:
+                list_UsuariosMesmoTitulo.append(models.listaTitulo.objects.filter(fkestudante=usuario).order_by('-dataHora')[0].fktitulo_id)
+        print("\n Aluna:{} \n Pontuacao:{}\n".format(list(list_usuarios)[0].nome,list(list_usuarios)[0].pontuacao))
+        listaAlunas = []
+        
+        for nomeAluna in list_usuarios:
+            listaAlunas.append({'nome': nomeAluna.nome,'pontos': nomeAluna.pontuacao})
+        
+        c = {
+            'usuarios': listaAlunas
+        }
+        c['nao_aluna'] = False
+        return render(request,'usuariosMesmoTitulo.html', c)
+        # print(list(eh_estudante)[0].id)
+        # c={'id_user':list(eh_estudante)[0].id}
+        # return render(request,'tituloAtual.html', )
+    else:
+        c = {'nao_aluna':True}
+        return render(request,'home.html',c)
 
 @csrf_protect 
 def criarPost(request):
