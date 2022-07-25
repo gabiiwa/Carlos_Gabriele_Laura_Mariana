@@ -537,6 +537,32 @@ def listarUsuariosMesmoTitulo(request):
         c = {'nao_aluna':True}
         return render(request,'home.html',c)
 
+# Elencar todos os usuários com o mesmo titulo
+def ranking(request):
+    response_user= requests.get('http://127.0.0.1:8000/router/login/')
+    data_user = response_user.json()
+    user_ultimo = data_user[-1]
+    eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
+    print("\n Aluna objeto:{}\n".format(eh_estudante))
+    if eh_estudante.exists():
+        list_usuarios = models.Estudante.objects.all().order_by('-pontuacao')
+        listaAlunas = []
+        
+        for nomeAluna in list_usuarios:
+            listaAlunas.append({'nome': nomeAluna.nome,'pontos': nomeAluna.pontuacao})
+        
+        c = {
+            'usuarios': listaAlunas
+        }
+        c['nao_aluna'] = False
+        return render(request,'ranking.html', c)
+        # print(list(eh_estudante)[0].id)
+        # c={'id_user':list(eh_estudante)[0].id}
+        # return render(request,'tituloAtual.html', )
+    else:
+        c = {'nao_aluna':True}
+        return render(request,'home.html',c)
+
 @csrf_protect 
 def criarPost(request):
     response_user= requests.get('http://127.0.0.1:8000/router/login/')

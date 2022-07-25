@@ -48,6 +48,7 @@ urlpatterns = [
     path('assistencia/', views.assistencia, name="assistencia"),
     path('professoras/', views.professoras, name="professoras"),
     path('criarPost/', views.criarPost, name="criarPostagem"),
+    path('ranking/', views.ranking, name="ranking"),
     
     # path('teste',include(router_tarefa)),
     # path('visualizar/', views.visualizar, name='vizualizar'),
