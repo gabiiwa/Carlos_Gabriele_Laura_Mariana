@@ -48,8 +48,8 @@ h1 {
     font-size: 2.5em;
 }
 
-a {
-    text-decoration: none;
+p {
+    text-align: center;
 }
 
 a:link, a:visited {
@@ -79,10 +79,4 @@ a:hover {
     border-color: #BA55D3 !important;
     color: #BA55D3 !important;
     font-weight: bold;
-}
-
-.form-floating {
-    color:#808080 !important;
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
 }
