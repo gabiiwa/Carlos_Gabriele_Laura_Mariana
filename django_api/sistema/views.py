@@ -417,7 +417,40 @@ def tituloAtual(request):
     else:
         c = {'nao_aluna':True}
         return render(request,'home.html',c)
-    
+
+## Feito por carlos
+
+# Elencar todos os usuários
+def usuarios(request):
+    response_user= requests.get('http://127.0.0.1:8000/router/login/')
+    data_user = response_user.json()
+    user_ultimo = data_user[-1]
+    eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
+    print("\n Aluna objeto:{}\n".format(eh_estudante))
+    if eh_estudante.exists():
+        list_usuarios = models.Estudante.objects.order_by('nome')
+        list_listaTitulo=[]
+        for usuario in list_usuarios:
+            list_listaTitulo.append(models.listaTitulo.objects.filter(fkestudante=usuario).order_by('-dataHora')[0].fktitulo_id)
+        print("\n Aluna:{} \n Pontuacao:{}\n".format(list(list_usuarios)[0].nome,list(list_usuarios)[0].pontuacao))
+        listaAlunas = []
+        
+        for nomeAluna,id_titulo in zip(list_usuarios,list_listaTitulo):
+            listaAlunas.append({'nome': nomeAluna.nome,'pontos': nomeAluna.pontuacao,'titulo':models.Titulo.objects.get(id=id_titulo).desc})
+        
+        c = {
+            'usuarios': listaAlunas
+        }
+        c['nao_aluna'] = False
+        return render(request,'usuarios.html', c)
+        # print(list(eh_estudante)[0].id)
+        # c={'id_user':list(eh_estudante)[0].id}
+        # return render(request,'tituloAtual.html', )
+    else:
+        c = {'nao_aluna':True}
+        return render(request,'home.html',c)
+
+## Termina parte da listagem de usuários
 
 @csrf_protect 
 def criarPost(request):
