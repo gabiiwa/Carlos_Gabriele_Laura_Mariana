@@ -1,0 +1,96 @@
+/* Elementos */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 16px;
+    font-family: "Arial Rounded MT Bold", Arial, Helvetica, sans-serif !important;
+    background-color: #FFFAFA;
+}
+
+/* Ids */
+
+#cabecalho {
+    background-color: #DDA0DD;
+    padding: 15px;
+    text-align: center;
+}
+
+#logo, #menu {
+    padding: 10px;
+}
+
+#main {
+    width: 920px;
+    margin: 0 auto;
+}
+
+#conteudo {
+    width: 660px;
+    float: left;
+    margin-bottom: 203px;
+}
+
+#area-lateral {
+    width: 240px;
+    float: right;
+}
+
+#rodape {
+    clear: both;
+    background-color: #CCCCCC;
+    text-align: center;
+    padding: 15px;
+}
+
+/* Tags */
+
+h1 {
+    color: #BA55D3;
+    font-size: 2.5em;
+}
+
+h2 {
+    color: #4B0082;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:link, a:visited {
+    color: #4B0082;
+    padding: 8px 12px;
+}
+
+a:hover {
+    color: #8B008B;
+    background-color: #F5F5F5;
+}
+
+/* Classes */
+
+.tarefa-atual {
+    margin-top: 20px;
+    background-color: #FFFFFF;
+}
+.historico-tarefas-concluidas {
+    margin-top: 20px;
+    font-size: 0.8em;
+    display: block;
+}
+.lista-tarefas {
+    display: block;
+    border-top: 1px solid grey;
+}
+.item-lista-tarefas {
+    background-color: #FAFAFA;
+    padding: 5px;
+    margin-bottom: 0.4em;
+}
+.item-p-tipo {
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}

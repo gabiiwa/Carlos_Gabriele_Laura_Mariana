@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="pt-br">
+    
+    <head>
+        <title>SigaComElas</title>
+        <meta charset="utf-8">
+        <!-- <link rel="stylesheet" href="../static/css/home.css"> -->
+        <!-- <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"> -->
+        <link rel="stylesheet" href="{% static 'css/tarefas.css'%}">
+
+	<!-- bootstrap core css -->
+ 	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+
+  	<!-- responsive style -->
+  	<!-- <link href="../static/css/responsive.css" rel="stylesheet" /> -->
+  	<link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+	
+	<!-- Custom styles for this template -->
+	<link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    </head>
+
+    <body>
+        {% include 'cabecalho.html' %}
+
+        <div id="main">
+            <div id="conteudo">
+                <div class="tarefa-atual">
+                    <h3>Tarefa de hoje</h3>
+                    <p>Tipo: {{atual.tipo}}</p> 
+                    <p>Pontos: {{atual.pontos}}</p> 
+                </div>
+                <div class="historico-tarefas-concluidas">
+                    <h3>Tarefas cumpridas</h3>
+                    <div class="lista-tarefas">
+                        {% for item in historico %}
+                        <div class="item-lista-tarefas">
+                            <p class="item-p-tipo">Tipo: {{item.tipo}}</p>
+                            <p class="item-p-tipo">Pontos: {{item.pontos}}</p>
+                            <p class="item-p-tipo">Data/hora: {{item.data}}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div id="area-lateral">
+                area lateral
+            </div> -->
+
+            <div id="rodape">
+                Todos os direitos reservados
+            </div>
+        </div>
+    </body>
+</html>
