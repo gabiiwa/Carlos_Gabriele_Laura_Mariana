@@ -49,9 +49,11 @@ urlpatterns = [
     path('professoras/', views.professoras, name="professoras"),
     path('criarPost/', views.criarPost, name="criarPostagem"),
     path('ranking/', views.ranking, name="ranking"),
-    
+    path('visualizar/int:id_usuario/int:id_postagem', views.visualizacao, name='vizualizar'),
+    path('comentario/int:id_usuario/boolean:estudante/int:id_postagem', views.comentario, name="comentario"),
+    path('tarefas/', views.tarefas, name="tarefas"),
     # path('teste',include(router_tarefa)),
-    # path('visualizar/', views.visualizar, name='vizualizar'),
+    # path('visualizar/int:id', views.visualizar, name='vizualizar'),
     
     
 ]
