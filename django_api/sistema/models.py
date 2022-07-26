@@ -126,7 +126,8 @@ Comentario:
 """
 class Comentario(models.Model):
     texto = models.CharField(max_length=10000)
-    fkestudante = models.ForeignKey(Estudante,on_delete=models.CASCADE)     
+    fkestudante = models.ForeignKey(Estudante,on_delete=models.CASCADE, blank=True, null=True)
+    fkprofessor = models.ForeignKey(Professor,on_delete=models.CASCADE, blank=True, null=True)   
     dataHora = models.DateTimeField(auto_now_add = True)
     qtdPontos = models.IntegerField(default=10)
     #fkpostagem = models.ForeignKey(Postagem,on_delete=models.CASCADE, blank=True, null=True)
@@ -170,7 +171,7 @@ Visualização:
 """
 class Visualizacao(models.Model):
     foiVisualizado = models.BooleanField(default=False)
-    ehPontoExtra = models.BooleanField(default=False)
+    fkusuario = models.ForeignKey(Professor,on_delete=models.CASCADE)
     qtdPontos = models.IntegerField()
     fkpostagem = models.ForeignKey(Postagem,on_delete=models.CASCADE, blank=True, null=True)
     fkprogramada = models.ForeignKey(PostagemArmazenada,on_delete=models.CASCADE, blank=True, null=True)  
