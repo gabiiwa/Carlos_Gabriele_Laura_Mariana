@@ -30,18 +30,18 @@
             <div id="conteudo">
                 <div class="tituloAtual">
                     <h3>Título atual</h3>
-                    <p>Titulo: {{aluna.titulo}}</p> 
-                    <p>Estudante: {{aluna.nome}}</p> 
-                    <p>Pontuação atual: {{aluna.pontuacao}}</p> 
-                    <p>Quantos pontos faltam pra trocar de título: {{aluna.pontos_para_prox_titulo}}</p> 
+                    <p>Titulo: {{c.aluna.titulo}}</p> 
+                    <p>Estudante: {{c.aluna.nome}}</p> 
+                    <p>Pontuação atual: {{c.aluna.pontuacao}}</p> 
+                    <p>Quantos pontos faltam pra trocar de título: {{c.aluna.pontos_para_prox_titulo}}</p> 
                 </div>
 
-                <div id="sobre">
+                <!-- <div id="sobre">
                     <p><br/>Titulo: {{aluna.titulo}}<br/>
                     Estudante: {{aluna.nome}}<br/>
                     Pontuação atual: {{aluna.pontuacao}}<br/>
                     Quantos pontos faltam pra trocar de título: {{aluna.pontos_para_prox_titulo}}<br/><br/><br/></p>
-                </div>
+                </div> -->
 
                 <div class="custom_heading-container">
                     <h3 class=" ">
@@ -59,7 +59,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for item in historico %}
+                            {% for item in c.historico %}
                             <tr>
                                 <td>{{item.titulo}}</td>
                                 <td>{{item.data}}</td>
