@@ -9,8 +9,12 @@
 
         <link rel="stylesheet" href="{% static 'css/tituloAtual.css'%}">
 
-	<!-- bootstrap core css -->
- 	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+<head>
+    <title>Seu Título Atual | SigaComElas</title>
+    <meta charset="utf-8">
+    <!-- <link rel="stylesheet" href="../static/css/home.css"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/tituloAtual.css'%}">
 
   	<!-- responsive style -->
   	<link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
@@ -31,36 +35,51 @@
                     <p>Pontuação atual: {{aluna.pontuacao}}</p> 
                     <p>Quantos pontos faltam pra trocar de título: {{aluna.pontos_para_prox_titulo}}</p> 
                 </div>
-                <div class="historicoTitulos">
-                    <h3>Histórico de Títulos</h3>
-                    <div class="table-responsive-xl">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Título</th>
-                                    <th scope="col">Data</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for item in historico %}
-                                <tr>
-                                    <td>{{item.titulo}}</td>
-                                    <td>{{item.data}}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+
+                <div id="sobre">
+                    <p><br/>Titulo: {{aluna.titulo}}<br/>
+                    Estudante: {{aluna.nome}}<br/>
+                    Pontuação atual: {{aluna.pontuacao}}<br/>
+                    Quantos pontos faltam pra trocar de título: {{aluna.pontos_para_prox_titulo}}<br/><br/><br/></p>
+                </div>
+
+                <div class="custom_heading-container">
+                    <h3 class=" ">
+                        Histórico de títulos
+                    </h3>
+                </div>
+
+                <div class="table-responsive-xl">
+                    <br /><br />
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Título</th>
+                                <th scope="col">Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in historico %}
+                            <tr>
+                                <td>{{item.titulo}}</td>
+                                <td>{{item.data}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </section>
+    </div>
 
-            <!-- <div id="area-lateral">
+    <!-- <div id="area-lateral">
                 area lateral
             </div> -->
 
-            <div id="rodape">
-                Todos os direitos reservados
-            </div>
-        </div>
-    </body>
+    <div id="rodape">
+        Todos os direitos reservados
+    </div>
+    </div>
+</body>
+
 </html>

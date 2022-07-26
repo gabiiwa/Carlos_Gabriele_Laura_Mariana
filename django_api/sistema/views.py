@@ -554,13 +554,12 @@ def listarUsuariosMesmoTitulo(request):
         nomeTituloSerMostrado = models.Titulo.objects.filter(id=tituloSerMostrado_id)[0].desc
         list_UsuariosMesmoTitulo=[]
         for usuario in list_usuarios:
-            print(models.listaTitulo.objects.filter(fkestudante=usuario).order_by('-dataHora'))
             if tituloSerMostrado_id==list(models.listaTitulo.objects.filter(fkestudante=usuario).order_by('-dataHora'))[0].fktitulo_id:
-                list_UsuariosMesmoTitulo.append(models.listaTitulo.objects.filter(fkestudante=usuario).order_by('-dataHora')[0].fktitulo_id)
+                list_UsuariosMesmoTitulo.append(models.listaTitulo.objects.filter(fkestudante=usuario).order_by('-dataHora')[0].fkestudante)
         print("\n Aluna:{} \n Pontuacao:{}\n".format(list(list_usuarios)[0].nome,list(list_usuarios)[0].pontuacao))
         listaAlunas = []
         
-        for nomeAluna in list_usuarios:
+        for nomeAluna in list_UsuariosMesmoTitulo:
             listaAlunas.append({'nome': nomeAluna.nome,'pontos': nomeAluna.pontuacao})
         
         c = {

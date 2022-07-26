@@ -3,23 +3,23 @@
 
 <html lang="pt-br">
 
-  <head>
-        <title>SigaComElas</title>
-        <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
-        <!-- <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"> -->
-        <!-- <link rel="stylesheet" href="{% static 'css/home.css'%}"> -->
+<head>
+  <title>Lista de Usuários com o Mesmo Título que o Seu | SigaComElas</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+  <!-- <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"> -->
+  <!-- <link rel="stylesheet" href="{% static 'css/home.css'%}"> -->
 
-        <!-- bootstrap core css -->
-        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
 
-        <!-- responsive style -->
-        <!-- <link href="../static/css/responsive.css" rel="stylesheet" /> -->
-        <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <!-- <link href="../static/css/responsive.css" rel="stylesheet" /> -->
+  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
 
-        <!-- Custom styles for this template -->
-        <link href="{% static 'css/style.css' %}" rel="stylesheet" />
-  </head>
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+</head>
 
   <body>
     {% include 'cabecalho.html' %}
@@ -33,32 +33,33 @@
             </h3>
           </div>
 
-          <div class="layout_padding2-top">
-              <div class="table-responsive-xl">
-                  <table class="table table-striped">
-                      <thead>
-                          <tr>
-                              <th scope="col">Nome</th>
-                              <th scope="col">Pontuação</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          {% for item in usuarios %}
-                          <tr>
-                              <td>{{item.nome}}</td>
-                              <td>{{item.pontos}}</td>
-                          </tr>
-                          {% endfor %}
-                      </tbody>
-                  </table>
-              </div>
+        <div class="layout_padding2-top">
+          <div class="table-responsive-xl">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Pontuação</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in usuarios %}
+                <tr>
+                  <td>{{item.nome}}</td>
+                  <td>{{item.pontos}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
+  </div>
 
-    <div id="rodape">
-      Todos os direitos reservados
-    </div>
-  </body>
+  <div id="rodape">
+    Todos os direitos reservados
+  </div>
+</body>
+
 </html>
