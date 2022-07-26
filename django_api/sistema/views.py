@@ -82,60 +82,60 @@ class PostagemViewSet(viewsets.ModelViewSet):
                                 novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
                                 novo_titulo_obj.save() 
              
-             if models.Estudante.objects.get(id=1):
-                for i in range(56):
-                    postagem_create = models.Postagem.objects.create(titulo="Socorro_{}".format(i),texto="oi",
-                                                                    fkusuario=models.Estudante.objects.get(id=1),
-                                                                    dataHora = django.utils.timezone.now())
-                    postagem_create.save()
-                    #atualizando a pontuação
-                    estudante_obj.pontuacao += 15
-                    estudante_obj.save()
+            #  if models.Estudante.objects.get(id=1):
+            #     for i in range(56):
+            #         postagem_create = models.Postagem.objects.create(titulo="Socorro_{}".format(i),texto="oi",
+            #                                                         fkusuario=models.Estudante.objects.get(id=1),
+            #                                                         dataHora = django.utils.timezone.now())
+            #         postagem_create.save()
+            #         #atualizando a pontuação
+            #         estudante_obj.pontuacao += 15
+            #         estudante_obj.save()
 
-                    data_atual = django.utils.timezone.now()
-                    tarefa_check = models.Tarefa.objects.filter(fkestudante = estudante_id, dataHora = data_atual, tipo = 'DC3')
-                    if tarefa_check.exists():
-                        tarefa_obj = models.Tarefa.objects.get(fkestudante = estudante_id, dataHora = data_atual, tipo = 'DC3')
-                        if tarefa_obj.cumprida == 0:
-                            tarefa_obj.cumprida = 1
-                            tarefa_obj.save()
-                            estudante_obj.pontuacao += 5 # estudante ganha 5 pontos por cumprir a tarefa
-                            estudante_obj.save()
+            #         data_atual = django.utils.timezone.now()
+            #         tarefa_check = models.Tarefa.objects.filter(fkestudante = estudante_id, dataHora = data_atual, tipo = 'DC3')
+            #         if tarefa_check.exists():
+            #             tarefa_obj = models.Tarefa.objects.get(fkestudante = estudante_id, dataHora = data_atual, tipo = 'DC3')
+            #             if tarefa_obj.cumprida == 0:
+            #                 tarefa_obj.cumprida = 1
+            #                 tarefa_obj.save()
+            #                 estudante_obj.pontuacao += 5 # estudante ganha 5 pontos por cumprir a tarefa
+            #                 estudante_obj.save()
 
 
-                    # atualizando o título
-                    titulo_atual = models.listaTitulo.objects.get(fkestudante = estudante_id, tituloAtual = 1)
-                    titulo_atual_obj = titulo_atual.fktitulo
-                    titulo_atual_nome = titulo_atual_obj.nome
+            #         # atualizando o título
+            #         titulo_atual = models.listaTitulo.objects.get(fkestudante = estudante_id, tituloAtual = 1)
+            #         titulo_atual_obj = titulo_atual.fktitulo
+            #         titulo_atual_nome = titulo_atual_obj.nome
 
-                    if estudante_obj.pontuacao > 840:
-                        if (estudante_obj.pontuacao <= 1680) and (titulo_atual_nome != 'Pontuação: 841 - 1680'):
-                            titulo_atual.tituloAtual = 0
-                            titulo_atual.save()
-                            novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 841 - 1680')
-                            novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
-                            novo_titulo_obj.save()
-                        else:
-                            if (estudante_obj.pontuacao > 1680) and (estudante_obj.pontuacao <= 3360) and (titulo_atual_nome != 'Pontuação: 1681 - 3360'):
-                                titulo_atual.tituloAtual = 0
-                                titulo_atual.save()
-                                novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 1681 - 3360')
-                                novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
-                                novo_titulo_obj.save()
-                            else:
-                                if (estudante_obj.pontuacao > 3360) and (estudante_obj.pontuacao <= 6720) and (titulo_atual_nome != 'Pontuação: 3361 - 6720'):
-                                    titulo_atual.tituloAtual = 0
-                                    titulo_atual.save()
-                                    novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 3361 - 6720')
-                                    novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
-                                    novo_titulo_obj.save()
-                                else:
-                                    if (estudante_obj.pontuacao > 6720) and (titulo_atual_nome != 'Pontuação: 6721 - oo'):
-                                        titulo_atual.tituloAtual = 0
-                                        titulo_atual.save()
-                                        novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 6721 - oo')
-                                        novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
-                                        novo_titulo_obj.save() 
+            #         if estudante_obj.pontuacao > 840:
+            #             if (estudante_obj.pontuacao <= 1680) and (titulo_atual_nome != 'Pontuação: 841 - 1680'):
+            #                 titulo_atual.tituloAtual = 0
+            #                 titulo_atual.save()
+            #                 novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 841 - 1680')
+            #                 novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
+            #                 novo_titulo_obj.save()
+            #             else:
+            #                 if (estudante_obj.pontuacao > 1680) and (estudante_obj.pontuacao <= 3360) and (titulo_atual_nome != 'Pontuação: 1681 - 3360'):
+            #                     titulo_atual.tituloAtual = 0
+            #                     titulo_atual.save()
+            #                     novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 1681 - 3360')
+            #                     novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
+            #                     novo_titulo_obj.save()
+            #                 else:
+            #                     if (estudante_obj.pontuacao > 3360) and (estudante_obj.pontuacao <= 6720) and (titulo_atual_nome != 'Pontuação: 3361 - 6720'):
+            #                         titulo_atual.tituloAtual = 0
+            #                         titulo_atual.save()
+            #                         novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 3361 - 6720')
+            #                         novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
+            #                         novo_titulo_obj.save()
+            #                     else:
+            #                         if (estudante_obj.pontuacao > 6720) and (titulo_atual_nome != 'Pontuação: 6721 - oo'):
+            #                             titulo_atual.tituloAtual = 0
+            #                             titulo_atual.save()
+            #                             novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 6721 - oo')
+            #                             novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
+            #                             novo_titulo_obj.save() 
              #loop pra procurar tarefas do tipo postagem
             #  lista
             #  return Response(serializer.data)
@@ -224,64 +224,72 @@ class ComentarioViewSet(viewsets.ModelViewSet):
         serializer = serializers.ComentarioSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             
-            #salva os dados no banco
-             serializer.save()
              #pega os dados que foram enviados pela requisição post
              data = request.data
-             #pega o id correspondente à estudante que fez o post para poder acessar a pontuação
-             estudante_id = data.get("fkestudante")
-             estudante_obj = models.Estudante.objects.get(id=estudante_id)
-             #atualizando a pontuação
-             estudante_obj.pontuacao += 10
-             estudante_obj.save()
+             #pegando ultimo usuario
+             ultimo_cpf = (list(models.Login.objects.all())[-1].cpf,)
+             cpf_estudantes = list(models.Estudante.objects.all().values_list('cpf'))
+             print("\n ultimo cpf:{} \n Cpf alunas:{}\n".format(ultimo_cpf,cpf_estudantes))
 
-             data_atual = django.utils.timezone.now()
-             tarefa_check = models.Tarefa.objects.filter(fkestudante = estudante_id, dataHora = data_atual, tipo = 'DC2')
-             
-             if tarefa_check.exists():
-                tarefa_obj = models.Tarefa.objects.get(fkestudante = estudante_id, dataHora = data_atual, tipo = 'DC2')
-                if tarefa_obj.cumprida == 0:
-                    tarefa_obj.cumprida = 1
-                    tarefa_obj.save()
-                    estudante_obj.pontuacao += 5 # estudante ganha 5 pontos por cumprir a tarefa
-                    estudante_obj.save()
+             if ultimo_cpf in cpf_estudantes:
+                #pega o id correspondente à estudante que fez o post para poder acessar a pontuação
+                estudante_id = data.get("fkestudante")
+                estudante_obj = models.Estudante.objects.get(id=estudante_id)
+                #atualizando a pontuação
+                estudante_obj.pontuacao += 10
+                estudante_obj.save()
 
-             # atualizando o título
-             titulo_atual = models.listaTitulo.objects.get(fkestudante = estudante_id, tituloAtual = 1)
-             titulo_atual_obj = titulo_atual.fktitulo
-             titulo_atual_nome = titulo_atual_obj.nome
+                data_atual = django.utils.timezone.now()
+                tarefa_check = models.Tarefa.objects.filter(fkestudante = estudante_id, dataHora = data_atual, tipo = 'DC2')
+                
+                if tarefa_check.exists():
+                    tarefa_obj = models.Tarefa.objects.get(fkestudante = estudante_id, dataHora = data_atual, tipo = 'DC2')
+                    if tarefa_obj.cumprida == 0:
+                        tarefa_obj.cumprida = 1
+                        tarefa_obj.save()
+                        estudante_obj.pontuacao += 5 # estudante ganha 5 pontos por cumprir a tarefa
+                        estudante_obj.save()
 
-             if estudante_obj.pontuacao > 840:
-                if (estudante_obj.pontuacao <= 1680) and (titulo_atual_nome != 'Pontuação: 841 - 1680'):
-                    titulo_atual.tituloAtual = 0
-                    titulo_atual.save()
-                    novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 841 - 1680')
-                    novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
-                    novo_titulo_obj.save()
-                else:
-                    if (estudante_obj.pontuacao > 1680) and (estudante_obj.pontuacao <= 3360) and (titulo_atual_nome != 'Pontuação: 1681 - 3360'):
+                # atualizando o título
+                titulo_atual = models.listaTitulo.objects.get(fkestudante = estudante_id, tituloAtual = 1)
+                titulo_atual_obj = titulo_atual.fktitulo
+                titulo_atual_nome = titulo_atual_obj.nome
+
+                if estudante_obj.pontuacao > 840:
+                    if (estudante_obj.pontuacao <= 1680) and (titulo_atual_nome != 'Pontuação: 841 - 1680'):
                         titulo_atual.tituloAtual = 0
                         titulo_atual.save()
-                        novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 1681 - 3360')
+                        novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 841 - 1680')
                         novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
                         novo_titulo_obj.save()
                     else:
-                        if (estudante_obj.pontuacao > 3360) and (estudante_obj.pontuacao <= 6720) and (titulo_atual_nome != 'Pontuação: 3361 - 6720'):
+                        if (estudante_obj.pontuacao > 1680) and (estudante_obj.pontuacao <= 3360) and (titulo_atual_nome != 'Pontuação: 1681 - 3360'):
                             titulo_atual.tituloAtual = 0
                             titulo_atual.save()
-                            novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 3361 - 6720')
+                            novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 1681 - 3360')
                             novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
                             novo_titulo_obj.save()
                         else:
-                            if (estudante_obj.pontuacao > 6720) and (titulo_atual_nome != 'Pontuação: 6721 - oo'):
+                            if (estudante_obj.pontuacao > 3360) and (estudante_obj.pontuacao <= 6720) and (titulo_atual_nome != 'Pontuação: 3361 - 6720'):
                                 titulo_atual.tituloAtual = 0
                                 titulo_atual.save()
-                                novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 6721 - oo')
+                                novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 3361 - 6720')
                                 novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
-                                novo_titulo_obj.save()              
+                                novo_titulo_obj.save()
+                            else:
+                                if (estudante_obj.pontuacao > 6720) and (titulo_atual_nome != 'Pontuação: 6721 - oo'):
+                                    titulo_atual.tituloAtual = 0
+                                    titulo_atual.save()
+                                    novo_titulo = models.Titulo.objects.get(nome = 'Pontuação: 6721 - oo')
+                                    novo_titulo_obj = models.listaTitulo.objects.create(fktitulo = novo_titulo, fkestudante = estudante_obj)
+                                    novo_titulo_obj.save()  
+                else:
+                    serializer.validated_data["fkprofessor"] = models.Professor.objects.get(cpf=ultimo_cpf)
 
             #  lista
             #  return Response(serializer.data)
+             #salva os dados no banco
+             serializer.save()
              return redirect("http://127.0.0.1:8000/home/")
 
 class LoginViewSet(viewsets.ModelViewSet):
@@ -371,11 +379,6 @@ class UsuarioViewSet(viewsets.ModelViewSet):
     
   
 class VisualizacaoViewSet(viewsets.ModelViewSet):
-    # foiVisualizado = models.BooleanField(default=False)
-    # ehPontoExtra = models.BooleanField(default=False)
-    # qtdPontos = models.IntegerField()
-    # fkpostagem = models.ForeignKey(Postagem,on_delete=models.CASCADE, blank=True, null=True)
-    # fkprogramada = models.ForeignKey(PostagemArmazenada,on_delete=models.CASCADE, blank=True, null=True) 
     queryset = models.Visualizacao.objects.all()
     serializer_class = serializers.VisualizacaoSerializer
 
@@ -393,6 +396,8 @@ def home(request):
     estudantes = [models.Estudante.objects.get(id=dict_est['fkusuario']).nome for dict_est in data_aluna ]
     professora = [models.Professor.objects.get(id=dict_est['fkusuario']).nome for dict_est in data_prof ]
     
+    # id_user_estudante = [models.Estudante.objects.get(nome=nome_estudante).id for nome_estudante in estudantes]
+    # id_user_professora = [models.Professor.objects.get(nome=nome_professor).id for nome_professor in professora]
     #identificar se é uma aluna que está logada
     eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
     c={}
@@ -401,21 +406,63 @@ def home(request):
     else:
         c['nao_aluna'] = True
 
-   #inserindo qual foi a estudante que realizoua postagem
-    for post,i in zip(data_aluna,range(len(estudantes))):
-        post['nome']=estudantes[i]
-        date = models.Postagem.objects.get(id=post['fkusuario']).dataHora
-        #transforma a data de str para o formato datetime
-        post['dataHora']=date
-    data = data_aluna
-    for post,i in zip(data_prof,range(len(professora))):
-        post['nome']=professora[i]
-        date = models.PostagemArmazenada.objects.get(id=post['fkusuario']).dataHora
-        #transforma a data de str para o formato datetime
-        post['dataHora']=date
     
-    data = data + data_prof
-    return render(request, 'home.html', {'data': data,'c':c})
+    #preenchendo com alunas
+    for i,aluna in enumerate(data_aluna):
+        print("\nAluna:{}\n".format(aluna))
+        aluna['nome'] = estudantes[i]
+        print('\n Nome da aluna:{}\n'.format(aluna['nome']))
+        aluna['estudante'] = True
+        aluna['dataHora'] = datetime.datetime.strptime(aluna['dataHora'][:19],"%Y-%m-%dT%H:%M:%S")
+    
+   
+   
+    #preenchendo com professora
+    for i,professora in enumerate(data_prof):
+        print("\nAluna:{}\n".format(aluna))
+        professora['nome'] = professora[i]
+        print('\n Nome da aluna:{}\n'.format(aluna['nome']))
+        professora['estudante'] = False
+        professora['dataHora'] = datetime.datetime.strptime(aluna['dataHora'][:19],"%Y-%m-%dT%H:%M:%S")
+
+    lista_users = data_aluna + data_prof
+    # for i in range(len(professora)):
+    #     postagem = list(models.PostagemArmazenada.objects.get(fkusuario_id=id_user_professora[i]).order_by('-dataHora'))
+    #     for cont_postagem in range(len(postagem)):
+    #         lista_user.append({'nome': professora[i], 
+    #                             'id_postagem': postagem[cont_postagem].id,
+    #                             'id_user': id_user_professora[i],
+    #                             'estudante':False,
+    #                             'dataHora': postagem[cont_postagem].dataHora,
+    #                             'titulo':postagem[cont_postagem].titulo,
+    #                             'texto':postagem[cont_postagem].texto})
+#    #inserindo qual foi a estudante que realizoua postagem
+#     for post,i in zip(data_aluna,range(len(estudantes))):
+#         postagem = models.Postagem.objects.get(fkusuario_id=post['fkusuario'])
+#         for cada_postagem in range(len(postagem)):
+#             post['nome']=estudantes[i]
+#             date = postagem[cada_postagem].dataHora
+#             #transforma a data de str para o formato datetime
+#             post['dataHora']=date
+#             post['id_user'] = id_user_estudante[i]
+#             post['id_postagem'] = postagem.id
+#     data = data_aluna
+#     for post,i in zip(data_prof,range(len(professora))):
+#         post['nome']=professora[i]
+#         postagem = models.PostagemArmazenada.objects.get(fkusuario_id=post['fkusuario']) 
+
+#         date = postagem.dataHora
+#         #transforma a data de str para o formato datetime
+#         post['dataHora']=date
+#         post['id_user'] = id_user_professora[i]
+#         post['id_postagem'] = postagem.id
+    # print("\n Id user:{}\n".format())
+    
+    print("\n lista_user:{}\n".format(lista_users))
+    # data = data + data_prof
+    # print("\n data:{}\n".format(data))
+    # print("\n Id da postagem:{}\n".format(lista_users['))
+    return render(request, 'home.html', {'data':lista_users,'c':c})
 
 @csrf_protect 
 def login(request):
@@ -457,21 +504,14 @@ def tituloAtual(request):
                 'pontos_para_prox_titulo': qtdPontos_prox - list(eh_estudante)[0].pontuacao,
             },
             'historico': [ {'titulo':nomeTitulo, 'data': dateTime.dataHora} for nomeTitulo,dateTime in zip(nomes_titulos,list_titulos)
-                # {'titulo': "Nome do titulo 1", 'data': '21/07/2022'},
-                # {'titulo': "Nome do titulo 2", 'data': '22/07/2022'},
-                # {'titulo': "Nome do titulo 3", 'data': '23/07/2022'},
-                # {'titulo': "Nome do titulo 4", 'data': '24/07/2022'},
-                # {'titulo': "Nome do titulo 5", 'data': '25/07/2022'}
+                
             ]
         }
         c['nao_aluna'] = False
-        return render(request,'tituloAtual.html', c)
-        # print(list(eh_estudante)[0].id)
-        # c={'id_user':list(eh_estudante)[0].id}
-        # return render(request,'tituloAtual.html', )
+        return render(request,'tituloAtual.html', {'c':c})
     else:
         c = {'nao_aluna':True}
-        return render(request,'home.html',c)
+        return render(request,'home.html',{'c':c})
 
 # Elencar todos os usuários
 def listarTodosUsuarios(request):
@@ -495,13 +535,11 @@ def listarTodosUsuarios(request):
             'usuarios': listaAlunas
         }
         c['nao_aluna'] = False
-        return render(request,'usuarios.html', c)
-        # print(list(eh_estudante)[0].id)
-        # c={'id_user':list(eh_estudante)[0].id}
-        # return render(request,'tituloAtual.html', )
+        return render(request,'usuarios.html', {'c':c})
+
     else:
         c = {'nao_aluna':True}
-        return render(request,'home.html',c)
+        return render(request,'home.html',{'c':c})
 
 # Elencar todos os usuários com o mesmo titulo
 def listarUsuariosMesmoTitulo(request):
@@ -529,13 +567,10 @@ def listarUsuariosMesmoTitulo(request):
             'usuarios': listaAlunas
         }
         c['nao_aluna'] = False
-        return render(request,'usuariosMesmoTitulo.html', c)
-        # print(list(eh_estudante)[0].id)
-        # c={'id_user':list(eh_estudante)[0].id}
-        # return render(request,'tituloAtual.html', )
+        return render(request,'usuariosMesmoTitulo.html', {'c':c})
     else:
         c = {'nao_aluna':True}
-        return render(request,'home.html',c)
+        return render(request,'home.html',{'c':c})
 
 # Elencar todos os usuários com o mesmo titulo
 def ranking(request):
@@ -555,13 +590,11 @@ def ranking(request):
             'usuarios': listaAlunas
         }
         c['nao_aluna'] = False
-        return render(request,'ranking.html', c)
-        # print(list(eh_estudante)[0].id)
-        # c={'id_user':list(eh_estudante)[0].id}
-        # return render(request,'tituloAtual.html', )
+        return render(request,'ranking.html', {'c':c})
+
     else:
         c = {'nao_aluna':True}
-        return render(request,'home.html',c)
+        return render(request,'home.html',{'c':c})
 
 @csrf_protect 
 def criarPost(request):
@@ -575,21 +608,63 @@ def criarPost(request):
         print(list(eh_estudante)[0].id)
         c={'id_user':list(eh_estudante)[0].id}
         c['nao_aluna']=False
-        return render(request,'criarPost.html',c)
+        return render(request,'criarPost.html',{'c':c})
     elif eh_professor.exists():
         c={'id_user':list(eh_professor)[0].id}
         c['nao_aluna']=True
-        return render(request,'criarPost_professora.html', c)
+        return render(request,'criarPost_professora.html', {'c':c})
+@csrf_protect 
+def comentario(request):
+    response_user= requests.get('http://127.0.0.1:8000/router/login/')
+    data_user = response_user.json()
+    user_ultimo = data_user[-1]
+    eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
+    c={}
+    if eh_estudante.exists():
+        c['nao_aluna'] = False
+    else:
+        c['nao_aluna'] = True
+
+    return render(request,'comentario.html',{'c':c})
 
 
-# def visualizacao(request):
-    # print('display functio')
-    # d=upload.objects.last()
-    # test=sr.takeCommand(d.file.path)
-    # # will store the record in the database
-    # p = text.objects.create(texts=test)
-    # print(test)
-    # return render(request,'thanks.html',{'print':test})
+def visualizacao(request,param):
+    # foiVisualizado = models.BooleanField(default=False)
+    # fkusuario = models.ForeignKey(Professor,on_delete=models.CASCADE)
+    # qtdPontos = models.IntegerField()
+    # fkpostagem = models.ForeignKey(Postagem,on_delete=models.CASCADE, blank=True, null=True)
+    # fkprogramada = models.ForeignKey(PostagemArmazenada,on_delete=models.CASCADE, blank=True, null=True)
+    response_user= requests.get('http://127.0.0.1:8000/router/login/')
+    data_user = response_user.json()
+    user_ultimo = data_user[-1]
+    eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
+    c={}
+    if eh_estudante.exists():
+        c['nao_aluna'] = False
+    else:
+        c['nao_aluna'] = True
+    print('\n Paramtros:{}\n'.format(param))
+    #criando uma instância de visualização
+    # visu = models.Visualizacao.objects.create(foiVisualizado=True,
+    #                                         fku)
+
+    return render(request,'visualizacao.html',{'c':c})
+
+def tarefas(request):
+    c = {
+        'atual': {
+            'tipo': 'Nome do tipo',
+            'pontos': 15,
+        },
+        'historico': [
+            {'tipo': "Nome do tipo 1", 'pontos': 15, 'data': '21/07/2022 12:55'},
+            {'tipo': "Nome do tipo 2", 'pontos': 18, 'data': '22/07/2022 14:01'},
+            {'tipo': "Nome do tipo 3", 'pontos': 17, 'data': '23/07/2022 18:25'},
+            {'tipo': "Nome do tipo 4", 'pontos': 14, 'data': '24/07/2022 10:02'},
+            {'tipo': "Nome do tipo 5", 'pontos': 19, 'data': '25/07/2022 08:05'}
+        ]
+    }
+    return render(request,'tarefas.html', c)
 ################Páginas estáticas################
 #página estática de títulos
 def titulos(request):
@@ -602,7 +677,7 @@ def titulos(request):
         c['nao_aluna'] = False
     else:
         c['nao_aluna'] = True
-    return render(request,'titulos.html',c)
+    return render(request,'titulos.html',{'c':c})
 
 def tutorial(request):
     response_user= requests.get('http://127.0.0.1:8000/router/login/')
@@ -614,7 +689,7 @@ def tutorial(request):
         c['nao_aluna'] = False
     else:
         c['nao_aluna'] = True
-    return render(request,'tutorial.html',c)
+    return render(request,'tutorial.html',{'c':c})
 
 def sobre(request):
     response_user= requests.get('http://127.0.0.1:8000/router/login/')
@@ -626,7 +701,7 @@ def sobre(request):
         c['nao_aluna'] = False
     else:
         c['nao_aluna'] = True
-    return render(request,'sobre.html',c)
+    return render(request,'sobre.html',{'c':c})
 
 def politicas(request):
     response_user= requests.get('http://127.0.0.1:8000/router/login/')
@@ -638,7 +713,7 @@ def politicas(request):
         c['nao_aluna'] = False
     else:
         c['nao_aluna'] = True
-    return render(request,'politicas.html',c)
+    return render(request,'politicas.html',{'c':c})
 
 def assistencia(request):
     response_user= requests.get('http://127.0.0.1:8000/router/login/')
@@ -650,7 +725,7 @@ def assistencia(request):
         c['nao_aluna'] = False
     else:
         c['nao_aluna'] = True
-    return render(request,'assistenciaEstudantil.html',c)
+    return render(request,'assistenciaEstudantil.html',{'c':c})
 
 def professoras(request):
     response_user= requests.get('http://127.0.0.1:8000/router/login/')
@@ -662,4 +737,4 @@ def professoras(request):
         c['nao_aluna'] = False
     else:
         c['nao_aluna'] = True
-    return render(request,'professoras.html',c)
+    return render(request,'professoras.html',{'c':c})

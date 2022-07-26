@@ -22,50 +22,24 @@
     </head>
 
     <body>
-        <div id="cabecalho">
-            <div id="logo">
-                <h1>SigaComElas</h1>
-            </div>
-
-            <div id="menu">
-                <a href="/home/">Home</a>
-                <a href="/criarPost/">Criar Postagem</a>
-                <a href="/titulos/">Títulos</a>
-                <a href="/tutorial/">Tutorial</a>
-                <a href="/sobre/">Sobre</a>
-                <a href="/politicas/">Políticas</a>
-                {% if c.nao_aluna %}
-                    <a href="/criaTarefa/">Criar Tarefa</a>
-                {% else %}
-                    <a href="/titulo-atual/">Seu título</a>
-                {% endif %}
-                
-                <a href="/ranking/">Ranking</a>
-                <a href="/usuariosMesmoTitulo/">Usuários com o mesmo título</a>
-                <a href="/professoras/">Lista de Professoras</a>
-                <a href="/usuarios/">Usuários</a>
-                <a href="/assistencia/">Assistência Estudantil</a>
-                <a href="/politicas/">Políticas</a>
-                <a href="/sobre/">Sobre</a>
-                <a href="http://127.0.0.1:8000">Sair</a>
-            </div>
-        </div>
+        {% include 'cabecalho.html'%}
+        
 
         <div id="main">
             <div id="conteudo">
                 <!-- Abertura postagens -->
                 <div class="postagens">
                     {% for post in data %}
-                    <!-- <h2>Título da Postagem</h2> -->
+                    
                     <h2>{{post.titulo}}</h2>
-                    <!-- <span class="data-postagem">Postado em 28 de Junho de 2022</span> -->
+                    
                     <span class="data-postagem">Autora:{{post.nome}}. Postado em {{post.dataHora.date}} ás
                         {{post.dataHora.time}}</span>
                     <p>
-                        <!-- Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.  -->
+                        
                         {{post.texto}}
                     </p>
-                    <a href="/visualizar/">Visualizar</a>
+                    <a href="/visualizar/{{post.fkusuario}}/{{post.estudante}}/{{post.id}}">Visualizar</a>
                     {% endfor %}
                 </div>
                 {% if nao_aluna %}
