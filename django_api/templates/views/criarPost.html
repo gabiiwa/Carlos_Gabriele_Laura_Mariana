@@ -3,91 +3,89 @@
 
 <html lang="pt-br">
 
-  <head>
-    <title>SigaComElas</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+<head>
+  <title>Criar Post | SigaComElas</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
-    <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
 
-    <!-- responsive style -->
-    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
 
-    <!-- Custom styles for this template -->
-    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
-  </head>
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+</head>
 
-  <body>
-    <div id="cabecalho">
-      <div id="logo">
-        <h1>SigaComElas</h1>
-      </div>
-
-      <div id="menu">
-        <a href="/home/">Home</a>
-        <a href="/criarPost/">Criar Postagem</a>
-        <a href="/titulos/">Títulos</a>
-        <a href="/tutorial/">Tutorial</a>
-        <a href="/sobre/">Sobre</a>
-        <a href="/politicas/">Políticas</a>
-        {% if c.nao_aluna %}
-            <a href="/criaTarefa/">Criar Tarefa</a>
-        {% else %}
-            <a href="/titulo-atual/">Seu título</a>
-        {% endif %}
-        
-        <a href="/ranking/">Ranking</a>
-        <a href="/usuariosMesmoTitulo/">Usuários com o mesmo título</a>
-        <a href="/professoras/">Lista de Professoras</a>
-        <a href="/usuarios/">Usuários</a>
-        <a href="/assistencia/">Assistência Estudantil</a>
-        <a href="/politicas/">Políticas</a>
-        <a href="/sobre/">Sobre</a>
-        <a href="http://127.0.0.1:8000">Sair</a>
-      </div>
-
+<body>
+  <div id="cabecalho">
+    <div id="logo">
+      <h1>SigaComElas</h1>
     </div>
 
-    <div id="main">
-      <section class="contact_section layout_padding">
-        <div class="custom_heading-container">
-          <h3 class=" ">
-            Criar post
-          </h3>
-        </div>
-        <div class="container layout_padding2-top">
-          <div class="row">
-            <div class="col-md-6 mx-auto">
-              <form action="/router/postagem/" method="post">
-                {% csrf_token %}
-                <input type="hidden" id="fkusuario" name="fkusuario" value="{{id_user}}">
-                <div>
-                  <label for="tituloPost">Título do post</label>
-                  <input type="text" name="titulo">
-                </div>
-                <div>
-                  <label for="exampleFormControlTextarea1">Texto do post</label>
-                  <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Texto do post"
-                    rows="3" name="texto"></textarea>
-                </div>
-                <div class="d-flex justify-content-center ">
-                  <button type="submit">
-                    Enviar
-                  </button>
-                </div>
-              </form>
-            </div>
+    <div id="menu">
+      <a href="/home/">Home</a>
+      <a href="/criarPost/">Criar Postagem</a>
+      <a href="/titulos/">Títulos</a>
+      <a href="/tutorial/">Tutorial</a>
+      {% if c.nao_aluna %}
+      <a href="/criaTarefa/">Criar Tarefa</a>
+      {% else %}
+      <a href="/titulo-atual/">Seu título</a>
+      {% endif %}
+
+      <a href="/ranking/">Ranking</a>
+      <a href="/usuariosMesmoTitulo/">Usuários com o mesmo título</a>
+      <a href="/professoras/">Lista de Professoras</a>
+      <a href="/usuarios/">Usuários</a>
+      <a href="/assistencia/">Assistência Estudantil</a>
+      <a href="/politicas/">Políticas</a>
+      <a href="/sobre/">Sobre</a>
+      <a href="http://127.0.0.1:8000">Sair</a>
+    </div>
+
+  </div>
+
+  <div id="main">
+    <section class="contact_section layout_padding">
+      <div class="custom_heading-container">
+        <h3 class=" ">
+          Criar post
+        </h3>
+      </div>
+      <div class="container layout_padding2-top">
+        <div class="row">
+          <div class="col-md-6 mx-auto">
+            <form action="/router/postagem/" method="post">
+              {% csrf_token %}
+              <input type="hidden" id="fkusuario" name="fkusuario" value="{{id_user}}">
+              <div>
+                <label for="tituloPost">Título do post</label>
+                <input type="text" name="titulo">
+              </div>
+              <div>
+                <label for="exampleFormControlTextarea1">Texto do post</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Texto do post" rows="3"
+                  name="texto"></textarea>
+              </div>
+              <div class="d-flex justify-content-center ">
+                <button type="submit">
+                  Enviar
+                </button>
+              </div>
+            </form>
           </div>
-
         </div>
-      </section>
 
-
-      <div id="rodape">
-        Todos os direitos reservados
       </div>
+    </section>
+
+
+    <div id="rodape">
+      Todos os direitos reservados
     </div>
-  </body>
+  </div>
+</body>
 
 </html>

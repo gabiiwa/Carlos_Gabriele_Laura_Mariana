@@ -3,88 +3,75 @@
 
 <html lang="pt-br">
 
-  <head>
-        <title>SigaComElas</title>
-        <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
-        <!-- <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"> -->
-        <!-- <link rel="stylesheet" href="{% static 'css/home.css'%}"> -->
+<head>
+  <title>SigaComElas</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+  <!-- <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"> -->
+  <!-- <link rel="stylesheet" href="{% static 'css/home.css'%}"> -->
 
-        <!-- bootstrap core css -->
-        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
 
-        <!-- responsive style -->
-        <!-- <link href="../static/css/responsive.css" rel="stylesheet" /> -->
-        <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <!-- <link href="../static/css/responsive.css" rel="stylesheet" /> -->
+  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
 
-        <!-- Custom styles for this template -->
-        <link href="{% static 'css/style.css' %}" rel="stylesheet" />
-  </head>
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+</head>
 
-  <body>
-    <div id="cabecalho">
-      <div id="logo">
-        <h1>SigaComElas</h1>
-      </div>
-
-      <div id="menu">
-        <a href="/home/">Home</a>
-        <a href="/criarPost/">Criar Postagem</a>
-        <a href="/titulos/">Títulos</a>
-        <a href="/tutorial/">Tutorial</a>
-        <a href="/sobre/">Sobre</a>
-        <a href="/politicas/">Políticas</a>
-        {% if c.nao_aluna %}
-            <a href="/criaTarefa/">Criar Tarefa</a>
-        {% else %}
-            <a href="/titulo-atual/">Seu título</a>
-        {% endif %}
-        
-        <a href="/ranking/">Ranking</a>
-        <a href="/usuariosMesmoTitulo/">Usuários com o mesmo título</a>
-        <a href="/professoras/">Lista de Professoras</a>
-        <a href="/usuarios/">Usuários</a>
-        <a href="/assistencia/">Assistência Estudantil</a>
-        <a href="/politicas/">Políticas</a>
-        <a href="/sobre/">Sobre</a>
-        <a href="http://127.0.0.1:8000">Sair</a>
-      </div>
+<body>
+  <div id="cabecalho">
+    <div id="logo">
+      <h1>SigaComElas</h1>
     </div>
 
-      <div id="main">
-        <section class="about_section layout_padding">
-          <div class="container">
-            <div class="custom_heading-container">
-              <h3 class=" ">
-                Políticas
-              </h3>
-            </div>
-          <p class="layout_padding2-top">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut tincidunt lacus. Nulla sit amet velit sagittis, scelerisque magna non, malesuada eros. Aenean elementum laoreet est, eget sagittis neque molestie non. Fusce scelerisque rhoncus mauris vitae tempor. Donec tincidunt, odio id blandit consequat, ex mauris auctor eros, eu finibus nunc elit vitae massa. Nam augue orci, accumsan id molestie nec, molestie id urna. Sed lobortis massa id arcu mollis, fermentum accumsan nisl maximus.
-          </p>
+    <div id="menu">
+      <a href="/home/">Home</a>
+      <a href="/criarPost/">Criar Postagem</a>
+      <a href="/titulos/">Títulos</a>
+      <a href="/tutorial/">Tutorial</a>
+      {% if c.nao_aluna %}
+      <a href="/criaTarefa/">Criar Tarefa</a>
+      {% else %}
+      <a href="/titulo-atual/">Seu título</a>
+      {% endif %}
 
-          <p class="layout_padding2-top">
-            Aliquam dictum laoreet nulla, ut fringilla metus convallis sed. Quisque vel sodales enim. Aliquam dictum lacus ornare lectus posuere, ut accumsan augue tincidunt. Etiam erat nulla, efficitur a semper vel, tristique quis nulla. Maecenas et posuere metus. Sed dignissim at ante nec vehicula. Nunc cursus eleifend sapien a suscipit. Mauris et tristique dui. Vivamus vulputate nisl vitae ornare dignissim. In hac habitasse platea dictumst. Ut elementum purus sit amet diam maximus, mattis pretium erat auctor. Suspendisse sed venenatis ante. Nulla vel leo convallis, semper massa vel, efficitur diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur luctus, dui et sodales pellentesque, elit nisl cursus lorem, vitae blandit nisl nulla at nibh.
-          </p>
-
-          <p class="layout_padding2-top">
-            Praesent molestie hendrerit quam non finibus. Nulla in porta lorem. Nam interdum, leo id sodales lobortis, sapien magna placerat massa, at scelerisque risus orci posuere nunc. Phasellus ex massa, vehicula eu velit sodales, feugiat posuere mi. Maecenas malesuada imperdiet nisi eu finibus. Sed a mollis felis. In egestas fermentum ipsum, et dapibus tellus ultricies sit amet. Suspendisse potenti. Nunc consequat eros urna, eget placerat lacus condimentum ut. Vestibulum dictum leo sed orci porttitor dictum. Vivamus sollicitudin augue non lectus posuere iaculis. Donec facilisis vestibulum sem, id iaculis quam vestibulum vel. Donec a felis a felis pellentesque auctor. In sodales lobortis ex, vel tristique quam tempor quis.
-          </p>
-
-          <p class="layout_padding2-top">
-            Sed scelerisque massa et orci varius, quis aliquet dui venenatis. Donec vel lorem lacus. Maecenas tempus id risus ac tempor. Morbi feugiat diam sollicitudin mauris porttitor efficitur. Duis dui nisl, tristique ac tellus et, facilisis viverra eros. Vestibulum in ante sed est viverra fringilla quis sit amet urna. Cras eget molestie turpis, ac suscipit lorem. Sed eu mauris in velit euismod egestas vitae et magna. Duis lacinia eleifend tortor at ultrices.
-          </p>
-
-          <p class="layout_padding2-top">
-            Aliquam erat volutpat. Vivamus auctor hendrerit massa in rhoncus. Vestibulum elementum varius massa. Duis interdum maximus nisl quis elementum. Suspendisse commodo nibh ut tellus imperdiet porta. Curabitur venenatis rutrum arcu id tincidunt. Sed ac rhoncus felis, at gravida felis.
-          </p>
-          </div>
-        </section>
+      <a href="/ranking/">Ranking</a>
+      <a href="/usuariosMesmoTitulo/">Usuários com o mesmo título</a>
+      <a href="/professoras/">Lista de Professoras</a>
+      <a href="/usuarios/">Usuários</a>
+      <a href="/assistencia/">Assistência Estudantil</a>
+      <a href="/politicas/">Políticas</a>
+      <a href="/sobre/">Sobre</a>
+      <a href="http://127.0.0.1:8000">Sair</a>
     </div>
+  </div>
 
-      <div id="rodape">
-        Todos os direitos reservados
+  <div id="main">
+    <section class="about_section layout_padding">
+      <div class="container">
+        <div class="custom_heading-container">
+          <h3 class=" ">
+            Políticas
+          </h3>
+        </div>
+        <p class="layout_padding2-top">
+          O SigaComElas é um sistema gamificado via web, com uma associação voluntária de indivíduos e grupos que estão
+          desenvolvendo um repositório para a promoção de mulheres nos cursos de Computação da Universidade Federal de
+          Juiz de Fora. Sua estrutura permite que qualquer indivíduo com uma conexão à Internet e um navegador web possa
+          colocar o conteúdo aqui encontrado. No entanto, tenha clara noção de que os administradores do SigaComELas NÃO
+          PODE garantir, de maneira nenhuma, a validade das informações aqui encontradas.
+        </p>
       </div>
-    </div>
-  </body>
+    </section>
+  </div>
+
+  <div id="rodape">
+    Todos os direitos reservados
+  </div>
+  </div>
+</body>
+
 </html>

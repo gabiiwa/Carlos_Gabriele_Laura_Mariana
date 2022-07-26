@@ -3,129 +3,128 @@
 
 <html lang="pt-br">
 
-  <head>
-    <title>SigaComElas</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+<head>
+  <title>Tutorial | SigaComElas</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
-    <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
 
-    <!-- responsive style -->
-    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
 
-    <!-- Custom styles for this template -->
-    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
-  </head>
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+</head>
 
-  <body>
-    <div id="cabecalho">
-      <div id="logo">
-        <h1>SigaComElas</h1>
-      </div>
-
-      <div id="menu">
-        <a href="/home/">Home</a>
-        <a href="/criarPost/">Criar Postagem</a>
-        <a href="/titulos/">Títulos</a>
-        <a href="/tutorial/">Tutorial</a>
-        <a href="/sobre/">Sobre</a>
-        <a href="/politicas/">Políticas</a>
-        {% if c.nao_aluna %}
-            <a href="/criaTarefa/">Criar Tarefa</a>
-        {% else %}
-            <a href="/titulo-atual/">Seu título</a>
-        {% endif %}
-        
-        <a href="/ranking/">Ranking</a>
-        <a href="/usuariosMesmoTitulo/">Usuários com o mesmo título</a>
-        <a href="/professoras/">Lista de Professoras</a>
-        <a href="/usuarios/">Usuários</a>
-        <a href="/assistencia/">Assistência Estudantil</a>
-        <a href="/politicas/">Políticas</a>
-        <a href="/sobre/">Sobre</a>
-        <a href="http://127.0.0.1:8000">Sair</a>
-      </div>
+<body>
+  <div id="cabecalho">
+    <div id="logo">
+      <h1>SigaComElas</h1>
     </div>
 
-    <div id="main">
-      <section class="service_section layout_padding">
-        <div class="container">
-          <div class="custom_heading-container">
-            <h3 class=" ">
-              Tutorial
-            </h3>
-          </div>
+    <div id="menu">
+      <a href="/home/">Home</a>
+      <a href="/criarPost/">Criar Postagem</a>
+      <a href="/titulos/">Títulos</a>
+      <a href="/tutorial/">Tutorial</a>
+      {% if c.nao_aluna %}
+      <a href="/criaTarefa/">Criar Tarefa</a>
+      {% else %}
+      <a href="/titulo-atual/">Seu título</a>
+      {% endif %}
 
-          <p class="">
-            Veja aqui todas as funcionalidades do sistema
-          </p>
+      <a href="/ranking/">Ranking</a>
+      <a href="/usuariosMesmoTitulo/">Usuários com o mesmo título</a>
+      <a href="/professoras/">Lista de Professoras</a>
+      <a href="/usuarios/">Usuários</a>
+      <a href="/assistencia/">Assistência Estudantil</a>
+      <a href="/politicas/">Políticas</a>
+      <a href="/sobre/">Sobre</a>
+      <a href="http://127.0.0.1:8000">Sair</a>
+    </div>
+  </div>
 
-          <div class="service_container ">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="box b-1">
-                  <div class="detail-box">
-                    <h6>
-                      Pontuação
-                    </h6>
+  <div id="main">
+    <section class="service_section layout_padding">
+      <div class="container">
+        <div class="custom_heading-container">
+          <h3 class=" ">
+            Tutorial
+          </h3>
+        </div>
 
-                    <p>
-                      adipiscing elit, sed do eiusmod tempor incididunt
-                    </p>
-                  </div>
+        <p class="">
+          Veja aqui todas as funcionalidades do sistema
+        </p>
+
+        <div class="service_container ">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="box b-1">
+                <div class="detail-box">
+                  <h6>
+                    Pontuação
+                  </h6>
+
+                  <p>
+                    adipiscing elit, sed do eiusmod tempor incididunt
+                  </p>
                 </div>
               </div>
+            </div>
 
-              <div class="col-md-3">
-                <div class="box b-1">
-                  <div class="detail-box">
-                    <h6>
-                      Títulos
-                    </h6>
+            <div class="col-md-3">
+              <div class="box b-1">
+                <div class="detail-box">
+                  <h6>
+                    Títulos
+                  </h6>
 
-                    <p>
-                      adipiscing elit, sed do eiusmod tempor incididunt
-                    </p>
-                  </div>
+                  <p>
+                    adipiscing elit, sed do eiusmod tempor incididunt
+                  </p>
                 </div>
               </div>
+            </div>
 
-              <div class="col-md-3">
-                <div class="box b-1">
-                  <div class="detail-box">
-                    <h6>
-                      Postagens e comentários
-                    </h6>
+            <div class="col-md-3">
+              <div class="box b-1">
+                <div class="detail-box">
+                  <h6>
+                    Postagens e comentários
+                  </h6>
 
-                    <p>
-                      adipiscing elit, sed do eiusmod tempor incididunt
-                    </p>
-                  </div>
+                  <p>
+                    adipiscing elit, sed do eiusmod tempor incididunt
+                  </p>
                 </div>
               </div>
+            </div>
 
-              <div class="col-md-3">
-                <div class="box b-1">
-                  <div class="detail-box">
-                    <h6>
-                      Tarefas
-                    </h6>
+            <div class="col-md-3">
+              <div class="box b-1">
+                <div class="detail-box">
+                  <h6>
+                    Tarefas
+                  </h6>
 
-                    <p>
-                      adipiscing elit, sed do eiusmod tempor incididunt
-                    </p>
-                  </div>
+                  <p>
+                    adipiscing elit, sed do eiusmod tempor incididunt
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
+  </div>
 
-    <div id="rodape">
-      Todos os direitos reservados
-    </div>
-  </body>
+  <div id="rodape">
+    Todos os direitos reservados
+  </div>
+</body>
+
 </html>
