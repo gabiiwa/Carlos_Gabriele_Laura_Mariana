@@ -30,6 +30,10 @@ body {
     margin: 0 auto;
 }
 
+#criarTarefa {
+    text-align: center;
+}
+
 /* Tags */
 h1 {
     color: #BA55D3;
@@ -44,4 +48,24 @@ a:link, a:visited {
 a:hover {
     color: #8B008B;
     background-color: #F5F5F5;
+}
+
+/* Classes */
+
+.form-select {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.btn.btn-warning.btn-call-to-action {
+    background-color: #D8BFD8 !important;
+    border-color: #BA55D3 !important;
+    color: #BA55D3 !important;
+    font-weight: bold;
+}
+
+.btn.btn-warning.btn-call-to-action:hover {
+    background-color: #4B0082 !important;
+    border-color: #BA55D3 !important;
+    color: #BA55D3 !important;
+    font-weight: bold;
 }
