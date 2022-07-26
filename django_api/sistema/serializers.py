@@ -11,13 +11,13 @@ Faz a transformação dos dados de json pra Python e o processo contrário.
 class PostagemSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Postagem
-        fields = ['titulo', 'texto', 'fkusuario']
+        fields = "__all__"
 
 #tabela de serialização de postagem das professoras
 class PostagemArmazenadaSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.PostagemArmazenada
-        fields = ['titulo','texto','dataHora','fkusuario']
+        fields = "__all__"
     
 #tabela de serialização de tarefa
 class TarefaSerializer(serializers.ModelSerializer):
@@ -29,7 +29,7 @@ class TarefaSerializer(serializers.ModelSerializer):
 class ComentarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Comentario
-        fields = ['texto','fkestudante', 'content_type', 'object_id']        
+        fields = ['texto','fkestudante', 'fkprofessor', 'content_type'] #, 'object_id'  
 
 # valida dados do login, me permitindo ver qual é o usuário atual
 class LoginSerializer(serializers.ModelSerializer):
