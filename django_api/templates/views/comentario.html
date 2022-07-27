@@ -30,14 +30,6 @@
 
     <div id="main">
         <div id="comentarios">
-            <div class="postagem">
-                <h2>{{c.titulo}}</h2>
-
-                <span class="data-postagem">Autora:{{c.nome}}. Postado {{c.dataHora}}</span>
-                <p>
-                    {{c.texto}}
-                </p>
-            </div>
             <div class="comentarios-postagem">
                 <!-- Autor, data, hora do comentário -->
                 {% for coment in lista_comentarios %}
