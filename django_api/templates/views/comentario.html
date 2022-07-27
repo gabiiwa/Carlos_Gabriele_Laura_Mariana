@@ -1,4 +1,4 @@
-{%load static %}
+{% load static %}
 <!DOCTYPE html>
 
 <html lang="pt-br">
@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/comentario.css' %}">
 
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" /> -->
 
     <!-- responsive style -->
     <!-- <link href="../static/css/responsive.css" rel="stylesheet" /> -->
@@ -30,15 +30,27 @@
 
     <div id="main">
         <div id="comentarios">
+            <div class="postagem">
+                <h2>{{c.titulo}}</h2>
+
+                <span class="data-postagem">Autora:{{c.nome}}. Postado {{c.dataHora}}</span>
+                <p>
+                    {{c.texto}}
+                </p>
+            </div>
             <div class="comentarios-postagem">
                 <!-- Autor, data, hora do comentário -->
                 {% for coment in lista_comentarios %}
                 <!-- <span class="data-postagem">Postado em 28 de Junho de 2022</span> -->
-                <span class="data-postagem">Autora:{{coment.nome}}. Postado em {{coment.dataHora.date}} ás
-                    {{coment.dataHora.time}}</span>
-                <p>
-                    {{coment.texto}}
-                </p>
+                <div class="item-comentario">
+                    <div class="autora-postagem">{{coment.nome}}</div>
+                    <div class="data-postagem">Postado em {{coment.dataHora.date}} ás
+                        {{coment.dataHora.time}}</div>
+                    <p>
+                        {{coment.texto}}
+                    </p>
+                </div>
+                
                 {% endfor %}
             </div>
             <!-- <form action="/router/postagem_armazenada/" method="post">
@@ -49,9 +61,11 @@
                 <form action="/router/comentario/" method="post">
                     {% csrf_token %}
                     <input type="hidden" id="fkusuario" name="fkusuario" value="{{c.id_user}}">
+                    <input type="hidden" id="id_postagem" name="id_postagem" value="{{c.id_postagem}}">
+                    <input type="hidden" id="programada" name="programada" value="{{c.programada}}">
+                    <input type="hidden" id="estudante" name="estudante" value="{{c.estudante}}">
                     <div class="form-floating">
-                        <textarea class="form-control" placeholder="Comentário" name="comentario id="
-                            floatingTextarea"></textarea>
+                        <textarea class="form-control" placeholder="Comentário" name="texto"></textarea>
                         <label for="floatingTextarea">Comentário</label>
                     </div>
 
