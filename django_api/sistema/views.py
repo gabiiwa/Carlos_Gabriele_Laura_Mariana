@@ -682,7 +682,7 @@ def visualizacao(request,id_usuario,estudante,id_postagem,programada,data_postag
                 #preciso registrar o aluno que visualizou, pra ele ganhar ponto
                 visu = models.Visualizacao.objects.create(foiVisualizado=True,
                                                     fkestudante_id = list(eh_estudante)[0].id, 
-                                                    fkpostagem_id= id_postagem)
+                                                    fkprogramada_id= id_postagem)
                 visu.save()
                 visualizacao_ponto(eh_estudante)
         else:
@@ -691,8 +691,8 @@ def visualizacao(request,id_usuario,estudante,id_postagem,programada,data_postag
             if objeto_visu_programada.exists()==False:
                 #preciso registrar o aluno que visualizou, pra ele ganhar ponto
                 visu = models.Visualizacao.objects.create(foiVisualizado=True,
-                                                    fkestudante = list(eh_estudante)[0].id, 
-                                                    fkprogramada_id= id_postagem)
+                                                    fkestudante_id = list(eh_estudante)[0].id, 
+                                                    fkpostagem_id= id_postagem)
                 visu.save()
                 visualizacao_ponto(eh_estudante)
     return render(request,'visualizacao.html',{'c':c})
