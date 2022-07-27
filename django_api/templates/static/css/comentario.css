@@ -72,3 +72,18 @@ a:hover {
     margin-top: 10px !important;
     margin-bottom: 10px !important;
 }
+.autora-postagem{
+    font-weight: bold;
+}
+.data-postagem {
+    font-size: 0.9em;
+    color:#454545
+}
+.comentarios-postagem{
+
+}
+.item-comentario {
+    background-color: #e5e5e5;
+    padding: 5px;
+    margin-bottom: 0.4em;
+}

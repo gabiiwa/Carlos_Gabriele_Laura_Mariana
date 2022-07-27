@@ -12,6 +12,9 @@ import requests
 import datetime
 from django.http import JsonResponse
 import django
+from django.contrib.contenttypes.models import ContentType
+
+import sistema
 # import json
 
 
@@ -235,29 +238,38 @@ class ComentarioViewSet(viewsets.ModelViewSet):
         serializer = serializers.ComentarioSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
              
-            #pega os dados que foram enviados pela requisição post
             data = request.data
+            referer = request.headers['Referer']
+            #print("referer", referer)
             #pegando ultimo usuario
             ultimo_cpf = (list(models.Login.objects.all())[-1].cpf,)
             cpf_estudantes = list(models.Estudante.objects.all().values_list('cpf'))
             print("\n ultimo cpf:{} \n Cpf alunas:{}\n".format(ultimo_cpf,cpf_estudantes))
 
-            
+            serializer.validated_data['object_id'] = data['id_postagem']
+            if data['programada']=='True':
+                serializer.validated_data['content_type'] = ContentType.objects.get(app_label='sistema',
+                                                                                    model='postagemarmazenada')
+            else:
+                serializer.validated_data['content_type'] = ContentType.objects.get(app_label='sistema',
+                                                                                    model='postagem')
             if ultimo_cpf in cpf_estudantes:
+                serializer.validated_data['fkestudante'] = models.Estudante.objects.get(cpf=ultimo_cpf[0])
+
                 # pega o id correspondente à estudante que fez o post para poder acessar a pontuação
-                estudante_id = data.get("fkestudante")
+                estudante_id = serializer.validated_data['fkestudante'].id
                 estudante_obj = models.Estudante.objects.get(id=estudante_id)
                 # atualizando a pontuação
                 estudante_obj.pontuacao += 10
                 estudante_obj.save()
 
                 data_atual = django.utils.timezone.now()
-                tarefa_check = models.Tarefa.objects.filter(
-                    fkestudante=estudante_id, dataHora=data_atual, tipo='DC2')
+                tarefa_check = models.Tarefa.objects.filter( fkestudante=estudante_id,
+                                                             dataHora=data_atual, tipo='DC2')
 
                 if tarefa_check.exists():
-                    tarefa_obj = models.Tarefa.objects.get(
-                        fkestudante=estudante_id, dataHora=data_atual, tipo='DC2')
+                    tarefa_obj = models.Tarefa.objects.get(fkestudante=estudante_id,
+                                                          dataHora=data_atual, tipo='DC2')
                     if tarefa_obj.cumprida == 0:
                         tarefa_obj.cumprida = 1
                         tarefa_obj.save()
@@ -265,8 +277,7 @@ class ComentarioViewSet(viewsets.ModelViewSet):
                         estudante_obj.save()
 
                 # atualizando o título
-                titulo_atual = models.listaTitulo.objects.get(
-                    fkestudante=estudante_id, tituloAtual=1)
+                titulo_atual = models.listaTitulo.objects.get(fkestudante=estudante_id, tituloAtual=1)
                 titulo_atual_obj = titulo_atual.fktitulo
                 titulo_atual_nome = titulo_atual_obj.nome
 
@@ -306,15 +317,15 @@ class ComentarioViewSet(viewsets.ModelViewSet):
                                     novo_titulo_obj = models.listaTitulo.objects.create(
                                         fktitulo=novo_titulo, fkestudante=estudante_obj)
                                     novo_titulo_obj.save()
-                else:
-                    serializer.validated_data["fkprofessor"] = models.Professor.objects.get(
-                        cpf=ultimo_cpf)
+            else:
+                serializer.validated_data["fkprofessor"] = models.Professor.objects.get(cpf=ultimo_cpf[0])
 
             #  lista
             #  return Response(serializer.data)
             # salva os dados no banco
             serializer.save()
-            return redirect("http://127.0.0.1:8000/home/")
+            return redirect(referer)
+            # <int:id_usuario>/<str:estudante>/<int:id_postagem>/<str:programada>/<str:data_postagem>
 
 
 class LoginViewSet(viewsets.ModelViewSet):
@@ -524,8 +535,7 @@ def home(request):
         aluna['nome'] = estudantes[i]
         # print('\n Nome da aluna:{}\n'.format(aluna['nome']))
         aluna['estudante'] = True
-        aluna['dataHora'] = datetime.datetime.strptime(
-            aluna['dataHora'][:19], "%Y-%m-%dT%H:%M:%S")
+        aluna['dataHora'] = datetime.datetime.strptime(aluna['dataHora'][:19], "%Y-%m-%dT%H:%M:%S")
         aluna['programada'] = False
 
     # preenchendo com professora
@@ -535,8 +545,7 @@ def home(request):
         prof['nome'] = professora[i]
         # print('\n Nome da professora:{}\n'.format(prof['nome']))
         prof['estudante'] = False
-        prof['dataHora'] = datetime.datetime.strptime(
-            prof['dataHora'][:19], "%Y-%m-%dT%H:%M:%S")
+        prof['dataHora'] = datetime.datetime.strptime(prof['dataHora'][:19], "%Y-%m-%dT%H:%M:%S")
         prof['programada'] = True
 
     lista_users = list(data_aluna + data_prof)
@@ -764,21 +773,6 @@ def criarPost(request):
         return render(request, 'criarPost_professora.html', {'c': c})
 
 
-@csrf_protect
-def comentario(request):
-    response_user = requests.get('http://127.0.0.1:8000/router/login/')
-    data_user = response_user.json()
-    user_ultimo = data_user[-1]
-    eh_estudante = models.Estudante.objects.filter(cpf=user_ultimo["cpf"])
-    c = {}
-    if eh_estudante.exists():
-        c['nao_aluna'] = False
-    else:
-        c['nao_aluna'] = True
-
-    return render(request, 'comentario.html', {'c': c})
-
-
 def visualizacao(request, id_usuario, estudante, id_postagem, programada, data_postagem):
     response_user = requests.get('http://127.0.0.1:8000/router/login/')
     data_user = response_user.json()
@@ -885,21 +879,14 @@ def comentario(request, id_usuario, estudante, id_postagem, programada, data_pos
     response_comentario = requests.get('http://127.0.0.1:8000/router/comentario/')
     comentarios_banco = response_comentario.json()
     lista_comentarios = []
-    # texto = models.CharField(max_length=10000)
-    # fkestudante = models.ForeignKey(Estudante,on_delete=models.CASCADE, blank=True, null=True)
-    # fkprofessor = models.ForeignKey(Professor,on_delete=models.CASCADE, blank=True, null=True)
-    # dataHora = models.DateTimeField(auto_now_add = True)
-
-    # content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, default=None)
-    # object_id = models.PositiveIntegerField(default=None)
-    # fkpostagem = GenericForeignKey('content_type', 'object_id')
     for comentario in comentarios_banco:
+        print("\n Comentario:{}\n".format(comentario))
         if type(comentario['fkestudante'])!=type(None):
-            comentario['nome'] = models.Estudante.objects.get(id=comentario['fkestudante_id'])
+            comentario['nome'] = models.Estudante.objects.get(id=comentario['fkestudante']).nome
         else:
-            comentario['nome'] = models.Professor.objects.get(id=comentario['fkprofessor_id'])
-        # comentario['object_id'] = 
-
+            comentario['nome'] = models.Professor.objects.get(id=comentario['fkprofessor']).nome
+       
+        comentario['dataHora'] = datetime.datetime.strptime(comentario['dataHora'][:19], "%Y-%m-%dT%H:%M:%S")
             
 
 

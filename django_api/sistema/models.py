@@ -129,6 +129,9 @@ class Comentario(models.Model):
     fkestudante = models.ForeignKey(Estudante,on_delete=models.CASCADE, blank=True, null=True)
     fkprofessor = models.ForeignKey(Professor,on_delete=models.CASCADE, blank=True, null=True)   
     dataHora = models.DateTimeField(auto_now_add = True)
+    qtdPontos = models.IntegerField(default=10)
+    #fkpostagem = models.ForeignKey(Postagem,on_delete=models.CASCADE, blank=True, null=True)
+    #fkprogramada = models.ForeignKey(PostagemArmazenada,on_delete=models.CASCADE, blank=True, null=True)
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, default=None)
     object_id = models.PositiveIntegerField(default=None)
