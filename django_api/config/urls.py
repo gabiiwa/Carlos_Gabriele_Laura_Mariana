@@ -53,7 +53,7 @@ urlpatterns = [
     path('ranking/', views.ranking, name="ranking"),
     # path('visualizar/<int:id_usuario>/<str:estudante>/<int:id_postagem>', views.visualizacao, name='vizualizar'),
     path('visualizar/<int:id_usuario>/<str:estudante>/<int:id_postagem>/<str:programada>/<str:data_postagem>', views.visualizacao, name='vizualizar'),
-    path('comentario/<int:id_usuario>/<str:estudante>/<int:id_postagem>/<str:programada>', views.comentario, name="comentario"),
+    path('comentario/<int:id_usuario>/<str:estudante>/<int:id_postagem>/<str:programada>/<str:data_postagem>', views.comentario, name="comentario"),
     path('tarefas/', views.tarefas, name="tarefas"),
     # path('teste',include(router_tarefa)),
     # path('visualizar/int:id', views.visualizar, name='vizualizar'),

@@ -212,16 +212,17 @@ class TarefaViewSet(viewsets.ModelViewSet):
 
         if serializer.is_valid(raise_exception=True):
             print("\n Valor seriliazer:{}\n".format(serializer.validated_data))
-            for estudante_obj in list(models.Estudante.objects.all()):
-                print("\n Estudante:{}\n".format(estudante_obj))
-                tarefa_objeto = models.Tarefa.objects.create(
-                    tipo=serializer.validated_data['tipo'],
-                    dataHora=django.utils.timezone.now().date(),
-                    fkestudante=estudante_obj
-                )
-
-                tarefa_objeto.save()
-
+            if models.Tarefa.objects.filter(dataHora=django.utils.timezone.now().date()).exists():
+                for estudante_obj in list(models.Estudante.objects.all()):
+                    print("\n Estudante:{}\n".format(estudante_obj))
+                    tarefa_objeto = models.Tarefa.objects.create(
+                                                                tipo=serializer.validated_data['tipo'],
+                                                                dataHora = django.utils.timezone.now().date(),
+                                                                fkestudante=estudante_obj
+                                                                )
+                    
+                    tarefa_objeto.save()
+                
             return redirect("http://127.0.0.1:8000/home/")
 
 
@@ -743,12 +744,9 @@ def visualizacao(request, id_usuario, estudante, id_postagem, programada, data_p
 
     else:
         c['nao_aluna'] = True
-
-    # print("\n O que eu recebo de postagem:{}\n".format(list(models.Postagem.objects.filter(fkusuario_id=id_usuario,id=id_postagem))[0].titulo))
-    print("\n Data:{}\n".format(data_postagem))
-    if programada == 'True':
-        postagem = list(models.PostagemArmazenada.objects.filter(
-            fkusuario_id=id_usuario, id=id_postagem))[0]
+        
+    if programada=='True':
+        postagem = list(models.PostagemArmazenada.objects.filter(fkusuario_id=id_usuario,id=id_postagem))[0]
         c['titulo'] = postagem.titulo
         c['texto'] = postagem.texto
         c['nome'] = models.Professor.objects.get(id=postagem.fkusuario_id).nome
@@ -765,8 +763,9 @@ def visualizacao(request, id_usuario, estudante, id_postagem, programada, data_p
     c['id_postagem'] = id_postagem
     c['estudante'] = estudante
     c['programada'] = programada
+    c['dataHora'] = data_postagem
 
-    print("\n eh_estudante:{}\n".format(list(eh_estudante)))
+
     # criando uma instância de visualização
     # isso é só pra aluna, pois só ela recebe os pontos
     if eh_estudante.exists():
@@ -796,17 +795,56 @@ def visualizacao(request, id_usuario, estudante, id_postagem, programada, data_p
                 visualizacao_ponto(eh_estudante)
     return render(request, 'visualizacao.html', {'c': c})
 
-
-# informações sobre título atual
-def tarefas(request):
-    response_user = requests.get('http://127.0.0.1:8000/router/login/')
+@csrf_protect
+def comentario(request,id_usuario,estudante,id_postagem,programada,data_postagem):
+    ###quem está logado###
+    response_user= requests.get('http://127.0.0.1:8000/router/login/')
     data_user = response_user.json()
     user_ultimo = data_user[-1]
-    eh_estudante = models.Estudante.objects.filter(cpf=user_ultimo["cpf"])
+    eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
+    c={}
     if eh_estudante.exists():
+        c['nao_aluna'] = False
         
-        tarefaAtual = list(models.Tarefa.objects.filter(cumprida=False))[0]
+    else:
+        c['nao_aluna'] = True
+    ###
+    ###pegando as informações da postagem, para saber em qual postagem está sendo feita a postagem###
+    if programada=='True':
+        postagem = list(models.PostagemArmazenada.objects.filter(fkusuario_id=id_usuario,id=id_postagem))[0]
+        c['titulo'] = postagem.titulo
+        c['texto'] = postagem.texto
+        c['nome'] = models.Professor.objects.get(id=postagem.fkusuario_id).nome
+        c['dataHora'] = data_postagem
+    else:
+        postagem = list(models.Postagem.objects.filter(fkusuario_id=id_usuario,id=id_postagem))[0]
+        c['titulo'] = postagem.titulo
+        c['texto'] = postagem.texto
+        c['nome'] = models.Estudante.objects.get(id=postagem.fkusuario_id).nome
+        c['dataHora'] = data_postagem
+        
+    c['id_user'] = id_usuario
+    c['id_postagem'] = id_postagem
+    #se é um aluno
+    c['estudante'] = estudante
+    #se a postagem é do tipo programada
+    c['programada'] = programada
+    #data que a postagem foi feita
+    c['dataHora'] = data_postagem
 
+    ###pegando os comentarios que já foram feitas###
+    response_comentario = request.get('http://127.0.0.1:8000/router/comentario/')
+    comentarios_banco = response_comentario.json()
+    lista_comentarios = []
+    # texto = models.CharField(max_length=10000)
+    # fkestudante = models.ForeignKey(Estudante,on_delete=models.CASCADE, blank=True, null=True)
+    # fkprofessor = models.ForeignKey(Professor,on_delete=models.CASCADE, blank=True, null=True)   
+    # dataHora = models.DateTimeField(auto_now_add = True)
+
+    # content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, default=None)
+    # object_id = models.PositiveIntegerField(default=None)
+    # fkpostagem = GenericForeignKey('content_type', 'object_id')
+    # for comentario in comentarios_banco:
         # Lista de tarefas já concluida
         list_tarefasConcluidas = models.Tarefa.objects.filter(
             cumprida=1).order_by('-dataHora')
@@ -831,7 +869,7 @@ def tarefas(request):
         return render(request, 'tarefas.html', {'c': c})
 
 
-# @csrf_protect
+    return render(request,'comentario.html',{'c':c,'lista_comentarios':lista_comentarios})
 # def criarTarefa(request):
 #     response_user= requests.get('http://127.0.0.1:8000/router/login/')
 #     # respose_tarefa = request.get('http://127.0.0.1:8000/router/tarefa/')

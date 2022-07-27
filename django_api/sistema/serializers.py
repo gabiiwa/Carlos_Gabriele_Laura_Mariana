@@ -29,7 +29,7 @@ class TarefaSerializer(serializers.ModelSerializer):
 class ComentarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Comentario
-        fields = ['texto','fkestudante', 'fkprofessor', 'content_type'] #, 'object_id'  
+        fields = "__all__"  
 
 # valida dados do login, me permitindo ver qual é o usuário atual
 class LoginSerializer(serializers.ModelSerializer):
