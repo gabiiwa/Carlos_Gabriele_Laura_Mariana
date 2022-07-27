@@ -721,7 +721,6 @@ def tarefas(request):
         print(tarefaAtual)
 
         if len(tarefaAtual) > 0:
-            tarefaAtual = tarefaAtual[0]
             atual = {
                 'tipo': tarefaAtual[0].desc,
                 'pontos': tarefaAtual[0].qtdPontos,
@@ -736,7 +735,8 @@ def tarefas(request):
 
         c = {
             'atual': atual,
-            'historico': tarefasConcluidas
+            'historico': tarefasConcluidas,
+            'tamanho': len(tarefasConcluidas),
         }
         c['nao_aluna'] = False
         return render(request, 'tarefas.html', {'c': c})
