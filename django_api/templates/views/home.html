@@ -32,8 +32,9 @@
         </section>
 
         <!-- Abertura postagens -->
-        <div class="my-5">
-            {% for post in data %}
+        {% for post in data %}
+        <div class="postagens">
+            
 
             <h2>{{post.titulo}}</h2>
 
@@ -46,8 +47,9 @@
                 <a style="color: #FFFFFF" class="btn btn-primary btn-sm" role="button"
                     href="/visualizar/{{post.fkusuario}}/{{post.estudante}}/{{post.id}}/{{post.programada}}/{{post.dataHora}}">Visualizar</a>
             </p>
-            {% endfor %}
+            
         </div>
+        {% endfor %}
         <!-- {% if c.nao_aluna %}
                     <script>
                         alert('Professora nao tem titulo!')
