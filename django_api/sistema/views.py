@@ -216,13 +216,13 @@ class TarefaViewSet(viewsets.ModelViewSet):
                 for estudante_obj in list(models.Estudante.objects.all()):
                     print("\n Estudante:{}\n".format(estudante_obj))
                     tarefa_objeto = models.Tarefa.objects.create(
-                                                                tipo=serializer.validated_data['tipo'],
-                                                                dataHora = django.utils.timezone.now().date(),
-                                                                fkestudante=estudante_obj
-                                                                )
-                    
+                        tipo=serializer.validated_data['tipo'],
+                        dataHora=django.utils.timezone.now().date(),
+                        fkestudante=estudante_obj
+                    )
+
                     tarefa_objeto.save()
-                
+
             return redirect("http://127.0.0.1:8000/home/")
 
 
@@ -526,7 +526,7 @@ def home(request):
         # print('\n Nome da aluna:{}\n'.format(aluna['nome']))
         aluna['estudante'] = True
         aluna['dataHora'] = datetime.datetime.strptime(
-        aluna['dataHora'][:19], "%Y-%m-%dT%H:%M:%S")
+            aluna['dataHora'][:19], "%Y-%m-%dT%H:%M:%S")
         aluna['programada'] = False
 
     # preenchendo com professora
@@ -744,9 +744,10 @@ def visualizacao(request, id_usuario, estudante, id_postagem, programada, data_p
 
     else:
         c['nao_aluna'] = True
-        
-    if programada=='True':
-        postagem = list(models.PostagemArmazenada.objects.filter(fkusuario_id=id_usuario,id=id_postagem))[0]
+
+    if programada == 'True':
+        postagem = list(models.PostagemArmazenada.objects.filter(
+            fkusuario_id=id_usuario, id=id_postagem))[0]
         c['titulo'] = postagem.titulo
         c['texto'] = postagem.texto
         c['nome'] = models.Professor.objects.get(id=postagem.fkusuario_id).nome
@@ -764,7 +765,6 @@ def visualizacao(request, id_usuario, estudante, id_postagem, programada, data_p
     c['estudante'] = estudante
     c['programada'] = programada
     c['dataHora'] = data_postagem
-
 
     # criando uma instância de visualização
     # isso é só pra aluna, pois só ela recebe os pontos
@@ -795,81 +795,84 @@ def visualizacao(request, id_usuario, estudante, id_postagem, programada, data_p
                 visualizacao_ponto(eh_estudante)
     return render(request, 'visualizacao.html', {'c': c})
 
+
 @csrf_protect
-def comentario(request,id_usuario,estudante,id_postagem,programada,data_postagem):
+def comentario(request, id_usuario, estudante, id_postagem, programada, data_postagem):
     ###quem está logado###
-    response_user= requests.get('http://127.0.0.1:8000/router/login/')
+    response_user = requests.get('http://127.0.0.1:8000/router/login/')
     data_user = response_user.json()
     user_ultimo = data_user[-1]
-    eh_estudante =  models.Estudante.objects.filter(cpf = user_ultimo["cpf"])
-    c={}
+    eh_estudante = models.Estudante.objects.filter(cpf=user_ultimo["cpf"])
+    c = {}
     if eh_estudante.exists():
         c['nao_aluna'] = False
-        
+
     else:
         c['nao_aluna'] = True
     ###
     ###pegando as informações da postagem, para saber em qual postagem está sendo feita a postagem###
-    if programada=='True':
-        postagem = list(models.PostagemArmazenada.objects.filter(fkusuario_id=id_usuario,id=id_postagem))[0]
+    if programada == 'True':
+        postagem = list(models.PostagemArmazenada.objects.filter(
+            fkusuario_id=id_usuario, id=id_postagem))[0]
         c['titulo'] = postagem.titulo
         c['texto'] = postagem.texto
         c['nome'] = models.Professor.objects.get(id=postagem.fkusuario_id).nome
         c['dataHora'] = data_postagem
     else:
-        postagem = list(models.Postagem.objects.filter(fkusuario_id=id_usuario,id=id_postagem))[0]
+        postagem = list(models.Postagem.objects.filter(
+            fkusuario_id=id_usuario, id=id_postagem))[0]
         c['titulo'] = postagem.titulo
         c['texto'] = postagem.texto
         c['nome'] = models.Estudante.objects.get(id=postagem.fkusuario_id).nome
         c['dataHora'] = data_postagem
-        
+
     c['id_user'] = id_usuario
     c['id_postagem'] = id_postagem
-    #se é um aluno
+    # se é um aluno
     c['estudante'] = estudante
-    #se a postagem é do tipo programada
+    # se a postagem é do tipo programada
     c['programada'] = programada
-    #data que a postagem foi feita
+    # data que a postagem foi feita
     c['dataHora'] = data_postagem
 
     ###pegando os comentarios que já foram feitas###
-    response_comentario = request.get('http://127.0.0.1:8000/router/comentario/')
+    response_comentario = request.get(
+        'http://127.0.0.1:8000/router/comentario/')
     comentarios_banco = response_comentario.json()
     lista_comentarios = []
     # texto = models.CharField(max_length=10000)
     # fkestudante = models.ForeignKey(Estudante,on_delete=models.CASCADE, blank=True, null=True)
-    # fkprofessor = models.ForeignKey(Professor,on_delete=models.CASCADE, blank=True, null=True)   
+    # fkprofessor = models.ForeignKey(Professor,on_delete=models.CASCADE, blank=True, null=True)
     # dataHora = models.DateTimeField(auto_now_add = True)
 
     # content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, default=None)
     # object_id = models.PositiveIntegerField(default=None)
     # fkpostagem = GenericForeignKey('content_type', 'object_id')
     # for comentario in comentarios_banco:
-        # Lista de tarefas já concluida
-        list_tarefasConcluidas = models.Tarefa.objects.filter(
-            cumprida=1).order_by('-dataHora')
-        
-        tarefasConcluidas = []
-        for item in list_tarefasConcluidas:
-            tarefasConcluidas.append(
-                {'tipo': item.desc, 'pontos': item.qtdPontos, 'data': item.dataHora})
-        print(tarefaAtual.tipo)
-        print(tarefaAtual.qtdPontos)
-        c = {
-            'atual': {
-                'tipo': tarefaAtual.desc,
-                'pontos': tarefaAtual.qtdPontos,
-            },
-            'historico': tarefasConcluidas
-        }
-        c['nao_aluna'] = False
-        return render(request, 'tarefas.html', {'c': c})
+    # Lista de tarefas já concluida
+    list_tarefasConcluidas = models.Tarefa.objects.filter(
+        cumprida=1).order_by('-dataHora')
+
+    tarefasConcluidas = []
+    for item in list_tarefasConcluidas:
+        tarefasConcluidas.append(
+            {'tipo': item.desc, 'pontos': item.qtdPontos, 'data': item.dataHora})
+    print(tarefaAtual.tipo)
+    print(tarefaAtual.qtdPontos)
+    c = {
+        'atual': {
+            'tipo': tarefaAtual.desc,
+            'pontos': tarefaAtual.qtdPontos,
+        },
+        'historico': tarefasConcluidas
+    }
+    c['nao_aluna'] = False
+    return render(request, 'tarefas.html', {'c': c})
     else:
         c = {'nao_aluna': True}
         return render(request, 'tarefas.html', {'c': c})
 
-
-    return render(request,'comentario.html',{'c':c,'lista_comentarios':lista_comentarios})
+    return render(request, 'comentario.html', {'c': c, 'lista_comentarios': lista_comentarios})
 # def criarTarefa(request):
 #     response_user= requests.get('http://127.0.0.1:8000/router/login/')
 #     # respose_tarefa = request.get('http://127.0.0.1:8000/router/tarefa/')
