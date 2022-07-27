@@ -28,13 +28,13 @@
             <div id="conteudo">
                 <div class="tarefa-atual">
                     <h3>Tarefa de hoje</h3>
-                    <p>Tipo: {{atual.tipo}}</p> 
-                    <p>Pontos: {{atual.pontos}}</p> 
+                    <p>Tipo: {{c.atual.tipo}}</p> 
+                    <p>Pontos: {{c.atual.pontos}}</p> 
                 </div>
                 <div class="historico-tarefas-concluidas">
                     <h3>Tarefas cumpridas</h3>
                     <div class="lista-tarefas">
-                        {% for item in historico %}
+                        {% for item in c.historico %}
                         <div class="item-lista-tarefas">
                             <p class="item-p-tipo">Tipo: {{item.tipo}}</p>
                             <p class="item-p-tipo">Pontos: {{item.pontos}}</p>

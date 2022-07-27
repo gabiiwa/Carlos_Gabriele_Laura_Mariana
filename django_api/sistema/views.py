@@ -235,12 +235,12 @@ class ComentarioViewSet(viewsets.ModelViewSet):
         serializer = serializers.ComentarioSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
              
-             #pega os dados que foram enviados pela requisição post
-             data = request.data
-             #pegando ultimo usuario
-             ultimo_cpf = (list(models.Login.objects.all())[-1].cpf,)
-             cpf_estudantes = list(models.Estudante.objects.all().values_list('cpf'))
-             print("\n ultimo cpf:{} \n Cpf alunas:{}\n".format(ultimo_cpf,cpf_estudantes))
+            #pega os dados que foram enviados pela requisição post
+            data = request.data
+            #pegando ultimo usuario
+            ultimo_cpf = (list(models.Login.objects.all())[-1].cpf,)
+            cpf_estudantes = list(models.Estudante.objects.all().values_list('cpf'))
+            print("\n ultimo cpf:{} \n Cpf alunas:{}\n".format(ultimo_cpf,cpf_estudantes))
 
             # pega os dados que foram enviados pela requisição post
             data = request.data
@@ -901,24 +901,6 @@ def comentario(request, id_usuario, estudante, id_postagem, programada, data_pos
 
     return render(request,'comentario.html',{'c':c,'lista_comentarios':lista_comentarios})
 
-
-
-
-def tarefas(request):
-    c = {
-        'atual': {
-            'tipo': 'Nome do tipo',
-            'pontos': 15,
-        },
-        'historico': [
-            {'tipo': "Nome do tipo 1", 'pontos': 15, 'data': '21/07/2022 12:55'},
-            {'tipo': "Nome do tipo 2", 'pontos': 18, 'data': '22/07/2022 14:01'},
-            {'tipo': "Nome do tipo 3", 'pontos': 17, 'data': '23/07/2022 18:25'},
-            {'tipo': "Nome do tipo 4", 'pontos': 14, 'data': '24/07/2022 10:02'},
-            {'tipo': "Nome do tipo 5", 'pontos': 19, 'data': '25/07/2022 08:05'}
-        ]
-    }
-    return render(request,'tarefas.html', c)
 
 
 # @csrf_protect 
