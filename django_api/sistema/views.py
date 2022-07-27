@@ -715,22 +715,35 @@ def tarefas(request):
     if eh_estudante.exists():
 
         tarefaAtual = models.Tarefa.objects.filter(
-            cumprida=0).order_by('-dataHora')[0]
-
+            cumprida=False,fkestudante=list(eh_estudante)[0]).order_by('-dataHora')
+        
         # Lista de tarefas já concluida
         list_tarefasConcluidas = models.Tarefa.objects.filter(
-            cumprida=1).order_by('-dataHora')
+            cumprida=True, fkestudante=list(eh_estudante)[0]).order_by('-dataHora')
 
         tarefasConcluidas = []
         for item in list_tarefasConcluidas:
             tarefasConcluidas.append(
                 {'tipo': item.desc, 'pontos': item.qtdPontos, 'data': item.dataHora})
 
+        print(tarefaAtual)
+
+        if len(tarefaAtual) > 0:
+            tarefaAtual = tarefaAtual[0]
+            atual = {
+                'tipo': tarefaAtual[0].desc,
+                'pontos': tarefaAtual[0].qtdPontos,
+                'cumprida': tarefaAtual[0].cumprida,
+            }
+        else:
+            atual = {
+                'tipo': "",
+                'pontos': "",
+                'cumprida': True,
+            }
+
         c = {
-            'atual': {
-                'tipo': tarefaAtual.desc,
-                'pontos': tarefaAtual.qtdPontos,
-            },
+            'atual': atual,
             'historico': tarefasConcluidas
         }
         c['nao_aluna'] = False

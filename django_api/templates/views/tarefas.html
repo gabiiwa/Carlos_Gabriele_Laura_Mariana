@@ -26,11 +26,14 @@
 
         <div id="main">
             <div id="conteudo">
+                {% if c.atual.cumprida %}
+                {% else %}
                 <div class="tarefa-atual">
                     <h3>Tarefa de hoje</h3>
                     <p>Tipo: {{c.atual.tipo}}</p> 
                     <p>Pontos: {{c.atual.pontos}}</p> 
                 </div>
+                {% endif %}
                 <div class="historico-tarefas-concluidas">
                     <h3>Tarefas cumpridas</h3>
                     <div class="lista-tarefas">
