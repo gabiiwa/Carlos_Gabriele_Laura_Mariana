@@ -4,8 +4,9 @@
 <html lang="pt-br">
 
 <head>
-    <title>Postagens | SigaComElas</title>
+    <title>{{c.titulo}} | SigaComElas</title>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/visualizacao.css' %}">
 
 
@@ -21,32 +22,30 @@
 
 <body>
     {% include 'cabecalho.html' %}
+
     <div id="main">
-        <div id="conteudo">
+        <section class="about_section layout_padding">
 
-            <div class="visualizacao">
-                <h2>{{c.titulo}}</h2>
+            <div class="custom_heading-container">
+                <h3 class=" ">
+                    {{c.titulo}}
+                </h3>
 
-                <span class="data-postagem">Autora:{{c.nome}}. Postado {{c.dataHora}}</span>
-                <p>
+        </section>
 
-                    {{c.texto}}
-                </p>
-                <!-- <a href="/comentario/{{c.fkusuario}}/{{c.estudante}}/{{c.id}}">Visualizar</a> -->
-            </div>
-            <a href="/comentario/{{c.id_user}}/{{c.estudante}}/{{c.id_postagem}}/{{c.programada}}/{{c.dataHora}}">Comentario</a>
-            <!-- Fechamento da postagens -->
-
-            <!-- <button class="btn btn-warning btn-call-to-action"  href="/visualizar/{{post.fkusuario}}/{{post.estudante}}/{{post.id}}">
-                    Visualizar
-                </button> -->
-            </section>
-        </div>
+        <span class="data-postagem">Autora:{{c.nome}}. Postado {{c.dataHora}}</span>
+        <p>
+            {{c.texto}}
+        </p>
+        <p>
+            <a class="btn btn-link btn-sm" role="button"
+                href="/comentario/{{c.id_user}}/{{c.estudante}}/{{c.id_postagem}}/{{c.programada}}/{{c.dataHora}}">Comentar</a>
+        </p>
+    </div>
 
 
-        <div id="rodape">
-            Todos os direitos reservados
-        </div>
+    <div id="rodape">
+        Todos os direitos reservados
     </div>
 </body>
 
