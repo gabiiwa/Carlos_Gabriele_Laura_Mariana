@@ -187,7 +187,7 @@ class TarefaViewSet(viewsets.ModelViewSet):
         
         if serializer.is_valid(raise_exception=True):
             print("\n Valor seriliazer:{}\n".format(serializer.validated_data))
-            if models.Tarefa.objects.filter(dataHora=django.utils.timezone.now().date()).exists():
+            if models.Tarefa.objects.filter(dataHora=django.utils.timezone.now().date()).exists()==False:
                 for estudante_obj in list(models.Estudante.objects.all()):
                     print("\n Estudante:{}\n".format(estudante_obj))
                     tarefa_objeto = models.Tarefa.objects.create(
@@ -208,7 +208,7 @@ class ComentarioViewSet(viewsets.ModelViewSet):
     def create(self, request):
         serializer = serializers.ComentarioSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            
+             
              #pega os dados que foram enviados pela requisição post
              data = request.data
              #pegando ultimo usuario
@@ -746,7 +746,14 @@ def comentario(request,id_usuario,estudante,id_postagem,programada,data_postagem
     # content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, default=None)
     # object_id = models.PositiveIntegerField(default=None)
     # fkpostagem = GenericForeignKey('content_type', 'object_id')
-    # for comentario in comentarios_banco:
+    for comentario in comentarios_banco:
+        if type(comentario['fkestudante'])!=type(None):
+            comentario['nome'] = models.Estudante.objects.get(id=comentario['fkestudante_id'])
+        else:
+            comentario['nome'] = models.Professor.objects.get(id=comentario['fkprofessor_id'])
+        # comentario['object_id'] = 
+
+            
 
 
     return render(request,'comentario.html',{'c':c,'lista_comentarios':lista_comentarios})
@@ -871,7 +878,7 @@ def professoras(request):
 
 
 
-##########Funções auxiliares###########################
+#######################Funções auxiliares###########################
 def visualizacao_ponto(eh_estudante):
     #####Estudante########
     estudante_id = list(eh_estudante)[0].id
