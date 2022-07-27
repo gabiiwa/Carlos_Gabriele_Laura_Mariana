@@ -235,22 +235,14 @@ class ComentarioViewSet(viewsets.ModelViewSet):
         serializer = serializers.ComentarioSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
              
-             #pega os dados que foram enviados pela requisição post
-             data = request.data
-             #pegando ultimo usuario
-             ultimo_cpf = (list(models.Login.objects.all())[-1].cpf,)
-             cpf_estudantes = list(models.Estudante.objects.all().values_list('cpf'))
-             print("\n ultimo cpf:{} \n Cpf alunas:{}\n".format(ultimo_cpf,cpf_estudantes))
-
-            # pega os dados que foram enviados pela requisição post
+            #pega os dados que foram enviados pela requisição post
             data = request.data
-            # pegando ultimo usuario
+            #pegando ultimo usuario
             ultimo_cpf = (list(models.Login.objects.all())[-1].cpf,)
-            cpf_estudantes = list(
-                models.Estudante.objects.all().values_list('cpf'))
-            print("\n ultimo cpf:{} \n Cpf alunas:{}\n".format(
-                ultimo_cpf, cpf_estudantes))
+            cpf_estudantes = list(models.Estudante.objects.all().values_list('cpf'))
+            print("\n ultimo cpf:{} \n Cpf alunas:{}\n".format(ultimo_cpf,cpf_estudantes))
 
+            
             if ultimo_cpf in cpf_estudantes:
                 # pega o id correspondente à estudante que fez o post para poder acessar a pontuação
                 estudante_id = data.get("fkestudante")
@@ -877,8 +869,7 @@ def comentario(request, id_usuario, estudante, id_postagem, programada, data_pos
     c['dataHora'] = data_postagem
 
     ###pegando os comentarios que já foram feitas###
-    response_comentario = request.get(
-        'http://127.0.0.1:8000/router/comentario/')
+    response_comentario = requests.get('http://127.0.0.1:8000/router/comentario/')
     comentarios_banco = response_comentario.json()
     lista_comentarios = []
     # texto = models.CharField(max_length=10000)
@@ -899,7 +890,7 @@ def comentario(request, id_usuario, estudante, id_postagem, programada, data_pos
             
 
 
-    return render(request,'comentario.html',{'c':c,'lista_comentarios':lista_comentarios})
+    return render(request,'comentario.html',{'c':c,'lista_comentarios':comentarios_banco})
 
 
 
@@ -1036,10 +1027,10 @@ def visualizacao_ponto(eh_estudante):
 
     data_atual = django.utils.timezone.now()
     tarefa_check = models.Tarefa.objects.filter(
-        fkestudante=estudante_id, dataHora=data_atual, tipo='DC3')
+        fkestudante=estudante_id, dataHora=data_atual, tipo='DC1')
     if tarefa_check.exists():
         tarefa_obj = models.Tarefa.objects.get(
-            fkestudante=estudante_id, dataHora=data_atual, tipo='DC3')
+            fkestudante=estudante_id, dataHora=data_atual, tipo='DC1')
         if tarefa_obj.cumprida == 0:
             tarefa_obj.cumprida = 1
             tarefa_obj.save()
