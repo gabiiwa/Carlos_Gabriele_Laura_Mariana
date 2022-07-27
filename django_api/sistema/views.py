@@ -1,5 +1,5 @@
 # from asyncio.windows_events import NULL
-from asyncio.windows_events import NULL
+# from asyncio.windows_events import NULL
 from urllib import response
 from django.shortcuts import render,redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -682,8 +682,7 @@ def visualizacao(request,id_usuario,estudante,id_postagem,programada,data_postag
                 #preciso registrar o aluno que visualizou, pra ele ganhar ponto
                 visu = models.Visualizacao.objects.create(foiVisualizado=True,
                                                     fkestudante_id = list(eh_estudante)[0].id, 
-                                                    fkpostagem_id= id_postagem,
-                                                    fkprogramada_id=NULL)
+                                                    fkpostagem_id= id_postagem)
                 visu.save()
                 visualizacao_ponto(eh_estudante)
         else:
@@ -693,8 +692,7 @@ def visualizacao(request,id_usuario,estudante,id_postagem,programada,data_postag
                 #preciso registrar o aluno que visualizou, pra ele ganhar ponto
                 visu = models.Visualizacao.objects.create(foiVisualizado=True,
                                                     fkestudante = list(eh_estudante)[0].id, 
-                                                    fkprogramada_id= id_postagem,
-                                                    fkpostagem_id=NULL)
+                                                    fkprogramada_id= id_postagem)
                 visu.save()
                 visualizacao_ponto(eh_estudante)
     return render(request,'visualizacao.html',{'c':c})
