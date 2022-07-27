@@ -14,7 +14,7 @@ body {
 
 #cabecalho {
     background-color: #DDA0DD;
-    padding: 15px;
+    padding: 25px;
     text-align: center;
 }
 
@@ -25,6 +25,7 @@ body {
 #main {
     width: 920px;
     margin: 0 auto;
+    margin-bottom: 90px !important;
 }
 
 #conteudo {
@@ -62,7 +63,6 @@ a:link, a:visited {
 
 a:hover {
     color: #8B008B;
-    background-color: #F5F5F5;
 }
 
 /* Classes */
