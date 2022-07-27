@@ -18,39 +18,47 @@
     <link href="{% static 'css/style.css' %}" rel="stylesheet" />
 </head>
 
-    <body>
-        {% include 'cabecalho.html'%}
-        
+<body>
+    {% include 'cabecalho.html'%}
 
-        <div id="main">
-            <div id="conteudo">
-                <!-- Abertura postagens -->
-                <div class="postagens">
-                    {% for post in data %}
-                    
-                    <h2>{{post.titulo}}</h2>
-                    
-                    <span class="data-postagem">Autora:{{post.nome}}. Postado em {{post.dataHora.date}} ás
-                        {{post.dataHora.time}}</span>
-                    <p>
-                        
-                        {{post.texto}}
-                    </p>
-                    <a href="/visualizar/{{post.fkusuario}}/{{post.estudante}}/{{post.id}}/{{post.programada}}/{{post.dataHora}}">Visualizar</a>
-                    {% endfor %}
+    <div id="main">
+        <section class="about_section layout_padding">
+            <div class="container">
+                <div class="custom_heading-container">
+                    <h3 class=" ">
+                        Home
+                    </h3>
                 </div>
-                <!-- {% if c.nao_aluna %}
-                <script>
-                    alert('Professora nao tem titulo!')
-                </script>
-                {% endif %} -->
-                <!-- Fechamento da postagens -->
         </section>
+
+        <!-- Abertura postagens -->
+        <div class="my-5">
+            {% for post in data %}
+
+            <h2>{{post.titulo}}</h2>
+
+            <span class="data-postagem">Autora:{{post.nome}}. Postado em {{post.dataHora.date}} ás
+                {{post.dataHora.time}}</span>
+            <p>
+                {{post.texto}}
+            </p>
+            <p>
+                <a class="btn btn-link btn-sm" role="button"
+                    href="/visualizar/{{post.fkusuario}}/{{post.estudante}}/{{post.id}}/{{post.programada}}/{{post.dataHora}}">Visualizar</a>
+            </p>
+            {% endfor %}
+        </div>
+        <!-- {% if c.nao_aluna %}
+                    <script>
+                        alert('Professora nao tem titulo!')
+                    </script>
+                    {% endif %} -->
+        <!-- Fechamento da postagens -->
     </div>
 
-    <div id="rodape">
-        Todos os direitos reservados
-    </div>
+        <div id="rodape">
+            Todos os direitos reservados
+        </div>
     </div>
 </body>
 
