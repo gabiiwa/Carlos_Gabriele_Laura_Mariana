@@ -9,6 +9,7 @@ from .models import listaTitulo
 from .models import Tarefa
 from .models import Comentario
 from .models import Login
+from .models import Visualizacao
 class EstudanteAdmin(admin.ModelAdmin):
     list_display = ('cpf','nome','matricula','pontuacao')
     list_display_links = ('cpf','nome','matricula')
@@ -24,3 +25,4 @@ admin.site.register(listaTitulo)
 admin.site.register(Tarefa)
 admin.site.register(Comentario)
 admin.site.register(Login)
+admin.site.register(Visualizacao)

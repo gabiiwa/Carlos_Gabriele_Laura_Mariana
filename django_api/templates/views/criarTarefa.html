@@ -20,18 +20,22 @@
     {% include 'cabecalho.html' %}
 
     <div id="main">
-        <div id="criarTarefa">
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Selecione uma opção</option>
-                <option value="1">Ler uma postagem</option>
-                <option value="2">Publicar um comentário</option>
-                <option value="3">Publicar uma postagem</option>
-            </select>
+        <form action="/router/tarefa/" method="post">
+            {% csrf_token %}
+            <input type="hidden" id="fkusuario" name="fkusuario" value="{{c.id_user}}">
+            <div id="criarTarefa">
+                <select class="form-select" aria-label="Default select example" name="desc">
+                    <option selected>Selecione uma opção</option>
+                    <option value="1">Ler uma postagem</option>
+                    <option value="2">Publicar um comentário</option>
+                    <option value="3">Publicar uma postagem</option>
+                </select>
 
-            <div id="tarefa">
-                <button class="btn btn-warning btn-call-to-action" type="submit">Criar Tarefa</button>
+                <div id="tarefa">
+                    <button class="btn btn-warning btn-call-to-action" type="submit">Criar Tarefa</button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"

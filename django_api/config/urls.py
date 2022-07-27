@@ -29,6 +29,7 @@ router.register(r'login', views.LoginViewSet)
 router.register(r'ranking', views.RankingViewSet)
 router.register(r'lista_professoras', views.ProfessorViewSet)
 router.register(r'titulo', views.criaTituloViewSet)
+router.register(r'visualizacao', views.VisualizacaoViewSet)
 router.register(r'lista_usuarios', views.UsuarioViewSet, basename ='lista_usuarios')
 
 router_tarefa = routers.DefaultRouter()
@@ -48,9 +49,11 @@ urlpatterns = [
     path('assistencia/', views.assistencia, name="assistencia"),
     path('professoras/', views.professoras, name="professoras"),
     path('criarPost/', views.criarPost, name="criarPostagem"),
+    # path('criarTarefa/', views.criarTarefa, name="criarTarefa"),
     path('ranking/', views.ranking, name="ranking"),
-    path('visualizar/int:id_usuario/int:id_postagem', views.visualizacao, name='vizualizar'),
-    path('comentario/int:id_usuario/boolean:estudante/int:id_postagem', views.comentario, name="comentario"),
+    # path('visualizar/<int:id_usuario>/<str:estudante>/<int:id_postagem>', views.visualizacao, name='vizualizar'),
+    path('visualizar/<int:id_usuario>/<str:estudante>/<int:id_postagem>/<str:programada>/<str:data_postagem>', views.visualizacao, name='vizualizar'),
+    path('comentario/<int:id_usuario>/<str:estudante>/<int:id_postagem>/<str:programada>', views.comentario, name="comentario"),
     path('tarefas/', views.tarefas, name="tarefas"),
     # path('teste',include(router_tarefa)),
     # path('visualizar/int:id', views.visualizar, name='vizualizar'),

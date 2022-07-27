@@ -50,12 +50,12 @@ class RankingSerializer(serializers.ModelSerializer):
 class ProfessorSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Professor
-        fields = ['nome']
+        fields = "__all__"
 
 class EstudanteSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Estudante
-        fields = ['nome']
+        fields = "__all__"
 
 class criaTituloSerializer(serializers.ModelSerializer):
     class Meta:

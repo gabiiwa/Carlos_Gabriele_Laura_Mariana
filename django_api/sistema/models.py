@@ -171,10 +171,12 @@ Visualização:
 """
 class Visualizacao(models.Model):
     foiVisualizado = models.BooleanField(default=False)
-    fkusuario = models.ForeignKey(Professor,on_delete=models.CASCADE)
-    qtdPontos = models.IntegerField()
+    fkestudante = models.ForeignKey(Estudante,on_delete=models.CASCADE, blank=True, null=True)
     fkpostagem = models.ForeignKey(Postagem,on_delete=models.CASCADE, blank=True, null=True)
-    fkprogramada = models.ForeignKey(PostagemArmazenada,on_delete=models.CASCADE, blank=True, null=True)  
+    fkprogramada = models.ForeignKey(PostagemArmazenada,on_delete=models.CASCADE, blank=True, null=True)
+
+    # class Meta:
+    #     unique_together = ('fkestudante','fkpostagem','fkprogramada')  
 
 class Login(models.Model):
     senha = models.IntegerField()
