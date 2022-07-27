@@ -20,6 +20,12 @@
     {% include 'cabecalho.html' %}
 
     <div id="main">
+        <section class="contact_section layout_padding">
+      <div class="custom_heading-container">
+        <h3 class=" ">
+          Criar tarefa
+        </h3>
+      </div>
         <form action="/router/tarefa/" method="post">
             {% csrf_token %}
             <input type="hidden" id="fkusuario" name="fkusuario" value="{{c.id_user}}">
@@ -36,6 +42,7 @@
                 </div>
             </div>
         </form>
+    </section>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
