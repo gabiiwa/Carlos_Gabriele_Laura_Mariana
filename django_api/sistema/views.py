@@ -894,24 +894,6 @@ def comentario(request, id_usuario, estudante, id_postagem, programada, data_pos
 
 
 
-
-def tarefas(request):
-    c = {
-        'atual': {
-            'tipo': 'Nome do tipo',
-            'pontos': 15,
-        },
-        'historico': [
-            {'tipo': "Nome do tipo 1", 'pontos': 15, 'data': '21/07/2022 12:55'},
-            {'tipo': "Nome do tipo 2", 'pontos': 18, 'data': '22/07/2022 14:01'},
-            {'tipo': "Nome do tipo 3", 'pontos': 17, 'data': '23/07/2022 18:25'},
-            {'tipo': "Nome do tipo 4", 'pontos': 14, 'data': '24/07/2022 10:02'},
-            {'tipo': "Nome do tipo 5", 'pontos': 19, 'data': '25/07/2022 08:05'}
-        ]
-    }
-    return render(request,'tarefas.html', c)
-
-
 # @csrf_protect 
 # def criarTarefa(request):
 #     response_user= requests.get('http://127.0.0.1:8000/router/login/')
