@@ -67,20 +67,6 @@ a:hover {
     text-align: center !important;
 }
 
-.btn.btn-warning.btn-call-to-action {
-    background-color: #D8BFD8 !important;
-    border-color: #BA55D3 !important;
-    color: #BA55D3 !important;
-    font-weight: bold;
-}
-
-.btn.btn-warning.btn-call-to-action:hover {
-    background-color: #4B0082 !important;
-    border-color: #BA55D3 !important;
-    color: #BA55D3 !important;
-    font-weight: bold;
-}
-
 .form-floating {
     color:#808080 !important;
     margin-top: 10px !important;

@@ -47,28 +47,3 @@ h2 {
 a {
     text-decoration: none;
 }
-
-a:link, a:visited {
-    color: #4B0082;
-    padding: 8px 12px;
-}
-
-a:hover {
-    color: #8B008B;
-    background-color: #F5F5F5;
-}
-
-/* Classes */
-.btn.btn-warning.btn-call-to-action {
-    background-color: #D8BFD8 !important;
-    border-color: #BA55D3 !important;
-    color: #BA55D3 !important;
-    font-weight: bold;
-}
-
-.btn.btn-warning.btn-call-to-action:hover {
-    background-color: #4B0082 !important;
-    border-color: #BA55D3 !important;
-    color: #BA55D3 !important;
-    font-weight: bold;
-}
