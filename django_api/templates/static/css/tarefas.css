@@ -38,13 +38,6 @@ body {
     float: right;
 }
 
-#rodape {
-    clear: both;
-    background-color: #CCCCCC;
-    text-align: center;
-    padding: 15px;
-}
-
 /* Tags */
 
 h1 {
@@ -75,20 +68,6 @@ a:hover {
 .tarefa-atual {
     margin-top: 20px;
     background-color: #FFFFFF;
-}
-.historico-tarefas-concluidas {
-    margin-top: 20px;
-    font-size: 0.8em;
-    display: block;
-}
-.lista-tarefas {
-    display: block;
-    border-top: 1px solid grey;
-}
-.item-lista-tarefas {
-    background-color: #FAFAFA;
-    padding: 5px;
-    margin-bottom: 0.4em;
 }
 .item-p-tipo {
     margin-top: 0.2em;

@@ -2,46 +2,46 @@
 <!DOCTYPE html>
 
 <html lang="pt-br">
-    
-    <head>
-        <title>SigaComElas</title>
-        <meta charset="utf-8">
-
-        <link rel="stylesheet" href="{% static 'css/tituloAtual.css'%}">
 
 <head>
-    <title>Seu Título Atual | SigaComElas</title>
+    <title>SigaComElas</title>
     <meta charset="utf-8">
-    <!-- <link rel="stylesheet" href="../static/css/home.css"> -->
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"> -->
+
     <link rel="stylesheet" href="{% static 'css/tituloAtual.css'%}">
 
-  	<!-- responsive style -->
-  	<link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
-	
-	<!-- Custom styles for this template -->
-	<link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <head>
+        <title>Seu Título Atual | SigaComElas</title>
+        <meta charset="utf-8">
+        <!-- <link rel="stylesheet" href="../static/css/home.css"> -->
+        <!-- <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"> -->
+        <link rel="stylesheet" href="{% static 'css/tituloAtual.css'%}">
+
+        <!-- responsive style -->
+        <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+        <!-- Custom styles for this template -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet" />
     </head>
 
-    <body>
-        {% include 'cabecalho.html' %}
+<body>
+    {% include 'cabecalho.html' %}
 
-        <div id="main">
-            <div id="conteudo">
-                <div class="tituloAtual">
-                    <h3>Título atual</h3>
-                    <p>Titulo: {{c.aluna.titulo}}</p> 
-                    <p>Estudante: {{c.aluna.nome}}</p> 
-                    <p>Pontuação atual: {{c.aluna.pontuacao}}</p> 
-                    <p>Quantos pontos faltam pra trocar de título: {{c.aluna.pontos_para_prox_titulo}}</p> 
+
+    <div id="main">
+        <section class="service_section layout_padding">
+            <div class="container">
+                <div class="custom_heading-container">
+                    <h3 class=" ">
+                        Título Atual
+                    </h3>
                 </div>
 
-                <!-- <div id="sobre">
-                    <p><br/>Titulo: {{aluna.titulo}}<br/>
-                    Estudante: {{aluna.nome}}<br/>
-                    Pontuação atual: {{aluna.pontuacao}}<br/>
-                    Quantos pontos faltam pra trocar de título: {{aluna.pontos_para_prox_titulo}}<br/><br/><br/></p>
-                </div> -->
+                <div class="layout_padding2-bottom">
+                    <p>Titulo: {{c.aluna.titulo}}</p>
+                    <p>Estudante: {{c.aluna.nome}}</p>
+                    <p>Pontuação atual: {{c.aluna.pontuacao}}</p>
+                    <p>Quantos pontos faltam pra trocar de título: {{c.aluna.pontos_para_prox_titulo}}</p>
+                </div>
 
                 <div class="custom_heading-container">
                     <h3 class=" ">

@@ -2,56 +2,80 @@
 <!DOCTYPE html>
 
 <html lang="pt-br">
-    
-    <head>
-        <title>SigaComElas</title>
-        <meta charset="utf-8">
-        <!-- <link rel="stylesheet" href="../static/css/home.css"> -->
-        <!-- <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"> -->
-        <link rel="stylesheet" href="{% static 'css/tarefas.css'%}">
 
-	<!-- bootstrap core css -->
- 	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+<head>
+    <title>SigaComElas</title>
+    <meta charset="utf-8">
+    <!-- <link rel="stylesheet" href="../static/css/home.css"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/tarefas.css'%}">
 
-  	<!-- responsive style -->
-  	<!-- <link href="../static/css/responsive.css" rel="stylesheet" /> -->
-  	<link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
-	
-	<!-- Custom styles for this template -->
-	<link href="{% static 'css/style.css' %}" rel="stylesheet" />
-    </head>
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
 
-    <body>
-        {% include 'cabecalho.html' %}
+    <!-- responsive style -->
+    <!-- <link href="../static/css/responsive.css" rel="stylesheet" /> -->
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
 
-        <div id="main">
-            <div id="conteudo">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+</head>
+
+<body>
+    {% include 'cabecalho.html' %}
+
+    <div id="main">
+        <section class="service_section layout_padding">
+            <div class="container">
+                <div class="custom_heading-container">
+                    <h3 class=" ">
+                        Tarefas de Hoje
+                    </h3>
+                </div>
+
+                {% if c.atual.cumprida %}
+                <p>
+                    Não há nenhuma tarefa pendente.
+                </p>
+                {% else %}
                 <div class="tarefa-atual">
                     <h3>Tarefa de hoje</h3>
-                    <p>Tipo: {{c.atual.tipo}}</p> 
-                    <p>Pontos: {{c.atual.pontos}}</p> 
+                    <p>Tipo: {{c.atual.tipo}}</p>
+                    <p>Pontos: {{c.atual.pontos}}</p>
                 </div>
-                <div class="historico-tarefas-concluidas">
-                    <h3>Tarefas cumpridas</h3>
-                    <div class="lista-tarefas">
-                        {% for item in c.historico %}
-                        <div class="item-lista-tarefas">
-                            <p class="item-p-tipo">Tipo: {{item.tipo}}</p>
-                            <p class="item-p-tipo">Pontos: {{item.pontos}}</p>
-                            <p class="item-p-tipo">Data/hora: {{item.data}}</p>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
+                {% endif %}
 
-            <!-- <div id="area-lateral">
+                <div class="custom_heading-container">
+                    <h3 class=" ">
+                        Tarefas Cumpridas
+                    </h3>
+                </div>
+
+                {% if c.tamanho == 0 %}
+                <p>
+                    Não há nenhuma tarefa cumprida.
+                </p>
+                {% else %}
+                {% for item in c.historico %}
+                <div class="item-lista-tarefas">
+                    <p class="item-p-tipo">Tipo: {{item.tipo}}</p>
+                    <p class="item-p-tipo">Pontos: {{item.pontos}}</p>
+                    <p class="item-p-tipo">Data/hora: {{item.data}}</p>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </section>
+    </div>
+
+    <!-- <div id="area-lateral">
                 area lateral
             </div> -->
 
-            <div id="rodape">
-                Todos os direitos reservados
-            </div>
-        </div>
-    </body>
+    <div id="rodape">
+        Todos os direitos reservados
+    </div>
+    </div>
+</body>
+
 </html>
