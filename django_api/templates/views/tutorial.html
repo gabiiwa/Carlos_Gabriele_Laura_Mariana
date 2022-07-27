@@ -18,86 +18,65 @@
   <link href="{% static 'css/style.css' %}" rel="stylesheet" />
 </head>
 
-  <body>
-    {% include 'cabecalho.html' %}
-    <div id="main">
-      <section class="service_section layout_padding">
-        <div class="container">
-          <div class="custom_heading-container">
-            <h3 class=" ">
-              Tutorial
-            </h3>
-          </div>
+<body>
+  {% include 'cabecalho.html' %}
+  <div id="main">
+    <section class="service_section layout_padding">
+      <div class="container">
+        <div class="custom_heading-container">
+          <h3 class=" ">
+            Tutorial
+          </h3>
+        </div>
 
         <p class="">
-          Veja aqui todas as funcionalidades do sistema
+          Veja aqui todas as funcionalidades do sistema<br /><br />
         </p>
 
-        <div class="service_container ">
-          <div class="row">
-            <div class="col-md-3">
-              <div class="box b-1">
-                <div class="detail-box">
-                  <h6>
-                    Criar postagem e fazer comentários.
-                  </h6>
-                  <p>
-                    Todas as estudantes podem criar postagens contendo curiosidades, divulgação de eventos, oportunidades de estágio/programas, entre outras coisas. Inclusive, é possibilitado comentários em cada postagem, permitindo uma maior interação.
-                    Para a criação de postagem, basta acessar a página "Criar postagem" e preencher todos os campos. Para fazer algum comentário: acesse a postagem, disponível na "Home"; clica no botão "Fazer comentário"; preenche o campo do texto do comentário; e, por fim, clique em "Comentar". 
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <div class="box b-1">
-                <div class="detail-box">
-                  <h6>
-                    Títulos e Ranking
-                  </h6>
-                  <p>
-                    Para incentivar a interação das participantes, este sistema é gamificado devido às faixas de pontuação por meio de títulos, nomeados com grandes mulheres da área de computação.
-                    A medida que as estudantes se pontuam (criar postagem, fazer comentários, ler postagem), avançam nos títulos para que possam ser vistas como referências em outras estudantes, principalmente que estão començando a vida universitária. Para visualizar seu título atual, basta acessar a página "Título Atual". 
-                    É possibilitado a visuallização de todos os usuários, na página "Usuários" e todos os usuários que possui o mesmo título com o seu, na página "Usuários com o mesmo título".
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <div class="box b-1">
-                <div class="detail-box">
-                  <h6>
-                    Páginas com informações gerais
-                  </h6>
-
-                  <p>
-                    O sistema disponibiliza por meio do menu principal algumas páginas de auxílio geral para o uso do sistema e para a vida universitária:
-                  </p>
-
-                  <dl><a href="/sobre/">Sobre este sistema</a></dl>
-                    <dl><a href="/politicas/">Políticas deste sistema</a></dl>
-                    <dl><a href="/professoras/">Lista de Professoras de áreas afins da computação</a></dl>
-                    <dl><a href="/assistencia/">Programas de assistência estudantil da universidade</a></dl>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <div class="box b-1">
-                <div class="detail-box">
-                  <h6>
-                    Tarefas
-                  </h6>
-
-                  <p>
-                    adipiscing elit, sed do eiusmod tempor incididunt
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="custom_heading-container">
+          <h5 class=" ">
+            <strong>Criar postagem e fazer comentários</strong>
+          </h5>
         </div>
+        <p>
+          Todas as estudantes podem criar postagens contendo curiosidades, divulgação de eventos, oportunidades de
+          estágio/programas, entre outras coisas. Inclusive, é possibilitado comentários em cada postagem, permitindo
+          uma maior interação.
+          Para a criação de postagem, basta acessar a página "Criar postagem" e preencher todos os campos. Para fazer
+          algum comentário: acesse a postagem, disponível na "Home"; clica no botão "Fazer comentário"; preenche o campo
+          do texto do comentário; e, por fim, clique em "Comentar".
+        </p>
+
+        <div class="custom_heading-container">
+          <h5 class=" ">
+            <strong>Títulos e Ranking</strong>
+          </h5>
+        </div>
+        <p>
+          Para incentivar a interação das participantes, este sistema é gamificado devido às faixas de pontuação por
+          meio de títulos, nomeados com grandes mulheres da área de computação.
+          A medida que as estudantes se pontuam (criar postagem, fazer comentários, ler postagem), avançam nos títulos
+          para que possam ser vistas como referências em outras estudantes, principalmente que estão començando a vida
+          universitária. Para visualizar seu título atual, basta acessar a página "Título Atual".
+          É possibilitado a visuallização de todos os usuários, na página "Usuários" e todos os usuários que possui o
+          mesmo título com o seu, na página "Usuários com o mesmo título".
+        </p>
+
+        <div class="custom_heading-container">
+          <h5 class=" ">
+            <strong>Páginas com informações gerais</strong>
+          </h5>
+        </div>
+        <p>
+          O sistema disponibiliza por meio do menu principal algumas páginas de auxílio geral para o uso do sistema e
+          para a vida universitária:
+        </p>
+
+        <dl><a href="/sobre/">Sobre este sistema</a></dl>
+        <dl><a href="/politicas/">Políticas deste sistema</a></dl>
+        <dl><a href="/professoras/">Lista de Professoras de áreas afins da computação</a></dl>
+        <dl><a href="/assistencia/">Programas de assistência estudantil da universidade</a></dl>
+
       </div>
     </section>
   </div>
