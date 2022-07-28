@@ -19,6 +19,15 @@ import sistema
 
 
 # """"""Views"""""""
+
+"""
+PostagemViewSet:
+- View que permite a criação de uma postagem por parte de uma estudante;
+- Atualiza a pontuação total da estudante (adiciona 15 pontos à pontuação existente);
+- Se a estudante possuir uma tarefa relacionada à publicação de postagem com a data atual, 
+  marca a tarefa como cumprida e adiciona mais 5 pontos pelo cumprimento da tarefa à pontuação existente;
+- Atualiza o título da estudante, caso seja necessário.
+"""
 class PostagemViewSet(viewsets.ModelViewSet):
     queryset = models.Postagem.objects.all().order_by('-dataHora')
     serializer_class = serializers.PostagemSerializer
@@ -155,7 +164,10 @@ class PostagemViewSet(viewsets.ModelViewSet):
             #                             novo_titulo_obj.save()
             return redirect("http://127.0.0.1:8000/home/")
 
-
+"""
+PostagemArmazenadaViewSet:
+- View que permite a criação de uma postagem armazenada por parte de uma professora.
+"""
 class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
     queryset = models.PostagemArmazenada.objects.all().order_by('-dataHora')
     serializer_class = serializers.PostagemArmazenadaSerializer
@@ -164,7 +176,7 @@ class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
         serializer = serializers.PostagemArmazenadaSerializer(
             data=request.data)
         if serializer.is_valid(raise_exception=True):
-            # caso não seje informado a data e o horário que se deseja fazer a postagem, insere a data e horário presente
+            # caso não sejam informados a data e o horário em que se deseja fazer a postagem, insere a data e horário presente
             if type(serializer.validated_data["dataHora"]) == type(None):
                 serializer.validated_data["dataHora"] = django.utils.timezone.now(
                 )
@@ -204,7 +216,10 @@ class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.data)
 
-
+"""
+TarefaViewSet:
+- View que permite a criação de uma tarefa.
+"""
 class TarefaViewSet(viewsets.ModelViewSet):
     queryset = models.Tarefa.objects.all().order_by('-dataHora')
     serializer_class = serializers.TarefaSerializer
@@ -228,7 +243,14 @@ class TarefaViewSet(viewsets.ModelViewSet):
 
             return redirect("http://127.0.0.1:8000/home/")
 
-
+"""
+ComentarioViewSet:
+- View que permite a criação de um comentário, seja por uma estudante ou por uma professora;
+- Atualiza a pontuação total da estudante (adiciona 10 pontos à pontuação existente);
+- Se a estudante possuir uma tarefa relacionada à publicação de comentário com a data atual, 
+  marca a tarefa como cumprida e adiciona mais 5 pontos pelo cumprimento da tarefa à pontuação existente;
+- Atualiza o título da estudante, caso seja necessário.
+"""
 class ComentarioViewSet(viewsets.ModelViewSet):
     queryset = models.Comentario.objects.all().order_by('-dataHora')
     serializer_class = serializers.ComentarioSerializer
@@ -327,7 +349,10 @@ class ComentarioViewSet(viewsets.ModelViewSet):
             return redirect(referer)
             # <int:id_usuario>/<str:estudante>/<int:id_postagem>/<str:programada>/<str:data_postagem>
 
-
+"""
+LoginViewSet:
+- View relacionada ao login de usuários no sistema.
+"""
 class LoginViewSet(viewsets.ModelViewSet):
     queryset = models.Login.objects.all()
     serializer_class = serializers.LoginSerializer
@@ -355,7 +380,10 @@ class LoginViewSet(viewsets.ModelViewSet):
 
                     return redirect("http://127.0.0.1:8000/?erro=cpf_invalido")
 
-
+"""
+RankingViewSet:
+- View relacionada à visualização do ranking de estudantes de acordo com as suas pontuações totais.
+"""
 class RankingViewSet(viewsets.ModelViewSet):
     #queryset = models.Login.objects.all()
     #serializer_class = serializers.LoginSerializermodels.PostagemArmazenada.objects.filter(fkusuario_id=id_usuario,id=id_postagem)
@@ -373,7 +401,10 @@ class RankingViewSet(viewsets.ModelViewSet):
             '-pontuacao').values_list('nome', 'pontuacao')
         return Response(list(ranking))
 
-
+"""
+ProfessorViewSet:
+- View relacionada à visualização da lista de professoras cadastradas no sistema.
+"""
 class ProfessorViewSet(viewsets.ModelViewSet):
     queryset = models.Professor.objects.all().order_by('nome')
     serializer_class = serializers.ProfessorSerializer
@@ -384,7 +415,10 @@ class ProfessorViewSet(viewsets.ModelViewSet):
         professoras = models.Professor.objects.all().order_by('nome').values_list('nome')
         return Response(list(professoras))
 
-
+"""
+criaTituloViewSet:
+- View relacionada à criação dos títulos no banco.
+"""
 class criaTituloViewSet(viewsets.ModelViewSet):
     queryset = models.Titulo.objects.all()
     serializer_class = serializers.criaTituloSerializer
@@ -400,7 +434,10 @@ class criaTituloViewSet(viewsets.ModelViewSet):
             #  lista
             return Response(serializer.data)
 
-
+"""
+UsuarioViewSet:
+- View relacionada à visualização da lista de usuários do sistema (estudantes e professoras).
+"""
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = models.Professor.objects.order_by('nome')
     serializer_class = serializers.ProfessorSerializer
@@ -420,7 +457,15 @@ class UsuarioViewSet(viewsets.ModelViewSet):
 
         return Response(usuarios)
 
-
+"""
+VisualizacaoViewSet:
+- View relacionada à visualização de postagens;
+- Atualiza a pontuação total da estudante (adiciona 5 pontos à pontuação existente);
+- Se a estudante possuir uma tarefa relacionada à leitura de postagem com a data atual, 
+  marca a tarefa como cumprida e adiciona mais 5 pontos pelo cumprimento da tarefa à
+  pontuação existente;
+- Atualiza o título da estudante, caso seja necessário.
+"""
 class VisualizacaoViewSet(viewsets.ModelViewSet):
     queryset = models.Visualizacao.objects.all()
     serializer_class = serializers.VisualizacaoSerializer
@@ -447,10 +492,10 @@ class VisualizacaoViewSet(viewsets.ModelViewSet):
 
             data_atual = django.utils.timezone.now()
             tarefa_check = models.Tarefa.objects.filter(
-                fkestudante=estudante_id, dataHora=data_atual, tipo='DC3')
+                fkestudante=estudante_id, dataHora=data_atual, tipo='DC1')
             if tarefa_check.exists():
                 tarefa_obj = models.Tarefa.objects.get(
-                    fkestudante=estudante_id, dataHora=data_atual, tipo='DC3')
+                    fkestudante=estudante_id, dataHora=data_atual, tipo='DC1')
                 if tarefa_obj.cumprida == 0:
                     tarefa_obj.cumprida = 1
                     tarefa_obj.save()

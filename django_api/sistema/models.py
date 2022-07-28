@@ -7,6 +7,11 @@ from django.db.models.signals import post_save
 import datetime
 import django
 # Create your models here.
+
+"""
+Usuario:
+- Tabela de usuários do sistema.
+"""
 class Usuario(models.Model):
     cpf = models.IntegerField()
     nome = models.CharField(max_length=100)
@@ -19,9 +24,17 @@ class Usuario(models.Model):
     # def __str__(self):
     #     return self.nome
 
+"""
+Professor:
+- Tabela de professoras.
+"""
 class Professor(Usuario):
     siape = models.IntegerField()
 
+"""
+Estudante:
+- Tabela de alunas.
+"""
 class Estudante(Usuario):
     matricula = models.CharField(max_length=11)
     pontuacao = models.IntegerField(default = 0)
@@ -69,6 +82,10 @@ class Titulo(models.Model):
                         self.desc = 'Marie Van Brittan Brown'
         super().save(*args, **kwargs)
 
+"""
+Lista Titulo:
+- Tabela que relaciona títulos da tabela Titulo com estudantes.
+"""
 class listaTitulo(models.Model): # títulos que as estudantes já tiveram, assim como o título atual
     fktitulo = models.ForeignKey(Titulo,on_delete=models.CASCADE)
     fkestudante = models.ForeignKey(Estudante,on_delete=models.CASCADE)
@@ -86,7 +103,10 @@ class listaTitulo(models.Model): # títulos que as estudantes já tiveram, assim
 
 """
 Tarefa:
-- Tabela referente às tarefas associadas às alunas;
+- Tabela referente às tarefas diárias associadas às alunas;
+- Tarefas podem ser de três tipos: leitura de postagem, publicação de comentário
+  e publicação de postagem;
+- Cada tipo de tarefa possui uma pontuação associada.  
 """
 class Tarefa(models.Model):
     desc_choice = (
@@ -121,8 +141,8 @@ class Tarefa(models.Model):
 
 """
 Comentario:
-- Tabela referente aos comentários feitos por alunas;
-- Valor de pontos ganhos: 10;
+- Tabela referente aos comentários feitos por usuários;
+- Valor de pontos ganhos pela aluna: 10.
 """
 class Comentario(models.Model):
     texto = models.CharField(max_length=10000)
@@ -140,8 +160,8 @@ class Comentario(models.Model):
 
 """
 Postagem:
-- Tabela referente as postagens feitas por alunas;
-- Valor de pontos ganhos: 15;
+- Tabela referente às postagens feitas por alunas;
+- Valor de pontos ganhos: 15.
 """
 class Postagem(models.Model):
     titulo = models.CharField(max_length=10000)
@@ -154,7 +174,7 @@ class Postagem(models.Model):
 """
 Postagem Armazenada:
 - Tem esse nome pois quando não são programadas para um dia específico, o sistema armazena e posta depois;
-- Tabela referente as postagens feitas por professoras;
+- Tabela referente às postagens feitas por professoras.
 """
 class PostagemArmazenada(models.Model):
     titulo = models.CharField(max_length=10000)
@@ -167,7 +187,7 @@ class PostagemArmazenada(models.Model):
 """
 Visualização:
 - Permite que as alunas vejam a postagem inteira e ganhem pontos por elas;
-- Valor de pontos ganhos: 5;
+- Valor de pontos ganhos: 5.
 """
 class Visualizacao(models.Model):
     foiVisualizado = models.BooleanField(default=False)
@@ -178,6 +198,10 @@ class Visualizacao(models.Model):
     # class Meta:
     #     unique_together = ('fkestudante','fkpostagem','fkprogramada')  
 
+"""
+Login:
+- Tabela relacionada ao login de usuários no sistema.
+"""
 class Login(models.Model):
     senha = models.IntegerField()
     cpf =  models.IntegerField()
