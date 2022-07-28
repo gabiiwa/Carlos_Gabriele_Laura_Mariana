@@ -19,7 +19,6 @@
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" /> -->
 
     <!-- responsive style -->
-    <!-- <link href="../static/css/responsive.css" rel="stylesheet" /> -->
     <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
 
     <!-- Custom styles for this template -->
@@ -54,7 +53,6 @@
         <div class="comentarios-postagem">
             <!-- Autor, data, hora do comentário -->
             {% for coment in lista_comentarios %}
-            <!-- <span class="data-postagem">Postado em 28 de Junho de 2022</span> -->
             <div class="item-comentario">
                 <div class="autora-postagem">{{coment.nome}}</div>
                 <div class="data-postagem">Postado em {{coment.dataHora.date}} ás
@@ -66,10 +64,6 @@
             
             {% endfor %}
         </div>
-        <!-- <form action="/router/postagem_armazenada/" method="post">
-                
-                <input type="hidden" id="fkusuario" name="fkusuario" value="{{c.id_user}}"> -->
-        <!-- Caixinha para comentar -->
         <div class="comentar">
             <form action="/router/comentario/" method="post">
                 {% csrf_token %}
