@@ -181,10 +181,8 @@ class PostagemArmazenadaViewSet(viewsets.ModelViewSet):
                 serializer.validated_data["dataHora"] = django.utils.timezone.now(
                 )
             # pega o ultimo usuario
-            ultimo_usuario = list(
-                models.Login.objects.all().order_by('id'))[-1].cpf
-            serializer.validated_data['fkusuario'] = models.Professor.objects.get(
-                cpf=ultimo_usuario)
+            ultimo_usuario = list( models.Login.objects.all().order_by('id'))[-1].cpf
+            serializer.validated_data['fkusuario'] = models.Professor.objects.get(cpf=ultimo_usuario)
             serializer.save()
         # return Response(serializer.data)
         return redirect("http://127.0.0.1:8000/home/")
@@ -229,19 +227,24 @@ class TarefaViewSet(viewsets.ModelViewSet):
         serializer = serializers.TarefaSerializer(data=request.data)
 
         if serializer.is_valid(raise_exception=True):
-            print("\n Valor seriliazer:{}\n".format(serializer.validated_data))
-            if models.Tarefa.objects.filter(dataHora=django.utils.timezone.now().date()).exists()==False:
-                for estudante_obj in list(models.Estudante.objects.all()):
-                    print("\n Estudante:{}\n".format(estudante_obj))
-                    tarefa_objeto = models.Tarefa.objects.create(
-                        tipo=serializer.validated_data['tipo'],
-                        dataHora=django.utils.timezone.now().date(),
-                        fkestudante=estudante_obj
-                    )
+            tarefas_lista = models.Tarefa.objects.filter(dataHora=datetime.datetime.now().date())
+            if tarefas_lista.exists()==False:
+                tipo_lista=[tarefa.tipo for tarefa in list(tarefas_lista)]
+                if serializer.validated_data in tipo_lista:
+                    return Response({'erro':'esse tipo de tarefa já foi inserido'})
+                else:
+                    for estudante_obj in list(models.Estudante.objects.all()):
+                        tarefa_objeto = models.Tarefa.objects.create(
+                            tipo=serializer.validated_data['tipo'],
+                            dataHora=django.utils.timezone.now().date(),
+                            fkestudante=estudante_obj
+                        )
 
-                    tarefa_objeto.save()
+                        tarefa_objeto.save()
+            else:
+                return Response({'erro': 'já existe uma tarefa para hoje'})
 
-            return redirect("http://127.0.0.1:8000/home/")
+            return Response({'mensagem':'tarefa inserida corretamente'})
 
 """
 ComentarioViewSet:
